@@ -14,10 +14,14 @@ function index()
 
 	if fs.access("/etc/config/dropbear") then
 		entry({"admin", "system", "admin", "dropbear"}, view("system/dropbear"), _("SSH Access"), 2)
+		if not fs.access("/etc/adv_luci_disabled") then
 		entry({"admin", "system", "admin", "sshkeys"}, view("system/sshkeys"), _("SSH-Keys"), 3)
+		end
 	end
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "startup"}, view("system/startup"), _("Startup"), 45)
+	end
 	entry({"admin", "system", "crontab"}, view("system/crontab"), _("Scheduled Tasks"), 46)
 
 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
