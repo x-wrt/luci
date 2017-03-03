@@ -35,6 +35,7 @@ config qos
 	option init qos
 
 config system
+	option init system
 	option init led
 	option exec '/etc/init.d/log reload'
 	list affects luci_statistics
@@ -54,3 +55,6 @@ config samba
 
 config tinyproxy
 	option init tinyproxy
+
+config natcapd
+	option init natcapd
