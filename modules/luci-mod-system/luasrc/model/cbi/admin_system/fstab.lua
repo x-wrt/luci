@@ -38,6 +38,7 @@ s = m:section(TypedSection, "global", translate("Global Settings"))
 s.addremove = false
 s.anonymous = true
 
+if not nixio.fs.access("/etc/adv_luci_disabled") then
 detect = s:option(Button, "block_detect", translate("Generate Config"), translate("Find all currently attached filesystems and swap and replace configuration with defaults based on what was detected"))
 detect.inputstyle = "reload"
 
@@ -53,6 +54,7 @@ o.rmempty = false
 o = s:option(Flag, "anon_mount", translate("Anonymous Mount"), translate("Mount filesystems not specifically configured"))
 o.default = o.disabled
 o.rmempty = false
+end
 
 o = s:option(Flag, "auto_swap", translate("Automount Swap"), translate("Automatically mount swap on hotplug"))
 o.default = o.enabled

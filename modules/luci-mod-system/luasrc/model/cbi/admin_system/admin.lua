@@ -93,6 +93,7 @@ gp.disabled = "off"
 gp.default  = gp.disabled
 
 
+if not fs.access("/etc/adv_luci_disabled") then
 s2 = m2:section(TypedSection, "_dummy", translate("SSH-Keys"),
 	translate("Here you can paste public SSH-Keys (one per line) for SSH public-key authentication."))
 s2.addremove = false
@@ -117,6 +118,7 @@ end
 
 function keys.remove(self, section, value)
 	return fs.writefile("/etc/dropbear/authorized_keys", "")
+end
 end
 
 end
