@@ -16,7 +16,6 @@ function index()
 	entry({"admin", "system", "admin", "sshkeys"}, view("system/sshkeys"), _("SSH-Keys"), 3)
 		.uci_depends = { dropbear = true }
 
-	entry({"admin", "system", "startup"}, view("system/startup"), _("Startup"), 45)
 	entry({"admin", "system", "crontab"}, view("system/crontab"), _("Scheduled Tasks"), 46)
 
 	entry({"admin", "system", "mounts"}, view("system/mounts"), _("Mount Points"), 50)
