@@ -79,6 +79,9 @@
 		"action": {
 			"type": "view",
 			"path": "status/dmesg"
+		},
+		"depends": {
+			"acl": [ "luci-mod-status-logs-hidden" ]
 		}
 	},
 
@@ -90,7 +93,7 @@
 			"path": "status/processes"
 		},
 		"depends": {
-			"acl": [ "luci-mod-status-processes" ]
+			"acl": [ "luci-mod-status-processes-hidden" ]
 		}
 	},
 
