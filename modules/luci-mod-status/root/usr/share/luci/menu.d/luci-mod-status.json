@@ -80,27 +80,6 @@
 		}
 	},
 
-	"admin/status/logs/dmesg": {
-		"title": "Kernel Log",
-		"order": 2,
-		"action": {
-			"type": "view",
-			"path": "status/dmesg"
-		}
-	},
-
-	"admin/status/processes": {
-		"title": "Processes",
-		"order": 6,
-		"action": {
-			"type": "view",
-			"path": "status/processes"
-		},
-		"depends": {
-			"acl": [ "luci-mod-status-processes" ]
-		}
-	},
-
 	"admin/status/channel_analysis": {
 		"title": "Channel Analysis",
 		"order": 7,
