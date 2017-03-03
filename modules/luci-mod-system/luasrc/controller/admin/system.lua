@@ -13,10 +13,14 @@ function index()
 	entry({"admin", "system", "admin", "dropbear"}, view("system/dropbear"), _("SSH Access"), 2)
 		.uci_depends = { dropbear = true }
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "admin", "sshkeys"}, view("system/sshkeys"), _("SSH-Keys"), 3)
 		.uci_depends = { dropbear = true }
+	end
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "startup"}, view("system/startup"), _("Startup"), 45)
+	end
 	entry({"admin", "system", "crontab"}, view("system/crontab"), _("Scheduled Tasks"), 46)
 
 	entry({"admin", "system", "mounts"}, view("system/mounts"), _("Mount Points"), 50)

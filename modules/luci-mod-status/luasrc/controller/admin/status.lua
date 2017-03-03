@@ -15,8 +15,10 @@ function index()
 
 	entry({"admin", "status", "routes"}, template("admin_status/routes"), _("Routes"), 3)
 	entry({"admin", "status", "syslog"}, call("action_syslog"), _("System Log"), 4)
+	if not nixio.fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "status", "dmesg"}, call("action_dmesg"), _("Kernel Log"), 5)
 	entry({"admin", "status", "processes"}, form("admin_status/processes"), _("Processes"), 6)
+	end
 
 	entry({"admin", "status", "realtime"}, alias("admin", "status", "realtime", "load"), _("Realtime Graphs"), 7)
 
