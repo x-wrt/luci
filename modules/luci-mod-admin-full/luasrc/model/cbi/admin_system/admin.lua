@@ -40,7 +40,6 @@ function m.parse(map)
 	Map.parse(map)
 end
 
-
 if fs.access("/etc/config/dropbear") then
 
 m2 = Map("dropbear", translate("SSH Access"),
@@ -90,7 +89,7 @@ gp.enabled  = "on"
 gp.disabled = "off"
 gp.default  = gp.disabled
 
-
+if not fs.access("/etc/adv_luci_disabled") then
 s2 = m2:section(TypedSection, "_dummy", translate("SSH-Keys"),
 	translate("Here you can paste public SSH-Keys (one per line) for SSH public-key authentication."))
 s2.addremove = false
@@ -114,6 +113,7 @@ function keys.write(self, section, value)
 	if value then
 		fs.writefile("/etc/dropbear/authorized_keys", value:gsub("\r\n", "\n"))
 	end
+end
 end
 
 end

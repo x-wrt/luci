@@ -13,13 +13,19 @@ function index()
 
 	entry({"admin", "system", "admin"}, cbi("admin_system/admin"), _("Administration"), 2)
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	if fs.access("/bin/opkg") then
 		entry({"admin", "system", "packages"}, post_on({ exec = "1" }, "action_packages"), _("Software"), 10)
 		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
 	end
+	end
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
+	end
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
+	end
 
 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
 		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points"), 50)
@@ -195,7 +201,7 @@ local function supports_sysupgrade()
 end
 
 local function supports_reset()
-	return (os.execute([[grep -sqE '"rootfs_data"|"ubi"' /proc/mtd]]) == 0)
+	return (os.execute([[grep -sqE '"rootfs_data"|"ubi"' /proc/mtd]]) == 0) or nixio.fs.access("/rom/lib/preinit/79_disk_ready")
 end
 
 local function storage_size()
@@ -296,7 +302,13 @@ function action_sysupgrade()
 			msg   = luci.i18n.translate("The system is flashing now.<br /> DO NOT POWER OFF THE DEVICE!<br /> Wait a few minutes before you try to reconnect. It might be necessary to renew the address of your computer to reach the device again, depending on your settings."),
 			addr  = (#keep > 0) and "192.168.1.1" or nil
 		})
-		fork_exec("sleep 1; killall dropbear uhttpd; sleep 1; /sbin/sysupgrade %s %q" %{ keep, image_tmp })
+		local erase_sda3 = ""
+		if nixio.fs.access("/rom/lib/preinit/79_disk_ready") then
+			if not http.formvalue("keep") == "1" then
+				erase_sda3 = 'mount -o remount,rw /rom && rm -f /rom/etc/sda3.ready && mount -o remount,ro /rom;'
+			end
+		end
+		fork_exec("sleep 1; killall dropbear uhttpd; %s sleep 1; /sbin/sysupgrade %s %q" %{ erase_sda3, keep, image_tmp })
 	end
 end
 
@@ -357,7 +369,11 @@ function action_reset()
 			addr  = "192.168.1.1"
 		})
 
-		fork_exec("sleep 1; killall dropbear uhttpd; sleep 1; jffs2reset -y && reboot")
+		if nixio.fs.access("/rom/lib/preinit/79_disk_ready") then
+			fork_exec("sleep 1; killall dropbear uhttpd; sleep 1; mount -o remount,rw /rom && rm -f /rom/etc/sda3.ready && reboot")
+		else
+			fork_exec("sleep 1; killall dropbear uhttpd; sleep 1; jffs2reset -y && reboot")
+		end
 		return
 	end
 

@@ -33,7 +33,6 @@ function index()
 			page.leaf = true
 		end
 
-
 		local has_wifi = false
 
 		uci:foreach("wireless", "wifi-device",
@@ -111,7 +110,6 @@ function index()
 					end
 				end)
 		end
-
 
 		if nixio.fs.access("/etc/config/dhcp") then
 			page = node("admin", "network", "dhcp")

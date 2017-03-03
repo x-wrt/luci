@@ -11,6 +11,7 @@ m = Map("dhcp", translate("DHCP and DNS"),
 		"Forwarder for <abbr title=\"Network Address Translation\">NAT</abbr> " ..
 		"firewalls"))
 
+if not nixio.fs.access("/etc/adv_luci_disabled") then
 s = m:section(TypedSection, "dnsmasq", translate("Server Settings"))
 s.anonymous = true
 s.addremove = false
@@ -255,6 +256,7 @@ o = s:taboption("general", DynamicList, "notinterface",
 	translate("Prevent listening on these interfaces."))
 o.optional = true
 o:depends("nonwildcard", true)
+end
 
 m:section(SimpleSection).template = "admin_network/lease_status"
 
