@@ -23,7 +23,7 @@ s2.anonymous = true
 s2.addremove = false
 
 freq = s2:option(Value, "freq", translate("Offset frequency"))
-freq.datatype = "integer"
+freq.datatype = "or(integer,uinteger)"
 freq.rmempty = true
 
 s3 = m:section(TypedSection, "ntpserver", translate("Time Servers"))
