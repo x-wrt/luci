@@ -17,11 +17,15 @@ function index()
 
 	if fs.access("/etc/config/dropbear") then
 		entry({"admin", "system", "admin", "dropbear"}, cbi("admin_system/dropbear"), _("SSH Access"), 2)
+		if not fs.access("/etc/adv_luci_disabled") then
 		entry({"admin", "system", "admin", "sshkeys"}, template("admin_system/sshkeys"), _("SSH-Keys"), 3)
 		entry({"admin", "system", "admin", "sshkeys", "json"}, post_on({ keys = true }, "action_sshkeys"))
+		end
 	end
 
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "startup"}, view("system/startup"), _("Startup"), 45)
+	end
 	entry({"admin", "system", "crontab"}, view("system/crontab"), _("Scheduled Tasks"), 46)
 
 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
@@ -275,7 +279,11 @@ function action_reset()
 			addr  = "192.168.1.1"
 		})
 
+		if nixio.fs.access("/rom/lib/preinit/79_disk_ready") then
+		luci.sys.process.exec({ "/bin/sh", "-c", "sleep 1; killall dropbear uhttpd; sleep 1; mount -o remount,rw /rom && rm -f /rom/etc/sda.ready && reboot" }, nil, nil, true)
+		else
 		luci.sys.process.exec({ "/bin/sh", "-c", "sleep 1; killall dropbear uhttpd; sleep 1; jffs2reset -y && reboot" }, nil, nil, true)
+		end
 		return
 	end
 
