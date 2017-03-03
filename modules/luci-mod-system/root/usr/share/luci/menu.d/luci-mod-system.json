@@ -68,7 +68,7 @@
 			"path": "system/startup"
 		},
 		"depends": {
-			"acl": [ "luci-mod-system-init" ]
+			"acl": [ "luci-mod-system-init-hidden" ]
 		}
 	},
 
