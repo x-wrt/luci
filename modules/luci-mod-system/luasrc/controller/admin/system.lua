@@ -11,7 +11,9 @@ function index()
 	entry({"admin", "system", "clock_status"}, post_on({ set = true }, "action_clock_status"))
 
 	entry({"admin", "system", "admin"}, cbi("admin_system/admin"), _("Administration"), 2)
+	if not fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
+	end
 	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
 
 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
@@ -257,7 +259,11 @@ function action_reset()
 			addr  = "192.168.1.1"
 		})
 
+		if nixio.fs.access("/rom/lib/preinit/79_disk_ready") then
+		luci.sys.process.exec({ "/bin/sh", "-c", "sleep 1; killall dropbear uhttpd; sleep 1; mount -o remount,rw /rom && rm -f /rom/etc/sda.ready && reboot" }, nil, nil, true)
+		else
 		luci.sys.process.exec({ "/bin/sh", "-c", "sleep 1; killall dropbear uhttpd; sleep 1; jffs2reset -y && reboot" }, nil, nil, true)
+		end
 		return
 	end
 
