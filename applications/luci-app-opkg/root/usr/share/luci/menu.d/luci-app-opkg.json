@@ -7,7 +7,7 @@
 			"path": "opkg"
 		},
 		"depends": {
-			"acl": [ "luci-app-opkg" ]
+			"acl": [ "luci-app-opkg-hidden" ]
 		}
 	}
 }
