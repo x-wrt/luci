@@ -17,7 +17,9 @@ function index()
 		arcombine(cbi("firewall/rules"), cbi("firewall/rule-details")),
 		_("Traffic Rules"), 30).leaf = true
 
+	if not nixio.fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "network", "firewall", "custom"},
 		cbi("firewall/custom"),
 		_("Custom Rules"), 40).leaf = true
+	end
 end
