@@ -44,11 +44,17 @@ function index()
 		arcombine(cbi("mwan/rule"), cbi("mwan/ruleconfig")),
 		_("Rules"), 40).leaf = true
 
+	if not nixio.fs.access("/etc/adv_luci_disabled") then
 	entry({"admin", "network", "mwan", "advanced"},
 		alias("admin", "network", "mwan", "advanced", "hotplugscript"),
 		_("Advanced"), 100)
 	entry({"admin", "network", "mwan", "advanced", "hotplugscript"},
 		form("mwan/advanced_hotplugscript"))
+	else
+	entry({"admin", "network", "mwan", "advanced"},
+		alias("admin", "network", "mwan", "advanced", "mwanconfig"),
+		_("Advanced"), 100)
+	end
 	entry({"admin", "network", "mwan", "advanced", "mwanconfig"},
 		form("mwan/advanced_mwanconfig"))
 	entry({"admin", "network", "mwan", "advanced", "networkconfig"},

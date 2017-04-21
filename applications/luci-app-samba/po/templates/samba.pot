@@ -10,6 +10,9 @@ msgstr ""
 msgid "Allowed users"
 msgstr ""
 
+msgid "Access password (user: lede)"
+msgstr ""
+
 msgid "Browseable"
 msgstr ""
 

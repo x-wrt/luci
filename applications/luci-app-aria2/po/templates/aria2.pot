@@ -48,6 +48,9 @@ msgstr ""
 msgid "Default download directory"
 msgstr ""
 
+msgid "Only path under /mnt or /data is allowed!"
+msgstr ""
+
 msgid "Disk cache"
 msgstr ""
 
