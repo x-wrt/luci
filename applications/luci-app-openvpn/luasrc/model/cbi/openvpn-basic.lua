@@ -21,7 +21,7 @@ local basicParams = {
 
 	{ Value,"keepalive","10 60", translate("Helper directive to simplify the expression of --ping and --ping-restart in server mode configurations") },
 
-	{ ListValue,"proto",{ "udp", "tcp-client", "tcp-server" }, translate("Use protocol") },
+	{ ListValue,"proto",{ "udp", "tcp-client", "tcp-server", "udp4", "tcp4", "udp6", "tcp6" }, translate("Use protocol") },
 
 	{ Flag,"client",0, translate("Configure client mode") },
 	{ Flag,"client_to_client",0, translate("Allow client-to-client traffic") },
