@@ -93,13 +93,13 @@ local has_ipv6 = fs.access("/proc/net/ipv6_route")
 if has_ipv6 then
 	table.insert( basicParams, { ListValue,
 		"proto",
-		{ "udp", "tcp-client", "tcp-server", "udp6", "tcp6-client", "tcp6-server" },
+		{ "udp", "tcp-client", "tcp-server", "udp4", "tcp4", "tcp6", "udp6", "tcp6-client", "tcp6-server" },
 		translate("Use protocol")
 	})
 else
 	table.insert( basicParams, { ListValue,
 		"proto",
-		{ "udp", "tcp-client", "tcp-server" },
+		{ "udp", "tcp-client", "tcp-server", "udp4", "tcp4" },
 		translate("Use protocol")
 	})
 end
