@@ -123,7 +123,7 @@ end
 local proto = s:option( DummyValue, "proto", translate("Protocol") )
 function proto.cfgvalue(self, section)
 	local val = AbstractValue.cfgvalue(self, section)
-	return val or "udp"
+	return val or "udp4"
 end
 
 
