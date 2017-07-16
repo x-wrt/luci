@@ -49,7 +49,7 @@ local basicParams = {
 		translate("Helper directive to simplify the expression of --ping and --ping-restart in server mode configurations") },
 	{ ListValue,
 		"proto",
-		{ "udp", "tcp-client", "tcp-server" },
+		{ "udp", "tcp-client", "tcp-server", "udp4", "tcp4", "udp6", "tcp6" },
 		translate("Use protocol") },
 	{ Flag,
 		"client",
