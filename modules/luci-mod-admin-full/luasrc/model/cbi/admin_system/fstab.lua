@@ -46,6 +46,7 @@ detect.write = function(self, section)
 	luci.http.redirect(luci.dispatcher.build_url("admin/system", "fstab"))
 end
 
+if not nixio.fs.access("/etc/adv_luci_disabled") then
 o = s:option(Flag, "anon_swap", translate("Anonymous Swap"), translate("Mount swap not specifically configured"))
 o.default = o.disabled
 o.rmempty = false
@@ -53,6 +54,7 @@ o.rmempty = false
 o = s:option(Flag, "anon_mount", translate("Anonymous Mount"), translate("Mount filesystems not specifically configured"))
 o.default = o.disabled
 o.rmempty = false
+end
 
 o = s:option(Flag, "auto_swap", translate("Automount Swap"), translate("Automatically mount swap on hotplug"))
 o.default = o.enabled
