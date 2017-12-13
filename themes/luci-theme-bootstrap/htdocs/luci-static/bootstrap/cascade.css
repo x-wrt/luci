@@ -770,7 +770,7 @@ header h3 {
 header h3 a, header .brand {
 	float: left;
 	display: block;
-	padding: 8px 20px 12px;
+	padding: 4px 20px 1px;
 	margin-left: -20px;
 	color: #fff;
 	font-size: 20px;
