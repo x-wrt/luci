@@ -75,7 +75,7 @@ rpc_auth_method:value("token", translate("Token"))
 
 o = s:taboption("general", Value, "rpc_user", translate("RPC username"))
 o:depends("rpc_auth_method", "user_pass")
-o.rmempty = false
+o.rmempty = true
 
 o = s:taboption("general", Value, "rpc_passwd", translate("RPC password"))
 o:depends("rpc_auth_method", "user_pass")
