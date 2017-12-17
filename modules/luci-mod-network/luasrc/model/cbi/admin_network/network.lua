@@ -257,5 +257,43 @@ if network:has_ipv6() then
 	m.pageaction = true
 end
 
+local s = m:section(TypedSection, "device", translate("Device Configuration"))
+s.addremove = true
+s.anonymous = true
+s.template = "cbi/tblsection"
+
+local _name = s:option(Value, "name", translate("Device"))
+local _type = s:option(ListValue, "type", translate("Type"))
+local _ifname = s:option(Value, "ifname", translate("Interface"))
+local _mtu = s:option(Value, "mtu", translate("Override MTU"))
+local _macaddr = s:option(Value, "macaddr", translate("MAC-Address"))
+local _vid = s:option(Value, "vid", translate("VLAN ID"))
+
+_name.datatype = "string"
+_name.rmempty = false
+
+_type.datatype = "string"
+_type.rmempty = true
+for _, v in ipairs({
+		{"", translate("none")},
+		{"macvlan", translate("macvlan")},
+		{"8021q", translate("8021q")},
+	}) do
+	_type:value(v[1], v[2])
+end
+
+_ifname.datatype = "string"
+_ifname.rmempty = true
+
+_mtu.datatype = "and(uinteger,min(0),max(9200))"
+_mtu.rmempty = true
+_mtu.placeholder = "1500"
+
+_macaddr.datatype = "macaddr"
+_macaddr.rmempty = true
+
+_vid.datatype = "and(uinteger,min(0),max(65535))"
+_vid.rmempty = true
+_vid.placeholder = "0"
 
 return m
