@@ -25,6 +25,9 @@ msgstr "Allow system users to reach their home directories via network shares"
 msgid "Allowed users"
 msgstr "Allowed users"
 
+msgid "Access password (user: lede)"
+msgstr "Access password (user: lede)"
+
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:58
 msgid "Browseable"
 msgstr ""

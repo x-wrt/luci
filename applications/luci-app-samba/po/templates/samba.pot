@@ -13,6 +13,9 @@ msgstr ""
 msgid "Allowed users"
 msgstr ""
 
+msgid "Access password (user: lede)"
+msgstr ""
+
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:58
 msgid "Browseable"
 msgstr ""
@@ -64,6 +67,9 @@ msgstr ""
 
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:46
 msgid "Path"
+msgstr ""
+
+msgid "Please run <code>chown -R lede:lede /mnt/sd*</code> to get access on disk"
 msgstr ""
 
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:40
