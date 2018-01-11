@@ -17,6 +17,8 @@ h = s:taboption("general", Flag, "homes", translate("Share home-directories"),
         translate("Allow system users to reach their home directories via " ..
                 "network shares"))
 h.rmempty = false
+o = s:taboption("general", Value, "password", translate("Access password (user: lede)"))
+o.placeholder = "password"
 
 tmpl = s:taboption("template", Value, "_tmpl",
 	translate("Edit the template that is used for generating the samba configuration."), 
