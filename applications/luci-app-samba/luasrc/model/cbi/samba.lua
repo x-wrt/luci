@@ -17,6 +17,8 @@ h = s:taboption("general", Flag, "homes", translate("Share home-directories"),
         translate("Allow system users to reach their home directories via " ..
                 "network shares"))
 h.rmempty = false
+o = s:taboption("general", Value, "password", translate("Access password (user: lede)"), translate("Please run <code>chown -R lede:lede /mnt/sd*</code> to get access on disk"))
+o.placeholder = "password"
 
 tmpl = s:taboption("template", Value, "_tmpl",
 	translate("Edit the template that is used for generating the samba configuration."), 
@@ -45,7 +47,7 @@ s.template = "cbi/tblsection"
 s:option(Value, "name", translate("Name"))
 pth = s:option(Value, "path", translate("Path"))
 if nixio.fs.access("/etc/config/fstab") then
-        pth.titleref = luci.dispatcher.build_url("admin", "system", "fstab")
+        pth.titleref = luci.dispatcher.build_url("admin", "system", "mounts")
 end
 
 s:option(Value, "users", translate("Allowed users")).rmempty = true
