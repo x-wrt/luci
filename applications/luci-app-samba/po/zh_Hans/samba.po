@@ -29,6 +29,9 @@ msgstr "允许系统用户通过网络共享访问他们的家目录"
 msgid "Allowed users"
 msgstr "允许用户"
 
+msgid "Access password (user: lede)"
+msgstr "访问密码（用户: lede）"
+
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:58
 msgid "Browseable"
 msgstr "可浏览"
@@ -81,6 +84,9 @@ msgstr "网络共享"
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:46
 msgid "Path"
 msgstr "路径"
+
+msgid "Please run <code>chown -R lede:lede /mnt/sd*</code> to get access on disk"
+msgstr "请执行 <code>chown -R lede:lede /mnt/sd*</code> 修改文件拥有权限访问。"
 
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:40
 msgid ""
