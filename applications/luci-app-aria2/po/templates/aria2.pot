@@ -64,6 +64,9 @@ msgstr ""
 msgid "Default download directory"
 msgstr ""
 
+msgid "Only path under /mnt or /data is allowed!"
+msgstr ""
+
 #: applications/luci-app-aria2/luasrc/model/cbi/aria2.lua:107
 msgid "Disk cache"
 msgstr ""
