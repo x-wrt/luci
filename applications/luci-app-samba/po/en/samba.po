@@ -22,6 +22,9 @@ msgstr "Allow system users to reach their home directories via network shares"
 msgid "Allowed users"
 msgstr "Allowed users"
 
+msgid "Access password (user: lede)"
+msgstr "Access password (user: lede)"
+
 msgid "Browseable"
 msgstr ""
 
