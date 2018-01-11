@@ -13,6 +13,9 @@ msgstr ""
 msgid "Allowed users"
 msgstr ""
 
+msgid "Access password (user: lede)"
+msgstr ""
+
 #: applications/luci-app-samba/luasrc/model/cbi/samba.lua:58
 msgid "Browseable"
 msgstr ""
