@@ -75,6 +75,9 @@ msgstr "调试"
 msgid "Default download directory"
 msgstr "默认下载目录"
 
+msgid "Only path under /mnt or /data is allowed!"
+msgstr "只允许设置成 /mnt 或者 /data 下面的路径"
+
 #: applications/luci-app-aria2/luasrc/model/cbi/aria2.lua:107
 msgid "Disk cache"
 msgstr "磁盘缓存"
