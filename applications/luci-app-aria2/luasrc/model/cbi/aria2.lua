@@ -60,7 +60,7 @@ o.rmempty = false
 
 user = s:taboption("general", ListValue, "user", translate("Run daemon as user"))
 local p_user
-for _, p_user in util.vspairs(util.split(sys.exec("cat /etc/passwd | cut -f 1 -d :"))) do
+for _, p_user in util.vspairs(util.split(sys.exec("cat /etc/passwd | cut -f 1,3 -d : | sed 's/:/ /' | while read name id; do test $id -ge 1000 && echo $name; done"))) do
 	user:value(p_user)
 end
 
@@ -103,6 +103,15 @@ o:value("error", translate("Error"))
 
 o = s:taboption("file", Value, "dir", translate("Default download directory"))
 o.rmempty = false
+o.placeholder = "/mnt/sda1/aria2"
+function o.validate(self, value, section)
+	if value:match("^/mnt") or value:match("^/data") then
+		if not value:match("/%.%.") then
+			return value
+		end
+	end
+	return nil, translate("Only path under /mnt or /data is allowed!")
+end
 
 o = s:taboption("file", Value, "disk_cache", translate("Disk cache"), translate("in bytes, You can append K or M."))
 o.rmempty = true
