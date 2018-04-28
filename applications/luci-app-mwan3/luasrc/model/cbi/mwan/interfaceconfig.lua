@@ -30,6 +30,8 @@ family:value("ipv6", translate("IPv6"))
 track_ip = mwan_interface:option(DynamicList, "track_ip", translate("Tracking hostname or IP address"),
 	translate("This hostname or IP address will be pinged to determine if the link is up or down. Leave blank to assume interface is always online"))
 track_ip.datatype = "host"
+track_ip.default = "gateway"
+track_ip.placeholder = "gateway"
 
 track_method = mwan_interface:option(ListValue, "track_method", translate("Tracking method"))
 track_method.default = "ping"
