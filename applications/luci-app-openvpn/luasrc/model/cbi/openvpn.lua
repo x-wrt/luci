@@ -13,6 +13,7 @@ s.template = "cbi/tblsection"
 s.template_addremove = "openvpn/cbi-select-input-add"
 s.addremove = true
 s.add_select_options = { }
+s.extedit = luci.dispatcher.build_url("admin", "vpn", "openvpn", "basic", "%s")
 
 local cfg = s:option(DummyValue, "config")
 function cfg.cfgvalue(self, section)
