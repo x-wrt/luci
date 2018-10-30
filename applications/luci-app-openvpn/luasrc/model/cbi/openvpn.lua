@@ -13,14 +13,13 @@ s.template = "cbi/tblsection"
 s.template_addremove = "openvpn/cbi-select-input-add"
 s.addremove = true
 s.add_select_options = { }
+s.extedit = luci.dispatcher.build_url("admin", "services", "openvpn", "basic", "%s")
 
 local cfg = s:option(DummyValue, "config")
 function cfg.cfgvalue(self, section)
 	local file_cfg = self.map:get(section, "config")
 	if file_cfg then
 		s.extedit = luci.dispatcher.build_url("admin", "services", "openvpn", "file", "%s")
-	else
-		s.extedit = luci.dispatcher.build_url("admin", "services", "openvpn", "basic", "%s")
 	end
 end
 
