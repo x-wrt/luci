@@ -655,7 +655,7 @@ msgstr "应用请求失败，状态 <code>%h</code>"
 
 #: modules/luci-base/htdocs/luci-static/resources/ui.js:1960
 msgid "Apply unchecked"
-msgstr ""
+msgstr "强制应用"
 
 #: modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm:19
 msgid "Architecture"
@@ -1603,7 +1603,7 @@ msgstr "下游 SNR 偏移"
 
 #: modules/luci-base/htdocs/luci-static/resources/form.js:956
 msgid "Drag to reorder"
-msgstr ""
+msgstr "拖动重新排序"
 
 #: modules/luci-mod-system/luasrc/model/cbi/admin_system/dropbear.lua:9
 msgid "Dropbear Instance"
@@ -1850,7 +1850,7 @@ msgstr "扩展 HOSTS 文件中的主机后缀"
 
 #: modules/luci-base/htdocs/luci-static/resources/validation.js:59
 msgid "Expecting: %s"
-msgstr ""
+msgstr "期待: %s"
 
 #: modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js:71
 msgid "Expires"
@@ -2916,7 +2916,7 @@ msgstr "正在加载 SSH 密钥…"
 #: modules/luci-base/htdocs/luci-static/resources/luci.js:1252
 #: modules/luci-base/luasrc/view/view.htm:4
 msgid "Loading view…"
-msgstr ""
+msgstr "正在加载视图…"
 
 #: modules/luci-base/htdocs/luci-static/resources/network.js:10
 #: modules/luci-base/luasrc/model/network.lua:30
@@ -3086,7 +3086,7 @@ msgstr "手动"
 
 #: modules/luci-base/htdocs/luci-static/resources/network.js:2036
 msgid "Master"
-msgstr ""
+msgstr "Master"
 
 #: modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js:122
 msgid "Max. Attainable Data Rate (ATTNDR)"
@@ -3149,7 +3149,7 @@ msgstr "内存使用率（%）"
 
 #: modules/luci-base/htdocs/luci-static/resources/network.js:2039
 msgid "Mesh"
-msgstr ""
+msgstr "Mesh"
 
 #: modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua:372
 msgid "Mesh Id"
@@ -3225,7 +3225,7 @@ msgstr "需要更多字符"
 
 #: modules/luci-base/htdocs/luci-static/resources/form.js:844
 msgid "More…"
-msgstr ""
+msgstr "更多…"
 
 #: modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab/mount.lua:45
 msgid "Mount Entry"
@@ -3403,7 +3403,7 @@ msgstr "未指定网络名"
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/wifi_join.js:147
 msgid "No networks in range"
-msgstr ""
+msgstr "未发现网络"
 
 #: themes/luci-theme-bootstrap/luasrc/view/themes/bootstrap/header.htm:173
 #: themes/luci-theme-material/luasrc/view/themes/material/header.htm:211
@@ -3535,7 +3535,7 @@ msgstr ""
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/routes.js:95
 msgid "On-Link route"
-msgstr ""
+msgstr "直连路由"
 
 #: modules/luci-mod-system/htdocs/luci-static/resources/view/system/leds.js:75
 msgid "On-State Delay"
@@ -3547,7 +3547,7 @@ msgstr "请指定主机名或MAC地址！"
 
 #: modules/luci-base/htdocs/luci-static/resources/validation.js:456
 msgid "One of the following: %s"
-msgstr ""
+msgstr "其中之一: %s"
 
 #: modules/luci-base/luasrc/view/cbi/nullsection.htm:17
 #: modules/luci-base/luasrc/view/cbi/ucisection.htm:22
@@ -3965,7 +3965,7 @@ msgstr "端口状态："
 
 #: modules/luci-base/htdocs/luci-static/resources/validation.js:482
 msgid "Potential negation of: %s"
-msgstr ""
+msgstr "潜在相反的: %s"
 
 #: modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js:137
 msgid "Power Management Mode"
@@ -4424,7 +4424,7 @@ msgstr "路由允许的 IP"
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/routes.js:72
 msgid "Route table"
-msgstr ""
+msgstr "路由表"
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/routes.js:59
 msgid "Route type"
@@ -4465,7 +4465,7 @@ msgstr "文件系统检查"
 
 #: modules/luci-base/htdocs/luci-static/resources/luci.js:652
 msgid "Runtime error"
-msgstr ""
+msgstr "运行时错误"
 
 #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:29
 msgid "SHA256"
@@ -4735,7 +4735,7 @@ msgstr "源地址"
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/routes.js:83
 msgid "Source Address"
-msgstr ""
+msgstr "源地址"
 
 #: modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab/mount.lua:103
 msgid "Specifies the directory the device is attached to"
@@ -5042,6 +5042,9 @@ msgid ""
 "or revert all pending changes to keep the currently working configuration "
 "state."
 msgstr ""
+"在应用挂起的更改后 %d 秒内无法连接到此设备，出于安全原因导致配置回滚。如果您"
+"认为配置的更改是正确的，请执行强制应用。或者您可以在再次尝试应用之前解除此警"
+"告并编辑配置，或者恢复所有挂起的更改以保持当前正在工作的配置状态。"
 
 #: modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab/mount.lua:87
 #: modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab/swap.lua:41
@@ -5159,7 +5162,7 @@ msgstr "不支持所上传的映像文件格式，请选择适合当前平台的
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/dhcp.js:404
 msgid "There are no active leases"
-msgstr ""
+msgstr "没有活动的租约"
 
 #: modules/luci-base/luasrc/view/lease_status.htm:29
 #: modules/luci-base/luasrc/view/lease_status.htm:61
@@ -5168,7 +5171,7 @@ msgstr "没有已分配的租约。"
 
 #: modules/luci-base/htdocs/luci-static/resources/ui.js:2066
 msgid "There are no changes to apply"
-msgstr ""
+msgstr "没有改动需要应用"
 
 #: modules/luci-mod-network/luasrc/model/cbi/admin_network/ifaces.lua:204
 msgid ""
@@ -5762,7 +5765,7 @@ msgstr "等待命令执行完成…"
 
 #: modules/luci-base/htdocs/luci-static/resources/ui.js:2033
 msgid "Waiting for configuration to get applied… %ds"
-msgstr ""
+msgstr "等待配置应用… %ds"
 
 #: modules/luci-mod-system/luasrc/view/admin_system/reboot.htm:56
 msgid "Waiting for device..."
@@ -5916,7 +5919,7 @@ msgstr "自动"
 
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/routes.js:84
 msgid "automatic"
-msgstr ""
+msgstr "自动"
 
 #: modules/luci-mod-network/luasrc/view/admin_network/switch_status.htm:45
 msgid "baseT"
