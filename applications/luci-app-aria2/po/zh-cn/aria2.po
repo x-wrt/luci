@@ -835,3 +835,6 @@ msgstr ""
 #: applications/luci-app-aria2/luasrc/model/cbi/aria2/config.lua:456
 msgid "trunc"
 msgstr ""
+
+msgid "Only path under /mnt or /data is allowed!"
+msgstr "只允许设置成 /mnt 或者 /data 下面的路径"
