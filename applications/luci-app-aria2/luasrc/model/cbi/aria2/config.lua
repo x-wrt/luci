@@ -62,13 +62,22 @@ o = s:taboption("basic", ListValue, "user", translate("Run daemon as user"),
 	translate("Leave blank to use default user."))
 o:value("")
 local user
-for user in util.execi("cat /etc/passwd | cut -d':' -f1") do
+for user in util.execi("cat /etc/passwd | cut -f 1,3 -d : | sed 's/:/ /' | while read name id; do test $id -ge 1000 && echo $name; done") do
 	o:value(user)
 end
 
 o = s:taboption("basic", Value, "dir", translate("Download directory"),
 	translate("The directory to store the downloaded file. For example <code>/mnt/sda1</code>."))
 o.rmempty = false
+o.placeholder = "/mnt/sda1/aria2"
+function o.validate(self, value, section)
+	if value:match("^/mnt") or value:match("^/data") then
+		if not value:match("/%.%.") then
+			return value
+		end
+	end
+	return nil, translate("Only path under /mnt or /data is allowed!")
+end
 
 o = s:taboption("basic", Value, "config_dir", translate("Config file directory"),
 	translate("The directory to store the config file, session file and DHT file."))
