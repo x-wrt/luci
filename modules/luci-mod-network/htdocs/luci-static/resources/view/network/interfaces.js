@@ -882,6 +882,36 @@ return view.extend({
 		o = s.option(form.Flag, 'packet_steering', _('Packet Steering'), _('Enable packet steering across all CPUs. May help or hinder network speed.'));
 		o.optional = true;
 
+		s = m.section(form.GridSection, 'device', _('Device Configuration'));
+		s.addremove = true;
+		s.anonymous = true;
+
+		o = s.option(form.Value, 'name', _('Device'));
+		o.rmempty = false;
+
+		o = s.option(form.Value, 'type', _('Type'));
+		o.rmempty = true;
+		o.nocreate = true;
+		o.value('', _('none'));
+		o.value('macvlan', _('macvlan'));
+		o.value('8021q', _('8021q'));
+
+		o = s.option(form.Value, 'ifname', _('Interface'));
+		o.rmempty = true;
+
+		o = s.option(form.Value, 'mtu', _('Override MTU'));
+		o.placeholder = 1500;
+		o.datatype = 'range(64,9000)';
+		o.rmempty = true;
+
+		o = s.option(form.Value, 'macaddr', _('MAC-Address'));
+		o.datatype = 'macaddr'
+		o.rmempty = true;
+
+		o = s.option(form.Value, 'vid', _('VLAN ID'));
+		o.rmempty = true;
+		o.placeholder = 0;
+		o.datatype = "range(0,65535)"
 
 		if (dslModemType != null) {
 			s = m.section(form.TypedSection, 'dsl', _('DSL'));
