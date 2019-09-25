@@ -179,7 +179,7 @@ return L.view.extend({
 				E('p', { 'class': 'spinning' }, _('The system is erasing the configuration partition now and will reboot itself when finished.'))
 			]);
 
-			L.ui.awaitReconnect('192.168.1.1', 'openwrt.lan');
+			L.ui.awaitReconnect(window.location.host, '192.168.15.1', 'x-wrt.lan');
 		}).catch(function(e) { L.ui.addNotification(null, E('p', e.message)) });
 	},
 
@@ -242,7 +242,7 @@ return L.view.extend({
 					E('p', { 'class': 'spinning' }, _('The system is rebooting now. If the restored configuration changed the current LAN IP address, you might need to reconnect manually.'))
 				]);
 
-				L.ui.awaitReconnect(window.location.host, '192.168.1.1', 'openwrt.lan');
+				L.ui.awaitReconnect(window.location.host, '192.168.15.1', 'x-wrt.lan');
 			}, this))
 			.catch(function(e) { L.ui.addNotification(null, E('p', e.message)) })
 			.finally(function() { btn.firstChild.data = _('Upload archive...') });
@@ -383,7 +383,7 @@ return L.view.extend({
 		/* Currently the sysupgrade rpc call will not return, hence no promise handling */
 		fs.exec('/sbin/sysupgrade', opts);
 
-		L.ui.awaitReconnect(window.location.host, '192.168.1.1', 'openwrt.lan');
+		L.ui.awaitReconnect(window.location.host, '192.168.15.1', 'x-wrt.lan');
 	},
 
 	handleBackupList: function(ev) {
