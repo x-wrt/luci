@@ -213,7 +213,8 @@ return L.view.extend({
 			callFileStat('/lib/upgrade/platform.sh'),
 			callFileRead('/proc/sys/kernel/hostname'),
 			callFileRead('/proc/mtd'),
-			callFileRead('/proc/partitions')
+			callFileRead('/proc/partitions'),
+			callFileStat('/rom/lib/preinit/79_disk_ready')
 		];
 
 		for (var i = 0; i < max_mtd; i++)
@@ -473,7 +474,7 @@ return L.view.extend({
 		    hostname = rpc_replies[1],
 		    procmtd = rpc_replies[2],
 		    procpart = rpc_replies[3],
-		    has_rootfs_data = rpc_replies.slice(4).filter(function(n) { return n == 'rootfs_data' })[0],
+		    has_rootfs_data = (rpc_replies[4].type == 'file') || rpc_replies.slice(5).filter(function(n) { return n == 'rootfs_data' })[0],
 		    storage_size = findStorageSize(procmtd, procpart),
 		    m, s, o, ss;
 
