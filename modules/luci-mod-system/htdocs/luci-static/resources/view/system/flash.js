@@ -96,7 +96,7 @@ return L.view.extend({
 		/* Currently the sysupgrade rpc call will not return, hence no promise handling */
 		fs.exec('/sbin/firstboot', [ '-r', '-y' ]);
 
-		L.ui.awaitReconnect('192.168.1.1', 'openwrt.lan');
+		L.ui.awaitReconnect('192.168.15.1', 'x-wrt.lan');
 	},
 
 	handleRestore: function(ev) {
@@ -158,7 +158,7 @@ return L.view.extend({
 					E('p', { 'class': 'spinning' }, _('The system is rebooting now. If the restored configuration changed the current LAN IP address, you might need to reconnect manually.'))
 				]);
 
-				L.ui.awaitReconnect(window.location.host, '192.168.1.1', 'openwrt.lan');
+				L.ui.awaitReconnect(window.location.host, '192.168.15.1', 'x-wrt.lan');
 			}, this))
 			.catch(function(e) { L.ui.addNotification(null, E('p', e.message)) })
 			.finally(function() { btn.firstChild.data = _('Upload archive...') });
@@ -302,7 +302,7 @@ return L.view.extend({
 		if (keep.checked)
 			L.ui.awaitReconnect(window.location.host);
 		else
-			L.ui.awaitReconnect('192.168.1.1', 'openwrt.lan');
+			L.ui.awaitReconnect('192.168.15.1', 'x-wrt.lan');
 	},
 
 	handleBackupList: function(ev) {
