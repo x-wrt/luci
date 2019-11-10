@@ -72,6 +72,8 @@ return view.extend({
 			_('This hostname or IP address will be pinged to determine if the link is up or down. Leave blank to assume interface is always online'));
 		o.datatype = 'host';
 		o.modalonly = true;
+		o.default = "";
+		o.placeholder = "gateway";
 
 		o = s.option(form.ListValue, 'track_method', _('Tracking method'));
 		o.default = 'ping';
