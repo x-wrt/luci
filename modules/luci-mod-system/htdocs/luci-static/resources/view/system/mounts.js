@@ -146,14 +146,6 @@ return L.view.extend({
 		s.addremove = false;
 		s.anonymous = true;
 
-		o = s.option(form.Button, '_detect', _('Generate Config'), _('Find all currently attached filesystems and swap and replace configuration with defaults based on what was detected'));
-		o.onclick = this.handleDetect.bind(this, m);
-		o.inputstyle = 'reload';
-
-		o = s.option(form.Button, '_mountall', _('Mount attached devices'), _('Attempt to enable configured mount points for attached devices'));
-		o.onclick = this.handleMountAll.bind(this, m);
-		o.inputstyle = 'reload';
-
 		o = s.option(form.Flag, 'anon_swap', _('Anonymous Swap'), _('Mount swap not specifically configured'));
 		o.default = o.disabled;
 		o.rmempty = false;
