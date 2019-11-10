@@ -76,7 +76,7 @@ msgstr "上传速率的默认值"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:75
 msgid "Download Bandwidth (Mbps)"
-msgstr "下载带宽（Mbps）"
+msgstr "下载带宽(Mbps)"
 
 #: applications/luci-app-nft-qos/luasrc/view/nft-qos/rate.htm:135
 msgid "Download Rate"
@@ -107,12 +107,21 @@ msgstr "IP 地址"
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:126
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:163
 msgid "IP Address(V4 / V6)"
-msgstr "IP 地址（V4 / V6）"
+msgstr "IP 地址(V4 / V6)"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:128
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:165
 msgid "IP Address(V4 Only)"
-msgstr "IP 地址（仅 V4）"
+msgstr "IP 地址(仅 V4)"
+
+msgid "Limit Rate"
+msgstr "限速"
+
+msgid "Traffic Priority"
+msgstr "流量优先级"
+
+msgid "Advanced Options"
+msgstr "高级选项"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:38
 msgid "Limit Enable"
@@ -125,7 +134,7 @@ msgstr "限速类型"
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:135
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:172
 msgid "MAC (optional)"
-msgstr "物理地址（可选）"
+msgstr "物理地址(可选)"
 
 #: applications/luci-app-nft-qos/luasrc/view/nft-qos/rate.htm:48
 msgid "MB"
@@ -167,7 +176,7 @@ msgstr "协议"
 #: applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua:16
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:23
 msgid "Qos over Nftables"
-msgstr "QoS Nftables 版"
+msgstr "流量控制"
 
 #: applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua:12
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:139
@@ -201,11 +210,11 @@ msgstr "静态 QoS-上传速率"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:85
 msgid "Target Network (IPv4/MASK)"
-msgstr "目标网络（IPv4 地址/掩码）"
+msgstr "目标网络(IPv4 地址/掩码)"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:91
 msgid "Target Network6 (IPv6/MASK)"
-msgstr "目标网络 v6（IPv6 地址/掩码）"
+msgstr "目标网络 v6(IPv6 地址/掩码)"
 
 #: applications/luci-app-nft-qos/luasrc/view/nft-qos/rate.htm:127
 msgid "This page gives an overview over currently download/upload rate."
@@ -226,7 +235,7 @@ msgstr "单位"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:80
 msgid "Upload Bandwidth (Mbps)"
-msgstr "上传带宽（Mbps）"
+msgstr "上传带宽(Mbps)"
 
 #: applications/luci-app-nft-qos/luasrc/view/nft-qos/rate.htm:154
 msgid "Upload Rate"
@@ -238,7 +247,7 @@ msgstr "限速白名单"
 
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:221
 msgid "e.g. https, 23, (separator is comma)"
-msgstr "例如https, 23（用逗号分隔）"
+msgstr "例如https, 23(用逗号分隔)"
 
 #: applications/luci-app-nft-qos/luasrc/view/nft-qos/rate.htm:44
 msgid "kB"
