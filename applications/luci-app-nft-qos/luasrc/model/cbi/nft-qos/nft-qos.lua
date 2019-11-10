@@ -29,8 +29,9 @@ s = m:section(TypedSection, "default", translate("NFT-QoS Settings"))
 s.addremove = false
 s.anonymous = true
 
-s:tab("limit", "Limit Rate")
-s:tab("priority", "Traffic Priority")
+s:tab("limit", translate("Limit Rate"))
+s:tab("priority", translate("Traffic Priority"))
+s:tab("advanced", translate("Advanced Options"))
 
 --
 -- Static
@@ -39,30 +40,30 @@ o = s:taboption("limit", Flag, "limit_enable", translate("Limit Enable"), transl
 o.default = limit_enable or o.enabled
 o.rmempty = false
 
-o = s:taboption("limit", ListValue, "limit_type", translate("Limit Type"), translate("Type of Limit Rate"))
+o = s:taboption("advanced", ListValue, "limit_type", translate("Limit Type"), translate("Type of Limit Rate"))
 o.default = limit_static or "static"
 o:depends("limit_enable","1")
 o:value("static", "Static")
 o:value("dynamic", "Dynamic")
 
-o = s:taboption("limit", Value, "static_rate_dl", translate("Default Download Rate"), translate("Default value for download rate"))
+o = s:taboption("advanced", Value, "static_rate_dl", translate("Default Download Rate"), translate("Default value for download rate"))
 o.datatype = "uinteger"
 o.default = def_rate_dl or '50'
 o:depends("limit_type","static")
 
-o = s:taboption("limit", ListValue, "static_unit_dl", translate("Default Download Unit"), translate("Default unit for download rate"))
+o = s:taboption("advanced", ListValue, "static_unit_dl", translate("Default Download Unit"), translate("Default unit for download rate"))
 o.default = def_unit_dl or "kbytes"
 o:depends("limit_type","static")
 o:value("bytes", "Bytes/s")
 o:value("kbytes", "KBytes/s")
 o:value("mbytes", "MBytes/s")
 
-o = s:taboption("limit", Value, "static_rate_ul", translate("Default Upload Rate"), translate("Default value for upload rate"))
+o = s:taboption("advanced", Value, "static_rate_ul", translate("Default Upload Rate"), translate("Default value for upload rate"))
 o.datatype = "uinteger"
 o.default = def_rate_ul or '50'
 o:depends("limit_type","static")
 
-o = s:taboption("limit", ListValue, "static_unit_ul", translate("Default Upload Unit"), translate("Default unit for upload rate"))
+o = s:taboption("advanced", ListValue, "static_unit_ul", translate("Default Upload Unit"), translate("Default unit for upload rate"))
 o.default = def_unit_ul or "kbytes"
 o:depends("limit_type","static")
 o:value("bytes", "Bytes/s")
@@ -72,28 +73,28 @@ o:value("mbytes", "MBytes/s")
 --
 -- Dynamic
 --
-o = s:taboption("limit", Value, "dynamic_bw_down", translate("Download Bandwidth (Mbps)"), translate("Default value for download bandwidth"))
+o = s:taboption("advanced", Value, "dynamic_bw_down", translate("Download Bandwidth (Mbps)"), translate("Default value for download bandwidth"))
 o.default = def_up or '100'
 o.datatype = "uinteger"
 o:depends("limit_type","dynamic")
 
-o = s:taboption("limit", Value, "dynamic_bw_up", translate("Upload Bandwidth (Mbps)"), translate("Default value for upload bandwidth"))
+o = s:taboption("advanced", Value, "dynamic_bw_up", translate("Upload Bandwidth (Mbps)"), translate("Default value for upload bandwidth"))
 o.default = def_down or '100'
 o.datatype = "uinteger"
 o:depends("limit_type","dynamic")
 
-o = s:taboption("limit", Value, "dynamic_cidr", translate("Target Network (IPv4/MASK)"), translate("Network to be apply, e.g. 192.168.1.0/24, 10.2.0.0/16, etc"))
+o = s:taboption("advanced", Value, "dynamic_cidr", translate("Target Network (IPv4/MASK)"), translate("Network to be apply, e.g. 192.168.1.0/24, 10.2.0.0/16, etc"))
 o.datatype = "cidr4"
 ipc.routes({ family = 4, type = 1 }, function(rt) o.default = rt.dest end)
 o:depends("limit_type","dynamic")
 
 if has_ipv6 then
-	o = s:taboption("limit", Value, "dynamic_cidr6", translate("Target Network6 (IPv6/MASK)"), translate("Network to be apply, e.g. AAAA::BBBB/64, CCCC::1/128, etc"))
+	o = s:taboption("advanced", Value, "dynamic_cidr6", translate("Target Network6 (IPv6/MASK)"), translate("Network to be apply, e.g. AAAA::BBBB/64, CCCC::1/128, etc"))
 	o.datatype = "cidr6"
 	o:depends("limit_type","dynamic")
 end
 
-o = s:taboption("limit", DynamicList, "limit_whitelist", translate("White List for Limit Rate"))
+o = s:taboption("advanced", DynamicList, "limit_whitelist", translate("White List for Limit Rate"))
 o.datatype = "ipaddr"
 o:depends("limit_enable","1")
 
