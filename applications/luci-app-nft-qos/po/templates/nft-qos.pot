@@ -99,6 +99,15 @@ msgstr ""
 msgid "IP Address(V4 Only)"
 msgstr ""
 
+msgid "Limit Rate"
+msgstr ""
+
+msgid "Traffic Priority"
+msgstr ""
+
+msgid "Advanced Options"
+msgstr ""
+
 #: applications/luci-app-nft-qos/luasrc/model/cbi/nft-qos/nft-qos.lua:38
 msgid "Limit Enable"
 msgstr ""
