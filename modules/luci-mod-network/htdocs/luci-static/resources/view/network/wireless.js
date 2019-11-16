@@ -821,6 +821,9 @@ return L.view.extend({
 					o.datatype = 'range(15,65535)';
 					o.placeholder = 100;
 					o.rmempty = true;
+
+					o = ss.taboption('advanced', form.Flag, 'vendor_vht', _('256QAM'), _('Enable 256QAM modulation. May not supported by some hardware!'));
+					o.rmempty = true;
 				}
 
 
