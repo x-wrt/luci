@@ -162,9 +162,7 @@ int main(int argc, char *argv[])
 				ctxt = NULL;
 			}
 
-			free(id);
 			type = MSG_ID;
-			id = NULL;
 		}
 		else if (!strncmp(line, "msgid_plural \"", 14)) {
 			type = MSG_ID_PLURAL;
@@ -185,6 +183,8 @@ int main(int argc, char *argv[])
 				break;
 
 			case MSG_ID:
+				if (id)
+					free(id);
 				id = strdup(val);
 				break;
 
@@ -222,7 +222,8 @@ int main(int argc, char *argv[])
 					}
 				}
 				else if (id && id[0] == 0) {
-					for (id = val, p = val; *p; p++) {
+					char *str;
+					for (str = val, p = val; *p; p++) {
 						if (esc) {
 							if (*p == 'n') {
 								p[-1] = 0;
@@ -249,15 +250,13 @@ int main(int argc, char *argv[])
 								}
 							}
 
-							id = p + 1;
+							str = p + 1;
 							esc = 0;
 						}
 						else if (*p == '\\') {
 							esc = 1;
 						}
 					}
-
-					id = NULL;
 				}
 
 				break;
@@ -286,6 +285,8 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+	if (id)
+		free(id);
 
 	print_index(array, n_entries, out);
 
