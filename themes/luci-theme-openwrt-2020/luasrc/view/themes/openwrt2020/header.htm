@@ -192,7 +192,7 @@
 		});
 	})();
 //]]></script>
-<title><%=striptags( (boardinfo.hostname or "?") .. ( (node and node.title) and ' - ' .. translate(node.title) or '')) %> - LuCI</title>
+<title><%=striptags( ("X-Wrt") .. ( (node and node.title) and ' - ' .. translate(node.title) or '')) %> - LuCI</title>
 </head>
 <body class="lang_<%=luci.i18n.context.lang%>" data-page="<%= pcdata(path) %>">
 
@@ -204,7 +204,7 @@
 <div id="menubar">
 	<h2 class="navigation"><a id="navigation" name="navigation"><%:Navigation%></a></h2>
 
-	<span class="hostname"><%=(boardinfo.hostname or "?")%></span>
+	<span class="hostname"><%=("X-Wrt")%></span>
 	<span class="distversion"><%=ver.distversion%></span>
 	<span class="indicators">
 		<span id="xhr_poll_status" style="display:none" onclick="XHR.running() ? XHR.halt() : XHR.run()">
