@@ -74,10 +74,13 @@ local methods = {
 
 			if idx and idx > 0 then
 				local uci = UCI.cursor()
+				local cmd = [[iptables -t filter -D MINIUPNPD %d 2>/dev/null;
+				            test -e /usr/share/natcapd/natcapd.cone_nat_unused.sh &&
+				            sh /usr/share/natcapd/natcapd.cone_nat_unused.sh delfwindex MINIUPNPD %d 2>/dev/null;
+				            iptables -t nat -D MINIUPNPD %d 2>/dev/null;
+				            iptables -t nat -D MINIUPNPD-POSTROUTING %d 2>/dev/null]] --idx,idx,idx,idx
 
-				sys.call("iptables -t filter -D MINIUPNPD %d 2>/dev/null" % idx)
-				sys.call("iptables -t nat -D MINIUPNPD %d 2>/dev/null" % idx)
-				sys.call("iptables -t nat -D MINIUPNPD-POSTROUTING %d 2>/dev/null" % idx)
+				sys.call(string.format(cmd, idx, idx, idx, idx))
 
 				local lease_file = uci:get("upnpd", "config", "upnp_lease_file")
 				if lease_file and fs.access(lease_file) then
