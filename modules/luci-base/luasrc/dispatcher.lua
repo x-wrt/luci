@@ -460,7 +460,10 @@ function httpdispatch(request, prefix)
 	local r = {}
 	context.request = r
 
-	local pathinfo = http.urldecode(request:getenv("PATH_INFO") or "", true)
+	local fs = require "nixio.fs"
+	local default_path_info = fs.access("/etc/config/wizard") and "admin/initsetup" or ""
+
+	local pathinfo = http.urldecode(request:getenv("PATH_INFO") or default_path_info, true)
 
 	if prefix then
 		for _, node in ipairs(prefix) do
