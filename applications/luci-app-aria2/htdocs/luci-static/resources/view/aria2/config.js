@@ -128,7 +128,7 @@ function getWebFrontInstalled() {
 function openWebInterface(path) {
 	var host = window.location.host;
 	var protocol = window.location.protocol;
-	window.open(protocol + '//' + host + '/' + path);
+	window.open(protocol + '//' + host + '/' + path + '/');
 };
 
 function showRPCURL(section_id, useWS, inputEl) {
