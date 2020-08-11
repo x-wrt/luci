@@ -94,6 +94,10 @@ return network.registerProtocol('qmi', {
 		o.placeholder = '10';
 		o.datatype    = 'min(1)';
 
+		o = s.taboption('advanced', form.Value, 'metric', _('Use gateway metric'));
+		o.placeholder = '0';
+		o.datatype    = 'uinteger';
+
 		o = s.taboption('advanced', form.Value, 'mtu', _('Override MTU'));
 		o.placeholder = dev ? (dev.getMTU() || '1500') : '1500';
 		o.datatype    = 'max(9200)';
