@@ -63,7 +63,8 @@ return view.extend({
 		o.modalonly = true;
 
 		o = s.option(form.ListValue, 'family', _('Internet Protocol'));
-		o.default = 'ipv4';
+		o.default = '';
+		o.value('', _('IPv4 and IPv6'));
 		o.value('ipv4', _('IPv4'));
 		o.value('ipv6', _('IPv6'));
 		o.modalonly = true;
