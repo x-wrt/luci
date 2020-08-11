@@ -30,29 +30,31 @@ return baseclass.extend({
 
 		var container = E('div', { 'id': 'mwan3-service-status' });
 		var iface;
+		var family;
 		for ( iface in result[0].interfaces) {
+		for ( family in result[0].interfaces[iface]) {
 			var state = '';
 			var css = '';
 			var time = '';
 			var tname = '';
-			switch (result[0].interfaces[iface].status) {
+			switch (result[0].interfaces[iface][family].status) {
 				case 'online':
 					state = _('Online');
 					css = 'alert-message success';
-					time = '%t'.format(result[0].interfaces[iface].online);
+					time = '%t'.format(result[0].interfaces[iface][family].online);
 					tname = _('Uptime');
 					break;
 				case 'offline':
 					state = _('Offline');
 					css = 'alert-message danger';
-					time = '%t'.format(result[0].interfaces[iface].offline);
+					time = '%t'.format(result[0].interfaces[iface][family].offline);
 					tname = _('Downtime');
 					break;
 				case 'notracking':
 					state = _('No Tracking');
-					if ((result[0].interfaces[iface].uptime) > 0) {
+					if ((result[0].interfaces[iface][family].uptime) > 0) {
 						css = 'alert-message success';
-						time = '%t'.format(result[0].interfaces[iface].uptime);
+						time = '%t'.format(result[0].interfaces[iface][family].uptime);
 						tname = _('Uptime');
 					}
 					else {
@@ -76,7 +78,7 @@ return baseclass.extend({
 							E('strong', {}, [
 								_('Interface'), ':', ' '
 							]),
-							iface
+							iface + '(' + family + ')'
 						]),
 						E('div', {}, [
 							E('strong', {}, [
@@ -100,7 +102,7 @@ return baseclass.extend({
 							E('strong', {}, [
 								_('Interface'), ':', ' '
 							]),
-							iface
+							iface + '(' + family + ')'
 						]),
 						E('div', {}, [
 							E('strong', {}, [
@@ -111,6 +113,7 @@ return baseclass.extend({
 					])
 				);
 			}
+		}
 		}
 
 		return container;
