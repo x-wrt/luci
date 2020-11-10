@@ -936,6 +936,16 @@ function dispatch(request)
 				sid, build_url(), http.getenv("HTTPS") == "on" and "; secure" or ""
 			})
 
+			local lang = http.formvalue("luci_lang")
+			if lang then
+				local uci = (require "luci.model.uci").cursor()
+				local orig_lang = uci:get("luci", "main", "lang")
+				if lang ~= orig_lang then
+					uci:set("luci", "main", "lang", lang)
+					uci:commit("luci")
+				end
+			end
+
 			http.redirect(build_url(unpack(ctx.requestpath)))
 			return
 		end
