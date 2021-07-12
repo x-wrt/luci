@@ -53,7 +53,7 @@ diag_gateway() {
 		exit 2
 	}
 
-	mwan3 use "$iface" "ping" "-c" "5" "-W" "1" "$gw"
+	mwan3 use "$iface" ipv4 "ping" "-c" "5" "-W" "1" "$gw"
 }
 
 diag_tracking() {
@@ -63,7 +63,7 @@ diag_tracking() {
 		local ip="$1"
 		local iface="$2"
 
-		mwan3 use "$iface" "ping" "-c" "5" "-W" "1" "$ip"
+		mwan3 use "$iface" ipv4 "ping" "-c" "5" "-W" "1" "$ip"
 	}
 
 	config_load mwan3
