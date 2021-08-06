@@ -126,5 +126,8 @@ return network.registerProtocol('mbim', {
 			_('If unchecked, the advertised DNS server addresses are ignored'));
 		o.default = o.enabled;
 
+		o = s.taboption('advanced', form.DynamicList, 'dns', _('Use custom DNS servers'));
+		o.depends('peerdns', '0');
+		o.datatype = 'ipaddr';
 	}
 });
