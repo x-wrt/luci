@@ -931,7 +931,9 @@ function dispatch(request)
 			return
 		end
 
-		page.readonly = not perm
+		if page then
+			page.readonly = not perm
+		end
 	end
 
 	local action = (page and type(page.action) == "table") and page.action or {}
