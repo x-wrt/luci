@@ -53,5 +53,10 @@ service_triggers() {
 }
 
 start_service() {
+	test -e /tmp/nf_conntrack_link || {
+		test -e /dev/conntrackinfo_ctl && ln -s /dev/conntrackinfo_ctl /tmp/nf_conntrack_link || {
+			ln -s /proc/net/nf_conntrack /tmp/nf_conntrack_link
+		}
+	}
 	config_load ucitrack
 }
