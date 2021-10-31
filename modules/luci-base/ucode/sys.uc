@@ -44,7 +44,7 @@ export function conntrack_list(callback) {
 		etcpr.close();
 	}
 
-	let nfct = open('/proc/net/nf_conntrack', 'r');
+	let nfct = open('/tmp/nf_conntrack_link', 'r');
 	if (! nfct) {
 		nfct = popen('/usr/sbin/conntrack -L -o extended', 'r');
 	}
