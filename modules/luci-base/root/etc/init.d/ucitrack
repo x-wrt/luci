@@ -49,6 +49,7 @@ register_trigger() {
 }
 
 service_triggers() {
+	test -e /dev/conntrackinfo_ctl && ln -s /dev/conntrackinfo_ctl /tmp/nf_conntrack_link || ln -s /proc/net/nf_conntrack /tmp/nf_conntrack_link
 	config_foreach register_trigger
 }
 
