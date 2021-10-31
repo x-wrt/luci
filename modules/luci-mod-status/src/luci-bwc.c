@@ -444,8 +444,8 @@ static int run_daemon(void)
 	struct stat s;
 	char *ipc = NULL;
 	char *ipc_command = NULL;
-	if(! stat("/proc/net/nf_conntrack", &s))
-		ipc = "/proc/net/nf_conntrack";
+	if(! stat("/tmp/nf_conntrack_link", &s))
+		ipc = "/tmp/nf_conntrack_link";
 	else if(! stat("/proc/net/ip_conntrack", &s))
 		ipc = "/proc/net/ip_conntrack";
 	else if(! stat("/usr/sbin/conntrack" , &s))
