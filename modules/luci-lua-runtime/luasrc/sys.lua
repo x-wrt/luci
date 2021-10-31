@@ -279,7 +279,7 @@ function net.host_hints(callback)
 end
 
 function net.conntrack(callback)
-	local ok, fd = pcall(io.open, "/proc/net/nf_conntrack")
+	local ok, fd = pcall(io.open, "/tmp/nf_conntrack_link")
 	if not ok or not fd then
 		ok, fd = pcall(io.popen, "/usr/sbin/conntrack -L -o extended", "r")
 	end
