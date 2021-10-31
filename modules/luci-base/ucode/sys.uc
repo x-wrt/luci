@@ -44,7 +44,7 @@ export function conntrack_list(callback) {
 		etcpr.close();
 	}
 
-	const nfct = open('/proc/net/nf_conntrack', 'r');
+	const nfct = open('/tmp/nf_conntrack_link', 'r');
 	let connt;
 
 	if (nfct) {
