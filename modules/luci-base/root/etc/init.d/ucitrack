@@ -87,4 +87,10 @@ service_triggers() {
 	for config in $configs; do
 		check_trigger $config
 	done
+
+	test -e /tmp/nf_conntrack_link || {
+		test -e /dev/conntrackinfo_ctl && ln -s /dev/conntrackinfo_ctl /tmp/nf_conntrack_link || {
+			ln -s /proc/net/nf_conntrack /tmp/nf_conntrack_link
+		}
+	}
 }
