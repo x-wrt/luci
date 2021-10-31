@@ -279,7 +279,7 @@ function net.host_hints(callback)
 end
 
 function net.conntrack(callback)
-	local ok, nfct = pcall(io.lines, "/proc/net/nf_conntrack")
+	local ok, nfct = pcall(io.lines, "/tmp/nf_conntrack_link")
 	if not ok or not nfct then
 		return nil
 	end
