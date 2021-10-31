@@ -443,7 +443,7 @@ static int run_daemon(void)
 
 	struct stat s;
 	const char *ipc = stat("/proc/net/nf_conntrack", &s)
-		? "/proc/net/ip_conntrack" : "/proc/net/nf_conntrack";
+		? "/proc/net/ip_conntrack" : "/tmp/nf_conntrack_link";
 
 	const struct {
 		const char *file;
