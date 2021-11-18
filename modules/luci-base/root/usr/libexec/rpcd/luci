@@ -438,7 +438,7 @@ local methods = {
 	},
 
 	setPassword = {
-		args = { username = "admin", password = "password" },
+		args = { username = "root", password = "password" },
 		call = function(args)
 			local util = require "luci.util"
 			return {

@@ -78,7 +78,7 @@
 		<div class="darkMask"></div>
 		<div id="maincontent">
 			<div class="container">
-				<%- if luci.sys.process.info("uid") == 0 and luci.sys.user.getuser("admin") and not luci.sys.user.getpasswd("admin") and path ~= "admin-system-admin-password" then -%>
+				<%- if luci.sys.process.info("uid") == 0 and luci.sys.user.getuser("root") and not luci.sys.user.getpasswd("root") and path ~= "admin-system-admin-password" then -%>
 				<%- end -%>
 
 				<%- if boardinfo.rootfs_type == "initramfs" then -%>

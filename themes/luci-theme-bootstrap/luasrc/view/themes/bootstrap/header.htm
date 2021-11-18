@@ -71,7 +71,7 @@
 		</header>
 
 		<div id="maincontent" class="container">
-			<%- if luci.sys.process.info("uid") == 0 and luci.sys.user.getuser("admin") and not luci.sys.user.getpasswd("admin") then -%>
+			<%- if luci.sys.process.info("uid") == 0 and luci.sys.user.getuser("root") and not luci.sys.user.getpasswd("root") then -%>
 				<div class="alert-message warning">
 					<h4><%:No password set!%></h4>
 					<p><%:There is no password set on this router. Please configure a admin password to protect the web interface.%></p>
