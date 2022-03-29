@@ -1,0 +1,11 @@
+{
+	"luci-mod-system-config": {
+		"description": "Grant access to LuCI app ledtrig-switch",
+		"read": {
+			"cgi-io": [ "exec" ],
+			"file": {
+				"/sbin/swconfig list": [ "exec" ]
+			}
+		}
+	}
+}
