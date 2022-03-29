@@ -1,0 +1,35 @@
+#!/bin/sh
+
+main() {
+	. /lib/functions.sh
+	local led="$1"
+
+	local device sysfs port_mask speed_mask mode
+
+	device="$(uci_get system "$led" device)"
+	sysfs="$(uci_get system "$led" sysfs)"
+	port_mask="$(uci_get system "$led" port_mask)"
+	speed_mask="$(uci_get system "$led" speed_mask)"
+	mode="$(uci_get system "$led" mode)"
+
+	[ -f "/sys/class/leds/${sysfs}/trigger" ] || {
+		logger -t "leds/switch" -p "warning" "LED '${sysfs}' not found"
+		return 0
+	}
+
+	if ! grep -q "${device}" < "/sys/class/leds/${sysfs}/trigger"; then
+		logger -t "leds/switch" -p "warning" "Trigger '${device}' not found"
+		return 0
+	fi
+
+	echo "${device}" > "/sys/class/leds/${sysfs}/trigger"
+
+	[ -n "$port_mask" ] && \
+		echo "$port_mask" > "/sys/class/leds/${sysfs}/port_mask"
+	[ -n "$speed_mask" ] && \
+		echo "$speed_mask" > "/sys/class/leds/${sysfs}/speed_mask"
+	[ -n "$mode" ] && \
+		echo "$mode" > "/sys/class/leds/${sysfs}/mode"
+}
+
+main "$@"
