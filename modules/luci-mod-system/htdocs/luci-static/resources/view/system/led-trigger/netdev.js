@@ -17,8 +17,9 @@ return baseclass.extend({
 		o.noaliases = true;
 		o.depends('trigger', 'netdev');
 
-		o = s.option(form.MultiValue, 'mode', _('Trigger Mode'));
+		o = s.option(form.MultiValue, '_net_dev_mode', _('Trigger Mode'));
 		o.rmempty = true;
+		o.ucioption = 'mode';
 		o.modalonly = true;
 		o.depends('trigger', 'netdev');
 		o.value('link', _('Link On'));
