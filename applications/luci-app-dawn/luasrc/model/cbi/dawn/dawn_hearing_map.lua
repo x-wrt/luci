@@ -10,7 +10,7 @@ function s.render(self, sid)
 			local utl = require "luci.util"
 			local xml = require "luci.xml"
 			local status = require "luci.tools.ieee80211"
-			local stat = utl.ubus("dawn", "get_hearing_map", { })
+			local stat = utl.ubus("dawn", "get_hearing_map", { }) or {}
 			local name, macs
 
 			for name, macs in pairs(stat) do
