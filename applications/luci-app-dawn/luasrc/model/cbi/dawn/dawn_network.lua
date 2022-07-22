@@ -14,7 +14,7 @@ function s.render(self, sid)
 			local sys = require "luci.sys"
 			local xml = require "luci.xml"
 			local hosts = sys.net.host_hints()
-			local stat = utl.ubus("dawn", "get_network", { })
+			local stat = utl.ubus("dawn", "get_network", { }) or { }
 			local name, macs
 			for name, macs in pairs(stat) do
 		%>
