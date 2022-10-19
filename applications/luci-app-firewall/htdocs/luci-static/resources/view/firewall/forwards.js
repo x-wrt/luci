@@ -125,6 +125,7 @@ return view.extend({
 		    ctHelpers = data[1],
 		    devs = data[2],
 		    m, s, o;
+		var fw4 = L.hasSystemFeature('firewall4');
 
 		m = new form.Map('firewall', _('Firewall - Port Forwards'),
 			_('Port forwarding allows remote computers on the Internet to connect to a specific computer or service within the private LAN.'));
@@ -200,9 +201,9 @@ return view.extend({
 		o.datatype = 'list(neg(macaddr))';
 
 		o = fwtool.addIPOption(s, 'advanced', 'src_ip', _('Source IP address'),
-			_('Only match incoming traffic from this IP or range.'), 'ipv4', hosts);
+			_('Only match incoming traffic from this IP or range.'), !fw4?'ipv4':'', hosts);
 		o.rmempty = true;
-		o.datatype = 'neg(ipmask4("true"))';
+		o.datatype = !fw4?'neg(ipmask4("true"))':'neg(ipmask("true"))';
 
 		o = s.taboption('advanced', form.Value, 'src_port', _('Source port'),
 			_('Only match incoming traffic originating from the given source port or port range on the client host'));
@@ -215,7 +216,7 @@ return view.extend({
 
 		o = fwtool.addLocalIPOption(s, 'advanced', 'src_dip', _('External IP address'),
 			_('Only match incoming traffic directed at the given IP address.'), devs);
-		o.datatype = 'neg(ipmask4("true"))';
+		o.datatype = !fw4?'neg(ipmask4("true"))':'neg(ipmask("true"))';
 		o.rmempty = true;
 
 		o = s.taboption('general', form.Value, 'src_dport', _('External port'),
@@ -232,9 +233,9 @@ return view.extend({
 		o.nocreate = true;
 
 		o = fwtool.addIPOption(s, 'general', 'dest_ip', _('Internal IP address'),
-			_('Redirect matched incoming traffic to the specified internal host'), 'ipv4', hosts);
+			_('Redirect matched incoming traffic to the specified internal host'), !fw4?'ipv4':'', hosts);
 		o.rmempty = true;
-		o.datatype = 'ipmask4';
+		o.datatype = !fw4?'ipmask4':'ipmask';
 
 		o = s.taboption('general', form.Value, 'dest_port', _('Internal port'),
 			_('Redirect matched incoming traffic to the given port on the internal host'));
