@@ -125,6 +125,9 @@ export function conntrack_list(callback) {
 				callback(e);
 			else
 				push(connt ??= [], e);
+
+			if (length(connt) >= 2048)
+				break;
 		}
 
 		nfct.close();
