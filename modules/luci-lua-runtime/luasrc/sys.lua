@@ -333,6 +333,7 @@ function net.conntrack(callback)
 				connt[#connt+1] = entry
 			end
 		end
+		if #connt >= 2048 then break end
 	end
 
 	return callback and true or connt
