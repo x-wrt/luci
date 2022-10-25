@@ -13806,7 +13806,7 @@ msgstr "没有待应用的更改"
 #: themes/luci-theme-footstrap/ucode/template/themes/footstrap/header.ut:194
 #: themes/luci-theme-material/ucode/template/themes/material/header.ut:83
 msgid ""
-"There is no password set on this router. Please configure a root password to "
+"There is no password set on this router. Please configure a admin password to "
 "protect the web interface."
 msgstr "尚未设置密码。请设置管理员密码以保护此设备。"
 
