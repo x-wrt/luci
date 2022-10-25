@@ -396,7 +396,7 @@ const methods = {
 	},
 
 	setPassword: {
-		args: { username: 'root', password: 'password' },
+		args: { username: 'admin', password: 'password' },
 		call: function(request) {
 			const u = shellquote(request.args.username);
 			const p = shellquote(request.args.password);
