@@ -946,7 +946,7 @@ dispatch = function(_http, path) {
 					pass = http.formvalue('luci_password');
 				}
 
-				let auth_check = get_challenges(http, user ?? 'root');
+				let auth_check = get_challenges(http, user ?? 'admin');
 				let auth_fields = null;
 				let auth_message = null;
 				let auth_html = null;
@@ -970,7 +970,7 @@ dispatch = function(_http, path) {
 
 					// Show login form with 2FA fields if required
 					let scope = {
-						duser: 'root',
+						duser: 'admin',
 						fuser: user,
 						auth_fields: auth_fields,
 						auth_message: auth_message,
@@ -1014,7 +1014,7 @@ dispatch = function(_http, path) {
 						http.header('X-LuCI-Login-Required', 'yes');
 
 						let scope = {
-							duser: 'root',
+							duser: 'admin',
 							fuser: user,
 							auth_plugin: length(auth_check.challenges) ? auth_check.challenges[0].name : null,
 							auth_fields: auth_check.fields,
