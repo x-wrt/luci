@@ -926,7 +926,7 @@ dispatch = function(_http, path) {
 					http.status(403, 'Forbidden');
 					http.header('X-LuCI-Login-Required', 'yes');
 
-					let scope = { duser: 'root', fuser: user };
+					let scope = { duser: 'admin', fuser: user };
 					let theme_sysauth = `themes/${basename(runtime.env.media)}/sysauth`;
 
 					if (runtime.is_ucode_template(theme_sysauth) || runtime.is_lua_template(theme_sysauth)) {
