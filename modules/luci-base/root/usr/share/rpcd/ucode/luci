@@ -533,7 +533,7 @@ const methods = {
 
 	setPassword: {
 		args: {
-			username: 'root',
+			username: 'admin',
 			password: 'password',
 			oldpassword: '',
 			rpcd: false,
