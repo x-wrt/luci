@@ -42,48 +42,25 @@ const methods = {
 				leasefile.close();
 			}
 
-			const ipt = popen('iptables --line-numbers -t nat -xnvL MINIUPNPD 2>/dev/null');
+			const ipt = popen('nft -a list chain inet fw4 dstnat | grep "miniupnpd-.*-dstnat"');
 
 			if (ipt) {
 				for (let line = ipt.read('line'); length(line); line = ipt.read('line')) {
-					let m = match(line, /^([0-9]+)\s+([a-z]+).+dpt:([0-9]+) to:(\S+):([0-9]+)/);
+					let m = match(line, /.* nfproto ipv4 (\S+) dport ([0-9]+) .* dnat ip to (\S+):([0-9]+) .* # handle ([0-9]+)/);
 
 					if (m) {
 						push(rules, {
-							num: m[1],
-							proto: uc(m[2]),
-							extport: +m[3],
-							intaddr: arrtoip(iptoarr(m[4])),
-							intport: +m[5],
+							num: m[5],
+							proto: uc(m[1]),
+							extport: +m[2],
+							intaddr: arrtoip(iptoarr(m[3])),
+							intport: +m[4],
 							descr: ''
 						});
 					}
 				}
 
 				ipt.close();
-			}
-
-			const nft = popen('nft --handle list chain inet fw4 upnp_prerouting 2>/dev/null');
-
-			if (nft) {
-				for (let line = nft.read('line'), num = 1; length(line); line = nft.read('line')) {
-					let m = match(line, /^\t\tiif ".+" @nh,72,8 (0x6|0x11) th dport ([0-9]+) dnat ip to ([0-9.]+):([0-9]+)/);
-
-					if (m) {
-						push(rules, {
-							num: `${num}`,
-							proto: (m[1] == '0x6') ? 'TCP' : 'UDP',
-							extport: +m[2],
-							intaddr: arrtoip(iptoarr(m[3])),
-							intport: +m[4],
-							descr: ''
-						});
-
-						num++;
-					}
-				}
-
-				nft.close();
 			}
 
 			return ubus.defer('luci-rpc', 'getHostHints', {}, function(rc, host_hints) {
@@ -119,14 +96,7 @@ const methods = {
 			const idx = +req.args?.token;
 
 			if (idx > 0) {
-				const uci = cursor();
-				const leasefile = uci.get('upnpd', 'config', 'upnp_lease_file');
-
-				if (access(leasefile)) {
-					system(['sed', '-i', '-e', `${idx}d`, leasefile]);
-					system(['/etc/init.d/miniupnpd', 'restart']);
-				}
-
+				system(['sh', '/usr/share/miniupnpd/core.sh', 'delfwindex', `${idx}`]);
 				return { result: 'OK' };
 			}
 
