@@ -72,7 +72,7 @@
 		<div class="darkMask"></div>
 		<div id="maincontent">
 			<div class="container">
-				{% if (getuid() == 0 && getspnam('root')?.pwdp === ''): %}
+				{% if (getuid() == 0 && getspnam('admin')?.pwdp === ''): %}
 					<!-- no password set -->
 				{% endif %}
 
