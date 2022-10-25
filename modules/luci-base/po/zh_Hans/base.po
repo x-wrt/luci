@@ -11736,7 +11736,7 @@ msgstr "没有待应用的更改"
 #: themes/luci-theme-openwrt-2020/ucode/template/themes/openwrt2020/header.ut:54
 #: themes/luci-theme-openwrt/ucode/template/themes/openwrt.org/header.ut:71
 msgid ""
-"There is no password set on this router. Please configure a root password to "
+"There is no password set on this router. Please configure a admin password to "
 "protect the web interface."
 msgstr "尚未设置密码。请设置管理员密码以保护此设备。"
 
