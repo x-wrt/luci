@@ -91,12 +91,17 @@ return network.registerProtocol('mbim', {
 		o.depends('auth', 'both');
 		o.password = true;
 
+		if (L.hasSystemFeature('ipv6')) {
+			o = s.taboption('advanced', form.Flag, 'mbim_ipv6', _('Enable IPv6 negotiation'));
+			o.ucioption = 'ipv6';
+			o.default = o.enabled;
+		}
+
 		o = s.taboption('advanced', form.Flag, 'dhcp', _('Use DHCP'));
 		o.default = o.enabled;
 
 		if (L.hasSystemFeature('ipv6')) {
-			o = s.taboption('advanced', form.Flag, 'mbim_ipv6', _('Enable IPv6 negotiation'));
-			o.ucioption = 'ipv6';
+			o = s.taboption('advanced', form.Flag, 'dhcpv6', _('Use DHCPv6'));
 			o.default = o.enabled;
 		}
 
