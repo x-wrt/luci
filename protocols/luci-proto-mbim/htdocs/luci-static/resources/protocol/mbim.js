@@ -91,18 +91,34 @@ return network.registerProtocol('mbim', {
 		o.depends('auth', 'both');
 		o.password = true;
 
+		o = s.taboption('general', form.ListValue, 'pdptype', _('PDP Type'));
+		o.value('ipv4v6', 'IPv4/IPv6');
+		o.value('ipv4', 'IPv4');
+		o.value('ipv6', 'IPv6');
+		o.default = 'ipv4v6';
+
 		if (L.hasSystemFeature('ipv6')) {
 			o = s.taboption('advanced', form.Flag, 'mbim_ipv6', _('Enable IPv6 negotiation'));
 			o.ucioption = 'ipv6';
 			o.default = o.enabled;
 		}
 
-		o = s.taboption('advanced', form.Flag, 'dhcp', _('Use DHCP'));
-		o.default = o.enabled;
+		o = s.taboption('advanced', form.ListValue, 'dhcp', _('Use DHCP'));
+		o.value('auto', 'Automatic');
+		o.value('0', 'Disabled');
+		o.value('1', 'Enabled');
+		o.depends('pdptype', 'ipv4');
+		o.depends('pdptype', 'ipv4v6');
+		o.default = 'auto';
 
 		if (L.hasSystemFeature('ipv6')) {
-			o = s.taboption('advanced', form.Flag, 'dhcpv6', _('Use DHCPv6'));
-			o.default = o.enabled;
+			o = s.taboption('advanced', form.ListValue, 'dhcpv6', _('Use DHCPv6'));
+			o.value('auto', 'Automatic');
+			o.value('0', 'Disabled');
+			o.value('1', 'Enabled');
+			o.depends('pdptype', 'ipv6');
+			o.depends('pdptype', 'ipv4v6');
+			o.default = 'auto';
 		}
 
 		o = s.taboption('advanced', form.Value, 'delay', _('Modem init timeout'), _('Maximum amount of seconds to wait for the modem to become ready'));
@@ -112,12 +128,6 @@ return network.registerProtocol('mbim', {
 		o = s.taboption('advanced', form.Value, 'mtu', _('Override MTU'));
 		o.placeholder = dev ? (dev.getMTU() || '1500') : '1500';
 		o.datatype    = 'max(9200)';
-
-		o = s.taboption('general', form.ListValue, 'pdptype', _('PDP Type'));
-		o.value('ipv4v6', 'IPv4/IPv6');
-		o.value('ipv4', 'IPv4');
-		o.value('ipv6', 'IPv6');
-		o.default = 'ipv4v6';
 
 		o = s.taboption('advanced', form.Flag, 'defaultroute',
 			_('Use default gateway'),
