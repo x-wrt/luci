@@ -7255,6 +7255,12 @@ msgstr ""
 msgid "Override TTL"
 msgstr ""
 
+msgid "Override IPv4 TTL"
+msgstr ""
+
+msgid "Override IPv6 Hotlimit"
+msgstr ""
+
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/wireless.js:1228
 msgid ""
 "Override default MAC address - the range of usable addresses might be "
