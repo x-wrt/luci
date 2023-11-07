@@ -1228,6 +1228,14 @@ return view.extend({
 					o.optional = true;
 				}
 
+				o = nettools.replaceOption(s, 'advanced', form.Value, 'output_ttl', _('Override IPv4 TTL'));
+				o.placeholder = '128';
+				o.datatype = 'range(1,255)';
+
+				o = nettools.replaceOption(s, 'advanced', form.Value, 'output_hotlimit', _('Override IPv6 Hotlimit'));
+				o.placeholder = '128';
+				o.datatype = 'range(1,255)';
+
 				o = nettools.replaceOption(s, 'advanced', form.Value, 'ip4table', _('Override IPv4 routing table'));
 				o.datatype = 'or(uinteger, string)';
 				for (let rt of rtTables)
