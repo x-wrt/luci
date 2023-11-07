@@ -1225,6 +1225,14 @@ return view.extend({
 				o.value('backup', _('Backup'), _('Hot standby; use this interface; do not forward traffic until no other interface is available (faster)'));
 				o.value('handover', _('Handover'), _('Cold standby; Establish a connection only when no other interface is available (slower)'));
 
+				o = nettools.replaceOption(s, 'advanced', form.Value, 'output_ttl', _('Override IPv4 TTL'));
+				o.placeholder = '128';
+				o.datatype = 'max(255)';
+
+				o = nettools.replaceOption(s, 'advanced', form.Value, 'output_hotlimit', _('Override IPv6 Hotlimit'));
+				o.placeholder = '255';
+				o.datatype = 'max(255)';
+
 				o = nettools.replaceOption(s, 'advanced', form.Value, 'ip4table', _('Override IPv4 routing table'));
 				o.datatype = 'or(uinteger, string)';
 				for (let rt of rtTables)
