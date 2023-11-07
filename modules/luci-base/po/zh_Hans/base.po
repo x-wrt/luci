@@ -7463,6 +7463,12 @@ msgstr "重设 TOS"
 msgid "Override TTL"
 msgstr "重设 TTL"
 
+msgid "Override IPv4 TTL"
+msgstr "重设 IPv4 TTL"
+
+msgid "Override IPv6 Hotlimit"
+msgstr "重设 IPv6 Hotlimit"
+
 #: modules/luci-mod-network/htdocs/luci-static/resources/view/network/wireless.js:1228
 msgid ""
 "Override default MAC address - the range of usable addresses might be "
