@@ -2,6 +2,7 @@
 'require rpc';
 'require form';
 'require network';
+'require tools.widgets as widgets'
 
 var callFileList = rpc.declare({
 	object: 'file',
@@ -73,6 +74,9 @@ return network.registerProtocol('ncm', {
 			}, this));
 		};
 
+		o = s.taboption('general', widgets.DeviceSelect, 'ifname', _('Modem ifname'));
+		o.rmempty = true;
+
 		o = s.taboption('general', form.Value, 'mode', _('Network Mode'));
 		o.value('', _('Modem default'));
 		o.value('preferlte', _('Prefer LTE'));
@@ -119,5 +123,10 @@ return network.registerProtocol('ncm', {
 		o = s.taboption('advanced', form.Value, 'delay', _('Modem init timeout'), _('Amount of seconds to wait for the modem to become ready'));
 		o.placeholder = '0';
 		o.datatype  = 'min(0)';
+
+		o = s.taboption('advanced', form.Value, 'profile',
+			_('APN profile index'));
+		o.placeholder = '1';
+		o.datatype = 'uinteger';
 	}
 });
