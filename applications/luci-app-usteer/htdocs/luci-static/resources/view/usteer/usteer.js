@@ -7,10 +7,27 @@
 'require form';
 'require uci';
 
+function isUsteerRPCAvailable() {
+	return rpc.list("usteer").then(function(signatures) {
+		return 'usteer' in signatures;
+	});
+}
+
+function getUsteerServiceNotRunningErrorMessage() {
+	return E('div', { 'class': 'alert-message fade-in warning' }, [
+		E('h4', _('Usteer service unavailable')),
+		E('p', _('Unable to query the Usteer service via ubus, the service appears to be stopped.')),
+		E('a', { 'href': L.url('admin/system/startup') }, _('Check Startup services'))
+	]);
+}
 
 var Hosts,Remotehosts,Remoteinfo,Localinfo,Clients;
 var HearingMap = form.DummyValue.extend({
 	renderWidget: function() {
+		if (!Localinfo) {
+			return getUsteerServiceNotRunningErrorMessage();
+		}
+
 		var body = E([
 			E('h3', _('Hearing map'))
 		]);
@@ -64,6 +81,10 @@ var HearingMap = form.DummyValue.extend({
 });
 var Clientinfooverview = form.DummyValue.extend({
 	renderWidget: function() {
+		if (!Remotehosts) {
+			return getUsteerServiceNotRunningErrorMessage();
+		}
+
 		var body = E([
 			E('h3', 'Remotehosts')
 		]);
@@ -238,12 +259,21 @@ return view.extend({
 		expect: { '': {} }
 	}),
 	load: function() {
+		var obj = this;
 		return Promise.all([
 			this.callHostHints(),
-			this.callGetRemotehosts(),
-			this.callGetRemoteinfo(),
-			this.callGetLocalinfo(),
-			this.callGetClients()
+			isUsteerRPCAvailable().then(function(isAvailable) {
+				return ( isAvailable ? obj.callGetRemotehosts() : null )
+			}),
+			isUsteerRPCAvailable().then(function(isAvailable) {
+				return ( isAvailable ? obj.callGetRemoteinfo() : null )
+			}),
+			isUsteerRPCAvailable().then(function(isAvailable) {
+				return ( isAvailable ? obj.callGetLocalinfo() : null )
+			}),
+			isUsteerRPCAvailable().then(function(isAvailable) {
+				return ( isAvailable ? obj.callGetClients() : null )
+			}),
 		]);
 	},
 	render: function(data) {
