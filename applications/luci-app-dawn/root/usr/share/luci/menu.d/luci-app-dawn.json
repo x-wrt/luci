@@ -28,7 +28,7 @@
 		}
 	},
 
-	"admin/network/dawn": {
+	"admin/mesh/dawn": {
 		"title": "DAWN",
 		"order": 60,
 		"action": {
