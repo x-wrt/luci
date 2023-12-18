@@ -113,7 +113,7 @@ function collectWlanAPInfos(compactconnectioninfo_table_entries, wlanAPInfos) {
 					}
 		}
 		compactconnectioninfo_table_entries.push([
-			'<nobr>'+wlan+'</nobr>', 
+			'<nobr>'+wlan+'</nobr>',
 			wlanAPInfos[wlan]['ssid'],
 			wlanAPInfos[wlan]['freq'],
 			wlanAPInfos[wlan]['load'],
@@ -271,7 +271,7 @@ return view.extend({
 		collectWlanAPInfos(compactconnectioninfo_table_entries, Localinfo);
 		collectWlanAPInfos(compactconnectioninfo_table_entries, Remoteinfo);
 		cbi_update_table(nodes.querySelector('#compactconnectioninfo_table'), compactconnectioninfo_table_entries, E('em', _('No data')));
-		
+
 		for (var mac in Clients) {
 			var macn = mac.toUpperCase().replace(/:/g,'');
 			var client_table_entries = [];
