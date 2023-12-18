@@ -1,5 +1,5 @@
 {
-  "admin/network/usteer": {
+  "admin/mesh/usteer": {
     "title": "Usteer",
     "order": 80,
     "action": {
