@@ -258,6 +258,7 @@ function has_sourcefilter(proto) {
 	case 'pppoe':
 	case 'pptp':
 	case 'qmi':
+	case 'qmap':
 		return true;
 	}
 
