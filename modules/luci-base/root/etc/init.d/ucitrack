@@ -74,7 +74,17 @@ check_trigger() {
 }
 
 service_triggers() {
-	for config in /etc/config/*; do
-		check_trigger "${config##*/}"
+	local file config
+	local configs
+
+	#fetch all listed config
+	configs=$(for file in /usr/share/ucitrack/*.json; do
+		json_load_file "${file}" >/dev/null 2>&1
+		json_get_var config 'config'
+		echo $config
+	done | sort | uniq)
+
+	for config in $configs; do
+		check_trigger $config
 	done
 }
