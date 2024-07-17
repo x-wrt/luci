@@ -18,7 +18,7 @@ end
 
 function f.handle(self, state, data)
 	if state == FORM_VALID then
-		local stat = luci.sys.user.setpasswd("admin", data.pw1) == 0
+		local stat = luci.sys.user.setpasswd("root", data.pw1) == 0
 
 		if stat then
 			f.message = translate("Password successfully changed")
