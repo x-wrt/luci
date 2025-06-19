@@ -5,6 +5,9 @@
     "action": {
       "type": "view",
       "path": "usteer/usteer"
+    },
+    "depends": {
+      "acl": [ "luci-app-usteer" ]
     }
   }
 }
