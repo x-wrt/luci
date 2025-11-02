@@ -49,7 +49,7 @@ return view.extend({
 	render: function() {
 		var m, s, o;
 
-		m = new form.JSONMap(formData, _('Router Password'), _('Changes the administrator password for accessing the device'));
+		m = new form.JSONMap(formData, _('Router Password'), _('Change the administrator password to access the device'));
 		m.readonly = !L.hasViewPermission();
 
 		s = m.section(form.NamedSection, 'password', 'password');
@@ -58,7 +58,7 @@ return view.extend({
 		o.password = true;
 		o.validate = this.checkPassword;
 
-		o = s.option(form.Value, 'pw2', _('Confirmation'), ' ');
+		o = s.option(form.Value, 'pw2', _('Confirm Password'), ' ');
 		o.password = true;
 		o.renderWidget = function(/* ... */) {
 			var node = form.Value.prototype.renderWidget.apply(this, arguments);
