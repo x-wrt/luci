@@ -22,7 +22,7 @@ return view.extend({
 		var loglines = logdata.trim().split(/\n/);
 
 		return E([], [
-			E('h2', {}, [ _('System Log') ]),
+			E('h2', {}, [ _('System Logs') ]),
 			E('div', { 'id': 'content_syslog' }, [
 				E('textarea', {
 					'id': 'syslog',
