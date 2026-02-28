@@ -149,7 +149,7 @@ const openvpnOptions = [
 	{ tab: 'management', type: form.Value, name: 'management_external_key', datatype: 'path', label: _('Management key'), placeholder: 'nopadding pkcs1' },
 
 	// Topology
-	{ tab: 'topology', type: form.ListValue, name: 'topology', values: ['net30','p2p','subnet'], label: _('\'net30\', \'p2p\', or \'subnet\''), default: '' },
+	{ tab: 'topology', type: form.ListValue, name: 'topology', lvalues: ['net30','p2p','subnet'], label: _('\'net30\', \'p2p\', or \'subnet\''), default: '' },
 	{ tab: 'topology', type: form.Flag, name: 'disable_dco', label: _('Disable Data Channel Offloading (DCO) support'), default: 0 },
 
 	// Crypto
