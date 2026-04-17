@@ -1596,6 +1596,7 @@ var tabs = [
 	{ id: 'basic', label: _('Basic Settings') },
 	{ id: 'file', label: _('Config File') },
 	{ id: 'general' },
+	{ id: 'advanced' },
 	{ id: 'cryptography', label: _('Cryptography') },
 	{ id: 'devices', label: _('Devices') },
 	{ id: 'expert', label: _('Expert Settings') },
@@ -1679,6 +1680,25 @@ return network.registerProtocol('openvpn', {
 			_('Options marked with ¹ are deprecated and will be removed.') /* + '<br/>' +
 			_('Options marked with * are server only.') */ + '<br/>' +
 			_('Options marked with ² are OpenSSL only.');
+
+		o = s.taboption('advanced', form.ListValue, 'ipv6', _('Obtain IPv6 address'), _('Enable IPv6 negotiation on the openvpn link'));
+		o.value('0', _('Disabled'));
+		o.value('1', _('Enabled'));
+		o.default = '1';
+		o.rmempty = true;
+		o.cfgvalue = function(sid) {
+			let val = uci.get(this.map.config, sid, 'ipv6');
+			if (val == '0' || val == '1') {
+				return val;
+			}
+			return '1';
+		};
+		o.write = function(sid, val) {
+			if (val == '0') {
+				return uci.set(this.map.config, sid, 'ipv6', '0');
+			}
+			return uci.unset(this.map.config, sid, 'ipv6');
+		};
 
 		// Render options for each tab
 		tabs.forEach(function(tab) {
