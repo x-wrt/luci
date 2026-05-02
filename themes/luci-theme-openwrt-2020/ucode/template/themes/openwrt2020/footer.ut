@@ -12,5 +12,23 @@
 
 <script>L.require('menu-openwrt2020')</script>
 
+<script>
+    // 监听全局点击事件（专为手机端菜单设计）
+    document.addEventListener('click', function(event) {
+        var menu = document.getElementById('mainmenu');
+        var menuToggle = document.querySelector('#menubar > h2');
+
+        // 如果菜单和按钮都存在，并且当前处于展开状态
+        if (menu && menuToggle && menu.classList.contains('active')) {
+            // 如果用户点击的区域【不是】菜单内部，也【不是】左上角的汉堡按钮本身
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                // 移除 active 状态，收起菜单并还原汉堡按钮
+                menu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
