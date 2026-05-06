@@ -5905,7 +5905,7 @@ msgstr "引用"
 
 #: modules/luci-base/htdocs/luci-static/resources/luci.js:2726
 msgid "Refreshing"
-msgstr "刷新"
+msgstr "刷新中"
 
 #: modules/luci-compat/luasrc/model/network/proto_relay.lua:153
 #: protocols/luci-proto-relay/htdocs/luci-static/resources/protocol/relay.js:39
