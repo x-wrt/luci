@@ -2369,4 +2369,176 @@ body[data-page='admin-status-overview'] .ifacebox-head {
 	[data-page="admin-system-admin-sshkeys"] .cbi-dynlist > .item { font-size: .9rem; line-height: 1rem; }
 	[data-page="admin-system-package-manager"] .control-group { flex-wrap: wrap; }
 	[data-page="admin-status-iptables"] h2 + div.right { margin: 0 0 1em 0 !important; display: flex; }
+
+	/* =========================================================
+	   【页面重构】软件包列表 (Package Manager) 手机端 App 商店级卡片体验
+	   ========================================================= */
+	[data-page="admin-system-package-manager"] #packages .tr:not(.table-titles):not(.cbi-section-table-titles) {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		background: rgba(0, 0, 0, 0.02);
+		border: 1px solid rgba(0, 0, 0, 0.06) !important;
+		border-radius: 12px;
+		padding: 12px 16px !important;
+		margin-bottom: 12px !important;
+		width: 100% !important; /* 强制宽度限制 */
+		box-sizing: border-box !important;
+	}
+
+	[data-page="admin-system-package-manager"] #packages .td {
+		border: none !important;
+		padding: 0 !important;
+		background: transparent !important;
+		min-width: 0 !important; /* 🚨 核心修复：允许子元素收缩，彻底防止撑破屏幕 */
+	}
+
+	/* 清除系统自带的 data-title 左侧占位符残留 */
+	[data-page="admin-system-package-manager"] #packages .td::before,
+	[data-page="admin-system-package-manager"] #packages .td::after {
+		display: none !important;
+	}
+
+	/* 第 1 列：包名 (加粗主题色，靠左) */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(1) {
+		order: 1; flex: 0 1 auto !important; width: auto !important;
+		font-weight: 600; font-size: 15px; color: var(--bs-primary, #0d6efd);
+		margin-right: 8px !important;
+		word-break: break-all !important; /* 包名过长也强制换行 */
+	}
+
+	/* 第 2 列：版本号 (做成小巧的灰色 Tag 徽章，紧跟包名) */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(2) {
+		order: 2; flex: 0 1 auto !important; width: auto !important;
+		font-size: 12px; color: #6c757d; font-family: monospace;
+		align-self: center; background: rgba(0, 0, 0, 0.06);
+		padding: 2px 6px !important; border-radius: 4px;
+		word-break: break-all !important;
+	}
+
+	/* 第 3 列：大小 (推到右上角对齐) */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(3) {
+		order: 3; flex: 1 0 auto !important; width: auto !important;
+		text-align: right !important; font-size: 12px; color: #888;
+		align-self: center; margin-left: auto !important; /* 强制靠右 */
+	}
+
+	/* 第 4 列：详细描述 (独占一行，灰色弱化) */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(4) {
+		order: 4; flex: 1 1 100% !important; width: 100% !important;
+		margin-top: 10px !important; font-size: 13px; line-height: 1.5;
+		color: var(--text-medium, #555);
+		white-space: normal !important;      /* 🚨 核心修复：允许正常多行显示 */
+		word-break: break-word !important;   /* 🚨 核心修复：遇到超长 URL 强行断字换行 */
+		overflow-wrap: break-word !important;
+	}
+
+	/* 第 5 列：操作按钮 (放在右下角) */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(5) {
+		order: 5; flex: 1 1 100% !important; width: 100% !important;
+		margin-top: 12px !important; text-align: right !important;
+		border-top: 1px dashed rgba(0, 0, 0, 0.08); /* 加一条浅色虚线分割 */
+		padding-top: 10px !important;
+	}
+
+	/* 让按钮变得更圆润精致 */
+	[data-page="admin-system-package-manager"] #packages .td:nth-child(5) .btn {
+		margin: 0 !important; border-radius: 6px !important;
+	}
+
+	/* =========================================================
+	   【页面重构】启动项列表 (Startup) 手机端精美控制卡片 (靶向修复版)
+	   ========================================================= */
+	[data-page="admin-system-startup"] table.table .tr:not(.table-titles) {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		background: rgba(0, 0, 0, 0.02);
+		border: 1px solid rgba(0, 0, 0, 0.06) !important;
+		border-radius: 12px;
+		padding: 12px 16px !important;
+		margin-bottom: 12px !important;
+		/* 为右上角的开关按钮腾出空间 */
+		position: relative !important;
+		padding-right: 80px !important;
+	}
+
+	[data-page="admin-system-startup"] table.table .td {
+		border: none !important;
+		padding: 0 !important;
+		background: transparent !important;
+	}
+
+	/* 清除系统残留的伪元素文字 */
+	[data-page="admin-system-startup"] table.table .td::before,
+	[data-page="admin-system-startup"] table.table .td::after {
+		display: none !important;
+	}
+
+	/* 第 2 列：脚本名称 (排在最前面) */
+	[data-page="admin-system-startup"] table.table .td:nth-child(2) {
+		order: 1; flex: 0 1 auto !important; width: auto !important;
+		font-weight: 600; font-size: 16px; color: var(--text-high);
+		margin-right: 8px !important;
+		word-break: break-all;
+	}
+
+	/* 第 1 列：启动优先级 (排在名称后面) */
+	[data-page="admin-system-startup"] table.table .td:nth-child(1) {
+		order: 2; flex: 1 1 auto !important; width: auto !important;
+		font-size: 12px; color: #6c757d; font-family: monospace;
+	}
+	/* 恢复优先级的小前缀 */
+	[data-page="admin-system-startup"] table.table .td:nth-child(1)::before {
+		content: "S" !important;
+		opacity: 0.6; font-size: 11px; margin-right: 1px;
+		display: inline !important; /* 强制显示，覆盖上面的 none */
+	}
+
+	/* 第 3 列：包含所有 5 个按钮的终极容器 */
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) {
+		order: 3; flex: 1 1 100% !important; width: 100% !important;
+		margin-top: 12px !important; padding-top: 12px !important;
+		border-top: 1px dashed rgba(0, 0, 0, 0.08); /* 优雅的分割线 */
+	}
+
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) > div {
+		display: flex !important; flex-wrap: nowrap !important; gap: 6px !important;
+		justify-content: space-between !important; width: 100% !important;
+	}
+
+	/* 🌟 拔出第一个按钮（已启用/已禁用），将它强行钉在卡片右上角 🌟 */
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) > div > button:nth-child(1) {
+		position: absolute !important;
+		top: 12px !important;
+		right: 16px !important;
+		margin: 0 !important;
+		padding: 4px 8px !important;
+		border-radius: 6px !important;
+		font-size: 12px !important;
+		width: auto !important;
+		height: auto !important;
+		min-width: 60px !important;
+	}
+
+	/* 剩下的 4 个操作按钮（启动/重启/重载/停止），在底部分布 */
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) > div > button:not(:nth-child(1)) {
+		flex: 1 1 25% !important; /* 4个按钮均分宽度 */
+		margin: 0 !important;
+		padding: 6px 0 !important;
+		font-size: 12px !important;
+		border-radius: 6px !important;
+		text-align: center !important;
+		background: rgba(0, 0, 0, 0.03) !important;
+		border-color: rgba(0, 0, 0, 0.1) !important;
+		color: var(--text-medium) !important;
+		box-shadow: none !important;
+	}
+
+	/* 底部操作按钮的点击反馈 */
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) > div > button:not(:nth-child(1)):hover,
+	[data-page="admin-system-startup"] table.table .td:nth-child(3) > div > button:not(:nth-child(1)):active {
+		background: var(--bg-low) !important;
+		color: var(--text-highest) !important;
+		border-color: var(--text-low) !important;
+	}
 }
