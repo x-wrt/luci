@@ -201,6 +201,10 @@ msgstr "上線時間"
 msgid "Wireless"
 msgstr "無線"
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:314
+msgid "Wireless Mesh"
+msgstr "無線 Mesh"
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:102
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:62
 msgid "no"
