@@ -1,297 +1,146 @@
-/**
- * Dashboard Principals Styles
-**/
-
-.Dashboard {
-	color: var(--text-color-high, #212529) !important;
-}
-
-.Dashboard h3 {
-	color: var(--text-color-high, #000);
-}
-
-.Dashboard hr {
-	border: 0;
-	height: 0;
-	overflow: visible;
-	margin: 0;
-	box-sizing: content-box;
-	border-top: 1px solid var(--border-color-medium, rgba(0, 0, 0, 0.1));
-}
-
-.Dashboard .box-s1 {
-	min-height: 466px;
-}
-
-.Dashboard .internet-status-self .internet-status-info .title {
-	height: 97px;
-}
-
-.Dashboard .dashboard-bg {
-	border-radius: 16px;
-	background-color: var(--background-color-medium, #e0e0e0);
-}
-
-.Dashboard .title {
-	text-align: center;
-}
-
-.Dashboard .section-content {
-	display: flex;
-	vertical-align: top;
-	padding: 20px 0 0 0;
-	align-items: flex-start;
-	justify-content: space-between;
-}
-
-.Dashboard .section-content > div {
-	width:100%;
-	padding:1.5em;
-}
-
-.Dashboard .section-content  .settings-info {
-	padding-top:1em;
-}
-
-.Dashboard .section-content .internet-status-info .settings-info {
-	display: flex;
-	justify-content: space-around;
-}
-
-.Dashboard .section-content .internet-status-info .settings-info > div > p > i{
-	padding: 0 0 0 5px;
-}
-
-.Dashboard .section-content > div:nth-child(2) {
-	margin-left:20px;
-}
-
-.Dashboard .devices-list .devices-info {
-	margin-bottom: 0;
-}
-
-.Dashboard .devices-list .devices-info .tr .td{
-	padding:0px 0 0 10px;
-}
-
-.Dashboard .devices-list .devices-info .tr .td:first-child {
-	width: 33%;
-	word-break: break-all;
-}
-
-.Dashboard .devices-list hr:nth-child(4) {
-	margin-top: 0;
-	margin-bottom: 8px;
-}
-
-.Dashboard .router-status-lan .devices-list .table-titles .th:first-child {
-	width: 35%;
-}
-
-.Dashboard .router-status-self .router-status-info .settings-info {
-	padding-left:27px;
-}
-
-.Dashboard .router-status-self .router-status-info .title h3 {
-	margin-top:-2px;
-}
-
-.Dashboard .router-status-info svg {
-	width: 70px;
-}
-
-.Dashboard .internet-status-self .settings-info p:first-child span:first-child{
-	font-size: 15px;
-	font-weight: 500;
-}
-
-.Dashboard .internet-status-self .settings-info p:nth-child(2) span:first-child,
-.Dashboard .router-status-wifi .wifi-info .settings-info p:first-child span:first-child,
-.Dashboard .router-status-wifi .wifi-info .settings-info p:nth-child(2) span:first-child{
-	font-weight: 700;
-}
-
-.Dashboard .settings-info p span:first-child {
-	width: 35%;
-	font-size: 12px;
-	text-align: right;
-}
-
-.Dashboard .settings-info p span:nth-child(2){
-	display: inline-block;
-	word-break: break-all;
-}
-
-.Dashboard .settings-info p span:nth-child(2).label {
-	padding: 1px 4px 1px 4px;
-	font-size: 9.75px;
-}
-
-.Dashboard .router-status-info .settings-info p span:nth-child(2){
-	max-width: 283px;
-}
-
-.Dashboard .settings-info p span.ssid {
-	max-height: 18px;
-	top: 3px;
-}
-
-.Dashboard .settings-info p span.encryption {
-	max-width: 82px;
-}
-
-.Dashboard .router-status-wifi .wifi-info .settings-info,
-.Dashboard .router-status-lan .lan-info .settings-info
-{
-	display: flex;
-	justify-content: space-around;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .tr .td {
-	padding: 0 10px 0 10px;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .tr .td:first-child {
-	width: 30%;
-	word-break: break-all;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .tr .td:nth-child(2) {
-	width: 21%;
-	overflow: hidden;
-	padding-left:0;
-	word-break: break-all;
-}
-
-.Dashboard .router-status-wifi .wifi-info .settings-info{
-	padding:1em 0 1em 0;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .tr .td:nth-child(3) {
-	width: 22%;
-	overflow: hidden;
-	position: relative;
-	top: -3px;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .tr .td:nth-child(5) {
-	width: initial;
-}
-
-.Dashboard .router-status-wifi .wifi-info > hr:last-child {
-	margin-bottom:0;
-}
-
-.Dashboard .router-status-wifi .wifi-info .devices-info .device-info .progress {
-	padding: 0;
-	width: 100%;
-	margin: 0;
-}
-
-.Dashboard .wifi-info .devices-info .table-titles {
+/* =========================================================
+   【全新重构】无线射频卡片布局 (CSS Grid)
+   ========================================================= */
+.Dashboard .wifi-networks-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 15px;
+	padding: 15px 0;
 	border-bottom: 1px solid var(--border-color-medium, rgba(0, 0, 0, 0.1));
+	margin-bottom: 15px;
 }
 
-.Dashboard .table {
-	width: auto;
-	text-align: left;
+.Dashboard .wifi-radio-card {
+	background: var(--background-color-medium, rgba(0,0,0,0.03));
+	border-radius: 12px;
+	padding: 15px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
 }
 
-[data-darkmode="true"] {
-	/* invert black SVG line drawings in dark mode */
-	.Dashboard .svgmonotone {
-		filter: invert(.5);
-	}
+.Dashboard .wifi-radio-card .card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed rgba(0,0,0,0.1);
 }
 
-/**
- * Responsive
- **/
-@media screen and (min-width: 200px) and (max-width: 640px) {
+.Dashboard .wifi-radio-card .ssid-name {
+	font-weight: 600;
+	font-size: 15px;
+	color: var(--bs-primary);
+}
 
-	.Dashboard .cbi-section-1 > .section-content {
-		padding-top:10px;
+.Dashboard .wifi-radio-card .info-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	margin-bottom: 6px;
+	color: var(--text-color-high, #333);
+}
+
+.Dashboard .wifi-radio-card .info-row span:first-child { color: #6c757d; }
+.Dashboard .wifi-radio-card .info-row.highlight strong { color: var(--bs-primary); font-size: 14px; }
+
+/* =========================================================
+   【全新重构】设备列表虚拟表格 (Modern Flex Table)
+   ========================================================= */
+.Dashboard .wifi-clients-wrapper { width: 100%; overflow: hidden; }
+
+.Dashboard .modern-flex-table {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.Dashboard .modern-flex-table .tr {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px 8px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.Dashboard .modern-flex-table .thead { font-weight: 600; color: #6c757d; background: transparent !important; }
+.Dashboard .modern-flex-table .tfoot { font-weight: 600; border-top: 2px solid rgba(0, 0, 0, 0.1); }
+
+/* 列宽分配 (PC端) */
+.Dashboard .modern-flex-table .col-device { flex: 1 1 35%; }
+.Dashboard .modern-flex-table .col-signal { flex: 1 1 45%; padding: 0 15px; }
+.Dashboard .modern-flex-table .col-traffic { flex: 1 1 20%; text-align: right; font-family: monospace; }
+
+/* 单元格内部微调 */
+.Dashboard .device-name { font-weight: 600; font-size: 14px; }
+.Dashboard .device-mac, .Dashboard .network-name { font-size: 12px; opacity: 0.7; margin-bottom: 4px; }
+.Dashboard .traffic-stat { font-size: 13px; color: #555; }
+.Dashboard .traffic-stat.rx span { color: var(--bs-success); }
+.Dashboard .traffic-stat.tx span { color: var(--bs-primary); }
+
+/* 高质感进度条 */
+.Dashboard .modern-progress {
+	width: 100%;
+	max-width: 200px;
+	height: 16px !important;
+	background-color: rgba(0, 0, 0, 0.08) !important;
+	border-radius: 8px !important;
+	position: relative;
+	overflow: hidden;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.1) !important;
+	margin: 0 !important;
+}
+.Dashboard .modern-progress > div { height: 100%; border-radius: 8px; }
+.Dashboard .modern-progress::after {
+	content: attr(title);
+	position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+	line-height: 16px !important; font-size: 11px !important; text-align: center;
+	color: #333 !important; text-shadow: 0 0 3px rgba(255, 255, 255, 0.9) !important;
+	white-space: nowrap; z-index: 2;
+}
+
+/* =========================================================
+   【极致响应式】手机端 (<= 800px) : 表格坍缩为独立卡片
+   ========================================================= */
+@media screen and (max-width: 800px) {
+	.Dashboard .modern-flex-table .hide-xs { display: none !important; } /* 隐藏表头 */
+
+	.Dashboard .modern-flex-table .tbody-row {
+		flex-direction: column !important; /* 横向变纵向 */
+		align-items: flex-start !important;
+		background: rgba(0, 0, 0, 0.02);
+		border-radius: 12px;
+		margin-bottom: 12px;
+		padding: 12px 16px !important;
+		border: 1px solid rgba(0, 0, 0, 0.05) !important;
 	}
 
-	.Dashboard .section-content {
-		display:block;
+	.Dashboard .modern-flex-table .col-device,
+	.Dashboard .modern-flex-table .col-signal,
+	.Dashboard .modern-flex-table .col-traffic {
+		width: 100% !important;
+		flex: 1 1 100% !important;
+		padding: 0 !important;
+		text-align: left !important;
 	}
 
-	.Dashboard .section-content > div{
-		padding: 1em;
-	}
+	.Dashboard .modern-flex-table .col-device { border-bottom: 1px dashed rgba(0, 0, 0, 0.1); padding-bottom: 8px !important; margin-bottom: 8px !important; }
+	.Dashboard .modern-flex-table .col-signal { margin-bottom: 8px !important; }
+	.Dashboard .modern-progress { max-width: 100%; } /* 手机端进度条撑满宽度 */
 
-	.Dashboard .section-content > div:first-child {
-		margin-bottom:10px;
-	}
-
-	.Dashboard .section-content > div:nth-child(2) {
-		margin:0;
-	}
-
-	.Dashboard .router-status-self .router-status-info .settings-info {
-		padding:0;
-	}
-
-	.Dashboard .section-content .internet-status-info .settings-info {
-		display:block;
-	}
-
-	.Dashboard .section-content .internet-status-info .settings-info > div:first-child {
-		margin-bottom: 10px;
-		border-bottom: 1px solid var(--border-color-medium, rgba(0, 0, 0, 0.1));
-	}
-
-	.Dashboard .section-content .router-status-lan .devices-info .table-titles {
-		display:block;
-	}
-
-	.Dashboard .router-status-wifi .wifi-info .settings-info > div{
-		flex:1;
-	}
-
-	.Dashboard .section-content .router-status-lan .devices-info .table-titles .th:last-child{
-		padding-left: 70px;
-	}
-
-	.Dashboard .section-content .router-status-lan .devices-info .td:first-child{
-		flex: 2 2 31%;
-	}
-
-	.Dashboard .section-content .router-status-lan .devices-info .td:nth-child(2){
-		flex: 1 1 24%;
-		padding: 0;
-	}
-
-	.Dashboard .section-content .router-status-lan .devices-info .td:last-child{
-		word-wrap: normal;
-	}
-
-	.Dashboard .router-status-wifi .wifi-info .settings-info > div p:nth-child(6) > span:last-child{
-		display: inline-block;
-		overflow: hidden;
-		height: 14px;
-		width: 52%;
-		word-break: break-word;
-		line-height: 15px;
-	}
-
-	.Dashboard .wifi-info .devices-info .table-titles {
-		padding: 0;
-		margin: 0;
+	/* 手机端将流量左右并排显示，节约纵向空间 */
+	.Dashboard .modern-flex-table .col-traffic {
 		display: flex;
-		border-radius: initial;
-	}
-
-	.Dashboard .wifi-info .devices-info .table-titles .th {
-		flex: 2 2 24%;
-	}
-
-	.Dashboard .wifi-info .devices-info .tr .td {
-		flex: 2 2 10%;
-	}
-
-	.Dashboard .wifi-info hr:nth-child(4) {
-		margin-bottom: 0;
+		justify-content: space-between;
+		background: rgba(255, 255, 255, 0.5);
+		padding: 6px 10px !important;
+		border-radius: 6px;
 	}
 }
+
+/* 夜间模式修正 */
+[data-darkmode="true"] .Dashboard .wifi-radio-card { background: rgba(255,255,255,0.05); }
+[data-darkmode="true"] .Dashboard .modern-progress::after { color: #fff !important; text-shadow: 0 0 3px rgba(0, 0, 0, 0.9) !important; }
+[data-darkmode="true"] .Dashboard .modern-flex-table .tbody-row { background: rgba(255, 255, 255, 0.03); }
+[data-darkmode="true"] .Dashboard .modern-flex-table .col-traffic { background: rgba(0, 0, 0, 0.2); }
