@@ -24,6 +24,10 @@ msgstr ""
 msgid "%d s ago"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:402
+msgid "%s ago"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:108
 msgid "15 min: %.2f"
 msgstr ""
@@ -36,8 +40,12 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:40
-msgid "Active leases"
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:90
+msgid "Active Users"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:402
+msgid "Active now"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:295
@@ -80,6 +88,7 @@ msgstr ""
 msgid "Channel"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:218
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/history.js:52
 msgid "Collecting data..."
 msgstr ""
@@ -94,10 +103,8 @@ msgstr ""
 msgid "Connected"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:14
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:19
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:20
-msgid "DHCP Devices"
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:212
+msgid "Connection"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:194
@@ -116,8 +123,20 @@ msgstr ""
 msgid "Detail tabs"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:211
+msgid "Device Info"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:352
 msgid "Devices Connected"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:478
+msgid "Disable"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:477
+msgid "Disabled"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:73
@@ -128,8 +147,32 @@ msgstr ""
 msgid "Down."
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:478
+msgid "Enable"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:477
+msgid "Enabled"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:346
 msgid "Encryption"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:69
+msgid "Failed to allow user."
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:69
+msgid "Failed to allow user: %s"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:65
+msgid "Failed to block user."
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:65
+msgid "Failed to block user: %s"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:300
@@ -173,13 +216,11 @@ msgstr ""
 msgid "Grant access to wireless status display"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:215
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:378
 msgid "Hostname"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:216
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:384
 msgid "IP Address"
@@ -213,6 +254,7 @@ msgstr ""
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:23
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:103
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:316
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:214
 msgid "Internet"
 msgstr ""
 
@@ -247,10 +289,6 @@ msgstr ""
 msgid "Local Time"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
-msgid "MAC"
-msgstr ""
-
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:336
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:25
 msgid "Mbit/s"
@@ -275,13 +313,12 @@ msgstr ""
 msgid "No RX signal"
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:40
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:53
-msgid "No active leases"
-msgstr ""
-
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/history.js:52
 msgid "No data received"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:506
+msgid "No information available"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:88
@@ -362,9 +399,12 @@ msgid ""
 "that order: drag an entry to move it. An empty list shows the defaults."
 msgstr ""
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:54
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:245
 msgid "Total"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:213
+msgid "Traffic (RX / TX)"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:160
@@ -387,6 +427,10 @@ msgstr ""
 msgid "Uptime"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:453
+msgid "VPN"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:10
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:13
 msgid "WAN traffic"
@@ -396,9 +440,18 @@ msgstr ""
 msgid "Weak"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:458
+msgid "Wired"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:28
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:37
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:423
 msgid "Wireless"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:423
+msgid "Wireless Mesh"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:36
@@ -440,10 +493,18 @@ msgstr ""
 msgid "dBm"
 msgstr ""
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:375
+msgid "expired"
+msgstr ""
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:89
 msgid "load %.2f"
 msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:278
 msgid "now"
+msgstr ""
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:373
+msgid "unlimited"
 msgstr ""
