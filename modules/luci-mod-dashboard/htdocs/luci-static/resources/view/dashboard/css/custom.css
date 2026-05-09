@@ -425,7 +425,7 @@
 /* ---- Wireless network boxes (LuCI .ifacebox) ---- */
 .dashboard-net-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 	gap: 12px;
 	margin-bottom: 18px;
 }
@@ -460,7 +460,7 @@
 .dashboard-net-fields {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 8px 14px;
+	gap: 8px 12px;
 	overflow-wrap: anywhere;
 	font-size: 12.5px;
 }
@@ -469,6 +469,19 @@
 	display: block;
 	font-size: 11.5px;
 	color: var(--dashboard-text-muted);
+}
+
+.dashboard-net-field.dashboard-net-bssid b,
+.dashboard-net-bssid b {
+	font-family: monospace;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.dashboard-net-field.dashboard-net-encryption b,
+.dashboard-net-encryption b {
+	word-break: normal;
+	overflow-wrap: normal;
 }
 
 .dashboard-net-note {
@@ -498,6 +511,10 @@
 		--dashboard-gap: 12px;
 	}
 
+	.dashboard-net-grid {
+		grid-template-columns: 1fr;
+	}
+
 	.dashboard-kpi-icon {
 		width: 46px;
 		height: 46px;
@@ -512,3 +529,236 @@
 		--dashboard-plot-h: 140px;
 	}
 }
+
+/* ---- Active Users Section & Table ---- */
+.Dashboard .active-users-self {
+	margin-top: var(--dashboard-gap, 16px);
+}
+
+.active-users-table {
+	display: flex !important;
+	flex-direction: column;
+	width: 100%;
+	border: none !important;
+}
+
+.active-users-table tbody {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.active-users-table .tr {
+	display: flex;
+	align-items: center;
+	padding: 12px 8px;
+	border-bottom: 1px solid var(--dashboard-border, rgba(0, 0, 0, 0.05));
+	transition: opacity 0.3s ease;
+}
+
+.active-users-table .table-titles {
+	font-weight: 600;
+	color: var(--dashboard-text-muted, #6c757d);
+	background: transparent !important;
+}
+
+.active-users-table .td,
+.active-users-table .th {
+	border: none !important;
+	padding: 8px 10px;
+	word-break: break-all;
+	min-width: 0;
+}
+
+.active-users-table .tr.placeholder .td {
+	flex: 1 1 100% !important;
+	text-align: center;
+}
+
+.active-users-table .th:nth-child(1),
+.active-users-table .td:nth-child(1) {
+	flex: 1 1 30%;
+}
+
+.active-users-table .th:nth-child(2),
+.active-users-table .td:nth-child(2) {
+	flex: 1 1 25%;
+}
+
+.active-users-table .th:nth-child(3),
+.active-users-table .td:nth-child(3) {
+	flex: 1 1 35%;
+}
+
+.active-users-table .th:nth-child(4),
+.active-users-table .td:nth-child(4) {
+	flex: 0 0 90px;
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+}
+
+@media screen and (max-width: 800px) {
+	.Dashboard .active-users-self {
+		padding: 14px 10px !important;
+		margin-bottom: 16px !important;
+	}
+
+	.active-users-self .title {
+		margin-bottom: 14px !important;
+	}
+
+	.active-users-self .title img {
+		width: 36px !important;
+	}
+
+	.active-users-self .title h3 {
+		font-size: 16px !important;
+	}
+
+	.active-users-table .table-titles {
+		display: none !important;
+	}
+
+	.active-users-table .tr:not(.table-titles) {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: stretch !important;
+		position: relative !important;
+		background: var(--dashboard-surface-alt, rgba(0, 0, 0, 0.02)) !important;
+		border-radius: 10px !important;
+		margin-bottom: 12px !important;
+		padding: 12px 14px !important;
+		border: 1px solid var(--dashboard-border, rgba(0, 0, 0, 0.08)) !important;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+	}
+
+	/* Disable theme's pseudo data-title headers and 40% padding */
+	.active-users-table td[data-title]::before,
+	.active-users-table td[data-title]::after {
+		display: none !important;
+		content: none !important;
+	}
+
+	.active-users-table td,
+	.active-users-table th,
+	.active-users-table td[data-title] {
+		padding: 0 !important;
+		position: static !important;
+		min-height: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Row 1: Device Info (with space on right for button) */
+	.active-users-table .td:nth-child(1) {
+		padding-right: 95px !important;
+		padding-bottom: 10px !important;
+		margin-bottom: 8px !important;
+		border-bottom: 1px dashed var(--dashboard-border, rgba(0, 0, 0, 0.08)) !important;
+	}
+
+	/* Top-Right Action Button */
+	.active-users-table .td:nth-child(4) {
+		position: absolute !important;
+		top: 12px !important;
+		right: 14px !important;
+		width: auto !important;
+		max-width: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		z-index: 2 !important;
+		display: flex !important;
+		justify-content: flex-end !important;
+	}
+
+	/* Row 2: Connection Info Box */
+	.active-users-table .td:nth-child(2) {
+		margin-bottom: 8px !important;
+		padding: 8px 10px !important;
+		background: rgba(0, 0, 0, 0.03) !important;
+		border-radius: 6px !important;
+		border: 1px solid var(--dashboard-border, rgba(0, 0, 0, 0.04)) !important;
+	}
+
+	.active-users-table .td:nth-child(2) > div {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		gap: 6px 10px !important;
+	}
+
+	.active-users-table .td:nth-child(2) > div > div {
+		margin: 0 !important;
+	}
+
+	/* Row 3: Traffic Info Box */
+	.active-users-table .td:nth-child(3) {
+		padding: 8px 10px !important;
+		background: rgba(0, 0, 0, 0.03) !important;
+		border-radius: 6px !important;
+		border: 1px solid var(--dashboard-border, rgba(0, 0, 0, 0.04)) !important;
+	}
+
+	.active-users-table .td:nth-child(3) > div {
+		display: flex !important;
+		flex-direction: row !important;
+		justify-content: space-between !important;
+		align-items: center !important;
+		gap: 12px !important;
+	}
+
+	.active-users-table .td:nth-child(3) > div > div:last-child {
+		text-align: right !important;
+	}
+
+	/* Placeholder */
+	.active-users-table .tr.placeholder {
+		border: none !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		padding: 20px 0 !important;
+	}
+
+	.active-users-table .tr.placeholder .td {
+		flex: 1 1 100% !important;
+		text-align: center !important;
+		padding-right: 0 !important;
+		border-bottom: none !important;
+	}
+}
+
+/* Dark mode styling for mobile cards */
+[data-darkmode="true"] .active-users-table .tr:not(.table-titles) {
+	background: rgba(255, 255, 255, 0.03) !important;
+	border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-darkmode="true"] .active-users-table .td:nth-child(1) {
+	border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-darkmode="true"] .active-users-table .td:nth-child(2),
+[data-darkmode="true"] .active-users-table .td:nth-child(3) {
+	background: rgba(255, 255, 255, 0.04) !important;
+	border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-darkmode="false"]) .active-users-table .tr:not(.table-titles) {
+		background: rgba(255, 255, 255, 0.03) !important;
+		border-color: rgba(255, 255, 255, 0.08) !important;
+	}
+
+	:root:not([data-darkmode="false"]) .active-users-table .td:nth-child(1) {
+		border-color: rgba(255, 255, 255, 0.08) !important;
+	}
+
+	:root:not([data-darkmode="false"]) .active-users-table .td:nth-child(2),
+	:root:not([data-darkmode="false"]) .active-users-table .td:nth-child(3) {
+		background: rgba(255, 255, 255, 0.04) !important;
+		border-color: rgba(255, 255, 255, 0.06) !important;
+	}
+}
+
