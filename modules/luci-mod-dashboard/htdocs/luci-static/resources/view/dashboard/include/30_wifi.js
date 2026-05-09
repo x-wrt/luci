@@ -185,11 +185,11 @@ return baseclass.extend({
 		const active = radio.isactive.value === true;
 		const fields = [];
 
-		for (const key of [ 'chan', 'rate', 'encryption', 'bssid' ])
+		for (const key of [ 'chan', 'rate', 'bssid', 'encryption' ])
 			if (radio[key].visible)
-				fields.push(E('div', {}, [
+				fields.push(E('div', { 'class': 'dashboard-net-field dashboard-net-' + key }, [
 					E('span', {}, [ radio[key].title ]),
-					E('b', {}, [ radio[key].value ])
+					E('b', (key === 'bssid') ? { 'style': 'font-family: monospace; white-space: nowrap;' } : {}, [ radio[key].value ])
 				]));
 
 		return E('div', { 'class': 'ifacebox' }, [
