@@ -144,3 +144,27 @@
 [data-darkmode="true"] .Dashboard .modern-progress::after { color: #fff !important; text-shadow: 0 0 3px rgba(0, 0, 0, 0.9) !important; }
 [data-darkmode="true"] .Dashboard .modern-flex-table .tbody-row { background: rgba(255, 255, 255, 0.03); }
 [data-darkmode="true"] .Dashboard .modern-flex-table .col-traffic { background: rgba(0, 0, 0, 0.2); }
+
+/* =========================================================
+   【全局修复】破除原主题自带的恶心“文本模糊/渐隐”遮罩效果
+   ========================================================= */
+.Dashboard .modern-flex-table .td,
+.Dashboard .modern-flex-table .td *,
+.Dashboard .lan-flex-table .td,
+.Dashboard .lan-flex-table .td *,
+.Dashboard .active-users-table .td,
+.Dashboard .active-users-table .td * {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    white-space: normal !important; /* 允许正常断字，不强制单行 */
+}
+
+/* 如果主题使用的是伪元素(::after)做的渐变白底覆盖，强行隐藏它 */
+.Dashboard .modern-flex-table .td::after,
+.Dashboard .modern-flex-table .td::before,
+.Dashboard .modern-flex-table .td *::after,
+.Dashboard .modern-flex-table .td *::before {
+    display: none !important;
+    background: none !important;
+    content: none !important;
+}
