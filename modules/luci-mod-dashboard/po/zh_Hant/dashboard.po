@@ -13,41 +13,49 @@ msgstr ""
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:97
 msgid "%d clients"
-msgstr ""
+msgstr "%d 個用戶端"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:89
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:124
 msgid "%d core"
 msgid_plural "%d cores"
-msgstr[0] ""
+msgstr[0] "%d 核"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:277
 msgid "%d min ago"
-msgstr ""
+msgstr "%d 分鐘前"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:72
 msgid "%d of %d SSIDs active"
-msgstr ""
+msgstr "%d / %d 個 SSID 處於活動狀態"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:277
 msgid "%d s ago"
-msgstr ""
+msgstr "%d 秒前"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:402
+msgid "%s ago"
+msgstr "%s前"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:108
 msgid "15 min: %.2f"
-msgstr ""
+msgstr "15 分鐘：%.2f"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:108
 msgid "5 min: %.2f"
-msgstr ""
+msgstr "5 分鐘：%.2f"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:322
 msgid "Active"
 msgstr "活動"
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:40
-msgid "Active leases"
-msgstr ""
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:90
+msgid "Active Users"
+msgstr "活躍用戶"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:402
+msgid "Active now"
+msgstr "剛剛活躍"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:295
 msgid "Architecture"
@@ -68,30 +76,31 @@ msgstr "位元速率"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:173
 msgid "Buffered"
-msgstr ""
+msgstr "已緩衝"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:141
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:166
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:43
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:87
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:162
 msgid "CPU usage"
-msgstr ""
+msgstr "CPU 使用率"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:176
 msgid "Cached"
-msgstr ""
+msgstr "已快取"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:328
 msgid "Channel"
 msgstr "頻道"
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:218
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/history.js:52
 msgid "Collecting data..."
-msgstr ""
+msgstr "正在收集資料..."
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:72
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:104
@@ -103,11 +112,9 @@ msgstr ""
 msgid "Connected"
 msgstr "已連線"
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:14
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:19
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:20
-msgid "DHCP Devices"
-msgstr "DHCP 裝置"
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:212
+msgid "Connection"
+msgstr "連線方式"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:194
 msgid "DNSv4"
@@ -123,11 +130,23 @@ msgstr "儀表板"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/layout.js:13
 msgid "Detail tabs"
-msgstr ""
+msgstr "詳細資訊分頁"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:211
+msgid "Device Info"
+msgstr "裝置資訊"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:352
 msgid "Devices Connected"
 msgstr "已連線裝置"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:478
+msgid "Disable"
+msgstr "停用"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:477
+msgid "Disabled"
+msgstr "已停用"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:73
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:168
@@ -135,11 +154,35 @@ msgstr "已連線裝置"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:220
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:240
 msgid "Down."
-msgstr "下載."
+msgstr "下載"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:478
+msgid "Enable"
+msgstr "啟用"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:477
+msgid "Enabled"
+msgstr "已啟用"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:346
 msgid "Encryption"
 msgstr "加密"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:69
+msgid "Failed to allow user."
+msgstr "放行用戶失敗。"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:69
+msgid "Failed to allow user: %s"
+msgstr "放行用戶失敗：%s"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:65
+msgid "Failed to block user."
+msgstr "封鎖用戶失敗。"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:65
+msgid "Failed to block user: %s"
+msgstr "封鎖用戶失敗：%s"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:300
 msgid "Firmware Version"
@@ -152,19 +195,19 @@ msgstr "GHz"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:188
 msgid "GatewayV4"
-msgstr "GatewayV4"
+msgstr "IPv4 閘道器"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:234
 msgid "GatewayV6"
-msgstr "GatewayV6"
+msgstr "IPv6 閘道器"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:25
 msgid "Gbit/s"
-msgstr ""
+msgstr "Gbit/s"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:111
 msgid "Good"
-msgstr ""
+msgstr "良好"
 
 #: modules/luci-mod-dashboard/root/usr/share/rpcd/acl.d/luci-mod-dashboard.json:31
 msgid "Grant access to DHCP status display"
@@ -182,13 +225,11 @@ msgstr "授予存取系統路由狀態的權限"
 msgid "Grant access to wireless status display"
 msgstr "授予存取無線狀態顯示的權限"
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:215
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:378
 msgid "Hostname"
 msgstr "主機名稱"
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:216
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:384
 msgid "IP Address"
@@ -216,18 +257,19 @@ msgstr "IPv6 首碼"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:206
 msgid "Interface is disabled"
-msgstr ""
+msgstr "介面已停用"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:21
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:23
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:103
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:316
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:214
 msgid "Internet"
 msgstr "網際網路"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:25
 msgid "Kbit/s"
-msgstr ""
+msgstr "Kbit/s"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:285
 msgid "Kernel Version"
@@ -236,29 +278,25 @@ msgstr "核心版本"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/index.js:251
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/index.js:298
 msgid "Layout"
-msgstr ""
+msgstr "版面配置"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/layout.js:12
 msgid "Live charts"
-msgstr ""
+msgstr "即時圖表"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:45
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:106
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:154
 msgid "Load average"
-msgstr ""
+msgstr "平均負載"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/index.js:298
 msgid "Loading view…"
-msgstr ""
+msgstr "正在載入檢視…"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:280
 msgid "Local Time"
 msgstr "本地時間"
-
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:47
-msgid "MAC"
-msgstr "MAC"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:336
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:25
@@ -269,11 +307,11 @@ msgstr "Mbit/s"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:97
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:142
 msgid "Memory"
-msgstr ""
+msgstr "記憶體"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:170
 msgid "Memory used"
-msgstr ""
+msgstr "已用記憶體"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:290
 msgid "Model"
@@ -282,31 +320,30 @@ msgstr "裝置型號"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:119
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:231
 msgid "No RX signal"
-msgstr ""
-
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:40
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:53
-msgid "No active leases"
-msgstr ""
+msgstr "無接收訊號"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/history.js:52
 msgid "No data received"
-msgstr ""
+msgstr "未收到資料"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:506
+msgid "No information available"
+msgstr "暫無可用資訊"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:88
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:113
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:180
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:244
 msgid "No wireless clients connected"
-msgstr ""
+msgstr "無已連線的無線用戶端"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:219
 msgid "Noise floor"
-msgstr ""
+msgstr "底噪"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:74
 msgid "Not configured or no address acquired"
-msgstr ""
+msgstr "尚未設定或未獲取到位址"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:72
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:104
@@ -324,7 +361,7 @@ msgstr "協定"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:47
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:202
 msgid "Resources"
-msgstr ""
+msgstr "資源"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:217
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:316
@@ -334,11 +371,11 @@ msgstr "SSID"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/layout.js:61
 msgid "Save & Apply"
-msgstr ""
+msgstr "儲存並套用"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:219
 msgid "Signal"
-msgstr ""
+msgstr "訊號"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:35
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:96
@@ -348,11 +385,11 @@ msgstr "訊號強度"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/layout.js:11
 msgid "Status cards"
-msgstr ""
+msgstr "狀態卡片"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:180
 msgid "Swap used"
-msgstr ""
+msgstr "已用 Swap"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:24
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:317
@@ -363,18 +400,23 @@ msgstr "系統"
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:130
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:137
 msgid "System load"
-msgstr ""
+msgstr "系統負載"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/layout.js:18
 msgid ""
 "The lists follow the page from top to bottom. What is in a list is shown, in "
 "that order: drag an entry to move it. An empty list shows the defaults."
 msgstr ""
+"清單自上而下與頁面相對應。清單中的項目將依序顯示：拖曳項目可調整順序。留空則"
+"顯示預設項目。"
 
-#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/20_lan.js:54
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:245
 msgid "Total"
 msgstr "總計"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:213
+msgid "Traffic (RX / TX)"
+msgstr "傳輸流量 (接收/傳送)"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:160
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:407
@@ -396,48 +438,61 @@ msgstr "上傳"
 msgid "Uptime"
 msgstr "上線時間"
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:453
+msgid "VPN"
+msgstr "VPN"
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:10
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/15_traffic.js:13
 msgid "WAN traffic"
-msgstr ""
+msgstr "WAN 流量"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:112
 msgid "Weak"
-msgstr ""
+msgstr "較弱"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:458
+msgid "Wired"
+msgstr "有線"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:28
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:37
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:423
 msgid "Wireless"
 msgstr "無線"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:423
+msgid "Wireless Mesh"
+msgstr "無線 Mesh"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:36
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:159
 msgid "Wireless client data usage"
-msgstr ""
+msgstr "無線用戶端流量"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:34
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:84
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:87
 msgid "Wireless client distribution"
-msgstr ""
+msgstr "無線用戶端分佈"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:33
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:70
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:288
 msgid "Wireless clients"
-msgstr ""
+msgstr "無線用戶端"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:25
 msgid "bit/s"
-msgstr ""
+msgstr "bit/s"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:85
 msgid "by SSID"
-msgstr ""
+msgstr "按 SSID"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:87
 msgid "clients"
-msgstr ""
+msgstr "用戶端"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:97
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:111
@@ -447,33 +502,26 @@ msgstr ""
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:231
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:234
 msgid "dBm"
-msgstr ""
+msgstr "dBm"
+
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:375
+msgid "expired"
+msgstr "已過期"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/12_resources.js:89
 msgid "load %.2f"
-msgstr ""
+msgstr "負載 %.2f"
 
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/lib/charts.js:278
 msgid "now"
-msgstr ""
+msgstr "現在"
 
-#~ msgid "Strength"
-#~ msgstr "強度"
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:373
+msgid "unlimited"
+msgstr "無限制"
 
-#~ msgid "no"
-#~ msgstr "否"
+#~ msgid "Client distribution"
+#~ msgstr "用戶端分佈"
 
-#~ msgid "yes"
-#~ msgstr "是"
-
-#~ msgid "Devices"
-#~ msgstr "裝置"
-
-#~ msgid "Download"
-#~ msgstr "下載"
-
-#~ msgid "Mac"
-#~ msgstr "Mac"
-
-#~ msgid "Upload"
-#~ msgstr "上傳"
+#~ msgid "Client traffic"
+#~ msgstr "用戶端流量"
