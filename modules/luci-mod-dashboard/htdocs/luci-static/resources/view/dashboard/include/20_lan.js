@@ -38,60 +38,66 @@ return baseclass.extend({
 
 		const container_devices_wrapper = E('div', { 'class': 'lan-clients-wrapper', 'style': 'width: 100%; overflow: hidden;' });
 
-		// 2. 💡 魔法注入：专门针对 LAN 列表的三列布局样式 (带终极手机端优化)
+		// 2. 💡 魔法注入：4 列数据的响应式布局
 		const dynamicStyles = E('style', {}, `
-			.lan-flex-table .col-host { flex: 1 1 35%; }
-			.lan-flex-table .col-mac { flex: 1 1 35%; padding: 0 15px; }
-			.lan-flex-table .col-ip { flex: 1 1 30%; text-align: right; }
+			.lan-flex-table .col-host { flex: 1 1 30%; }
+			.lan-flex-table .col-mac { flex: 1 1 25%; padding: 0 10px; }
+			.lan-flex-table .col-ip { flex: 1 1 25%; padding: 0 10px; }
+			.lan-flex-table .col-exp { flex: 1 1 20%; text-align: right; }
 
-			/* 手机端极致紧凑卡片优化：一行变两行，左右平分 */
+			/* 手机端 2x2 网格卡片重组 */
 			@media screen and (max-width: 800px) {
 				.lan-flex-table .tbody-row {
 					flex-wrap: wrap !important;
-					flex-direction: row !important; /* 允许内部元素折行并排 */
+					flex-direction: row !important;
+				}
+				.lan-flex-table .td {
+					width: auto !important;
+					padding: 0 !important;
+					align-self: center;
 				}
 
-				/* 第一行：主机名霸占 100% 宽度，底部使用柔和实线分割 */
+				/* Row 1: 主机名 (左) + IP地址 (右) */
 				.lan-flex-table .col-host {
-					width: 100% !important;
-					flex: 1 1 100% !important;
-					border-bottom: 1px solid rgba(0,0,0,0.06);
-					padding-bottom: 8px !important;
-					margin-bottom: 8px !important;
+					order: 1; flex: 1 1 60% !important;
+					border-bottom: 1px dashed rgba(0,0,0,0.1);
+					padding-bottom: 8px !important; margin-bottom: 8px !important;
 				}
-
-				/* 第二行左侧：MAC 地址占 50% */
-				.lan-flex-table .col-mac {
-					width: auto !important;
-					flex: 1 1 50% !important;
-					padding: 0 !important;
-					font-size: 11px !important; /* 稍微缩小 MAC 更精致 */
-					align-self: center;
-				}
-
-				/* 第二行右侧：IP 地址占 50%，强制靠右 */
 				.lan-flex-table .col-ip {
-					width: auto !important;
-					flex: 1 1 50% !important;
-					text-align: right !important;
-					margin-top: 0 !important;
-					padding: 0 !important;
-					align-self: center;
+					order: 2; flex: 1 1 40% !important; text-align: right !important;
+					border-bottom: 1px dashed rgba(0,0,0,0.1);
+					padding-bottom: 8px !important; margin-bottom: 8px !important;
 				}
+
+				/* Row 2: MAC (左) + 租期 (右) */
+				.lan-flex-table .col-mac {
+					order: 3; flex: 1 1 50% !important;
+					font-size: 11px !important;
+				}
+				.lan-flex-table .col-exp {
+					order: 4; flex: 1 1 50% !important; text-align: right !important;
+					font-size: 11px !important;
+				}
+
+				/* 表尾统计行修复 */
+				.lan-flex-table .tfoot { flex-direction: row !important; }
+				.lan-flex-table .tfoot .col-host { flex: 1 1 50% !important; border: none !important; margin: 0 !important; padding: 12px 8px !important; order: 1; }
+				.lan-flex-table .tfoot .col-exp { flex: 1 1 50% !important; border: none !important; margin: 0 !important; padding: 12px 8px !important; order: 2; }
 			}
 		`);
 		container_wapper.appendChild(dynamicStyles);
 
-		// 3. 构建 3 列的现代 Flex 表格
+		// 3. 构建 4 列的现代 Flex 表头
 		const table = E('div', { 'class': 'modern-flex-table lan-flex-table' }, [
 			E('div', { 'class': 'tr thead dashboard-bg hide-xs' }, [
 				E('div', { 'class': 'th col-host' }, _('Hostname')),
 				E('div', { 'class': 'th col-mac' }, _('MAC')),
-				E('div', { 'class': 'th col-ip' }, _('IP Address'))
+				E('div', { 'class': 'th col-ip' }, _('IP Address')),
+				E('div', { 'class': 'th col-exp' }, _('Lease time')) // 新增表头
 			])
 		]);
 
-		// 4. 遍历渲染 3 列数据
+		// 4. 遍历渲染 4 列数据
 		for(let i = 0; i < this.params.lan.devices.length; i++) {
 			const device = this.params.lan.devices[i];
 
@@ -102,23 +108,30 @@ return baseclass.extend({
 					E('div', { 'class': 'device-name', 'style': 'font-weight: 600;' }, device.hostname)
 				]),
 
-				// 第二列: MAC 地址 (采用等宽字体，灰色弱化)
+				// 第二列: MAC 地址
 				E('div', { 'class': 'td col-mac', 'style': 'font-family: monospace; font-size: 13px; color: #6c757d;' }, device.macaddr),
 
-				// 第三列: IP 地址 (去除突兀颜色，跟随系统默认字体颜色)
+				// 第三列: IP 地址
 				E('div', { 'class': 'td col-ip', 'style': 'font-family: monospace; font-size: 15px;' }, [
 					E('strong', {}, device.ipv4)
+				]),
+
+				// 第四列: 剩余租约时间 (完美还原官方的 DOM 渲染逻辑，带沙漏图标)
+				E('div', { 'class': 'td col-exp', 'style': 'font-size: 13px; color: #6c757d;' }, [
+					E('span', { 'style': 'opacity: 0.8; margin-right: 2px;' }, '⏳ '),
+					device.expires // 这里的 expires 已经是处理好的 DOM 节点或字符串
 				])
 			]);
 
 			table.appendChild(row);
 		}
 
-		// 5. 表尾统计 (三列对齐)
+		// 5. 表尾统计
 		table.appendChild(E('div', { 'class': 'tr tfoot dashboard-bg', 'style': 'border-top: 2px solid rgba(0,0,0,0.1);' }, [
 			E('div', { 'class': 'td col-host' }, E('strong', _('Total') + '：')),
-			E('div', { 'class': 'td col-mac hide-xs' }, ''), // 手机端自动隐藏中间的空列
-			E('div', { 'class': 'td col-ip' }, E('strong', this.params.lan.devices.length))
+			E('div', { 'class': 'td col-mac hide-xs' }, ''),
+			E('div', { 'class': 'td col-ip hide-xs' }, ''),
+			E('div', { 'class': 'td col-exp' }, E('strong', this.params.lan.devices.length))
 		]));
 
 		container_devices_wrapper.appendChild(table);
@@ -131,8 +144,18 @@ return baseclass.extend({
 	renderUpdateData(leases) {
 		const dev_arr = [];
 
-		leases.forEach(({ hostname = '?', ipaddr: ipv4 = '-', macaddr = '00:00:00:00:00:00' }) => {
-			dev_arr.push({ hostname, ipv4, macaddr });
+		leases.forEach(({ hostname = '?', ipaddr: ipv4 = '-', macaddr = '00:00:00:00:00:00', expires }) => {
+
+			// 💡 这里完美提取并复刻了官方原生代码的逻辑
+			let expNode;
+			if (expires === false)
+				expNode = E('em', _('unlimited'));
+			else if (expires <= 0)
+				expNode = E('em', _('expired'));
+			else
+				expNode = '%t'.format(expires);
+
+			dev_arr.push({ hostname, ipv4, macaddr, expires: expNode });
 		});
 
 		this.params.lan = { devices: dev_arr };
