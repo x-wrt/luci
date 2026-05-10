@@ -2541,4 +2541,225 @@ body[data-page='admin-status-overview'] .ifacebox-head {
 		color: var(--text-highest) !important;
 		border-color: var(--text-low) !important;
 	}
+
+	/* =========================================================
+	   【表 1：当前已挂载的文件系统】双列对称 2x2 网格排版 (终极ID追踪版)
+	   ========================================================= */
+
+	/* 1. 强制重置此表格的移动端默认排版 */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) {
+		display: flex !important;
+		flex-direction: column !important;
+	}
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr.table-titles {
+		display: none !important; /* 隐藏原始表头 */
+	}
+
+	/* 2. 卡片外框 */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		background: rgba(0, 0, 0, 0.02) !important;
+		border: 1px solid rgba(0, 0, 0, 0.06) !important;
+		border-radius: 12px !important;
+		padding: 14px 16px !important;
+		margin-bottom: 12px !important;
+		box-sizing: border-box !important;
+		width: 100% !important;
+	}
+
+	/* 3. 让每个单元格内部变成垂直排列（标题在上，数值在下） */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td {
+		display: flex !important;
+		flex-direction: column !important;
+		border: none !important;
+		padding: 0 !important;
+		background: transparent !important;
+		min-width: 0 !important;
+	}
+
+	/* 4. 动态提取标题并统一美化 */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td::before {
+		content: attr(data-title) !important;
+		display: block !important;
+		font-size: 11px !important;
+		color: #888 !important;
+		margin-bottom: 6px !important;
+		font-weight: normal !important;
+	}
+
+	/* 清除多余的后缀干扰 */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td::after {
+		display: none !important;
+	}
+
+	/* --- 第 1 列：文件系统 (左上角) --- */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(1) {
+		order: 1 !important; flex: 1 1 50% !important;
+		align-items: flex-start !important; text-align: left !important;
+		border-bottom: 1px dashed rgba(0,0,0,0.08) !important;
+		padding-bottom: 12px !important; margin-bottom: 12px !important;
+		padding-right: 8px !important; word-break: break-all !important;
+		font-family: monospace !important; font-size: 13px !important; color: var(--text-high) !important;
+	}
+
+	/* --- 第 2 列：挂载点 (右上角) --- */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(2) {
+		order: 2 !important; flex: 1 1 50% !important;
+		align-items: flex-end !important; text-align: right !important;
+		border-bottom: 1px dashed rgba(0,0,0,0.08) !important;
+		padding-bottom: 12px !important; margin-bottom: 12px !important;
+		padding-left: 8px !important; word-break: break-all !important;
+		font-weight: 600 !important; font-size: 15px !important; color: var(--bs-primary, #0d6efd) !important;
+	}
+
+	/* --- 第 3 列：可用空间 (左下角) --- */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(3) {
+		order: 3 !important; flex: 1 1 50% !important;
+		align-items: flex-start !important; text-align: left !important;
+		border-bottom: 1px dashed rgba(0,0,0,0.08) !important;
+		padding-bottom: 12px !important; margin-bottom: 12px !important;
+		padding-right: 8px !important;
+		font-size: 13px !important; color: var(--text-high) !important;
+	}
+
+	/* --- 第 4 列：已使用空间 (右下角) --- */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(4) {
+		order: 4 !important; flex: 1 1 50% !important;
+		align-items: flex-end !important; text-align: right !important;
+		border-bottom: 1px dashed rgba(0,0,0,0.08) !important;
+		padding-bottom: 12px !important; margin-bottom: 12px !important;
+		padding-left: 8px !important;
+		font-size: 13px !important; color: var(--text-high) !important;
+	}
+
+	/* --- 第 5 列：卸载分区按钮 (底部整行靠右) --- */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(5) {
+		order: 5 !important; flex: 1 1 100% !important; width: 100% !important;
+		align-items: flex-end !important; justify-content: flex-end !important;
+	}
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(5)::before {
+		display: none !important; /* 隐藏操作按钮的文字前缀 */
+	}
+
+	/* 无卸载权限时显示为连字符 "-" */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(5):not(:has(.btn)) {
+		opacity: 0.15 !important; font-size: 20px !important; font-weight: bold !important; line-height: 1 !important; text-align: right !important; display: block !important;
+	}
+
+	/* 有卸载按钮时美化按钮 */
+	.cbi-section-node[id^="cbi-fstab-"] table.table:not(.cbi-section-table) .tr:not(.table-titles) .td:nth-child(5) .btn {
+		margin: 0 !important; padding: 6px 16px !important; font-size: 13px !important; border-radius: 6px !important;
+	}
+
+	/* ================= 表 2：自定义挂载点配置 (精确制导 + 对称排版版) ================= */
+
+	/* 1. 卡片外层容器 */
+	tr[id^="cbi-fstab-"].cbi-section-table-row {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		background: rgba(0, 0, 0, 0.02) !important;
+		border: 1px solid rgba(0, 0, 0, 0.06) !important;
+		border-radius: 12px !important;
+		padding: 14px 16px !important;
+		margin-bottom: 12px !important;
+		box-sizing: border-box !important;
+		width: 100% !important;
+	}
+
+	tr[id^="cbi-fstab-"] > .td {
+		border: none !important;
+		padding: 0 !important;
+		background: transparent !important;
+		text-align: left !important;
+		min-width: 0 !important;
+	}
+
+	/* 清理所有系统自带的丑陋文字描述 */
+	tr[id^="cbi-fstab-"] > .td::before,
+	tr[id^="cbi-fstab-"] > .td::after,
+	tr[id^="cbi-fstab-"] > .td .cbi-value-description {
+		display: none !important;
+	}
+
+	/* --- 挂载点 (主标题) --- */
+	tr[id^="cbi-fstab-"] > .td[data-name="target"] {
+		order: 1 !important; flex: 1 1 70% !important;
+		font-weight: 600 !important; font-size: 16px !important; color: var(--bs-primary, #0d6efd) !important;
+		margin-bottom: 4px !important; word-break: break-all !important;
+	}
+	tr[id^="cbi-fstab-"] > .td[data-name="target"]::before {
+		content: attr(data-title) "：" !important; /* 动态读取多语言标题 */
+		display: inline !important; font-size: 12px !important; color: #888 !important; font-weight: normal !important;
+	}
+
+	/* --- 已启用 (复选框，放右上角) --- */
+	tr[id^="cbi-fstab-"] > .td[data-name="enabled"] {
+		order: 2 !important; flex: 0 0 30% !important;
+		display: flex !important; justify-content: flex-end !important; align-items: flex-start !important;
+	}
+	tr[id^="cbi-fstab-"] > .td[data-name="enabled"] .cbi-checkbox { margin: 0 !important; }
+
+	/* --- 设备信息 (长文本跨行显示) --- */
+	tr[id^="cbi-fstab-"] > .td[data-name="_device"] {
+		order: 3 !important; flex: 1 1 100% !important; width: 100% !important;
+		font-family: monospace !important; font-size: 12px !important; color: #6c757d !important;
+		margin-bottom: 12px !important; padding-bottom: 12px !important;
+		border-bottom: 1px dashed rgba(0,0,0,0.08) !important;
+		white-space: normal !important; word-break: break-all !important; line-height: 1.4 !important;
+	}
+
+	/* --- 文件系统 (左下方：与挂载选项对称) --- */
+	tr[id^="cbi-fstab-"] > .td[data-name="fstype"] {
+		order: 4 !important; flex: 1 1 50% !important;
+		font-size: 13px !important; color: var(--text-high) !important;
+		display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+	}
+	tr[id^="cbi-fstab-"] > .td[data-name="fstype"]::before {
+		content: attr(data-title) !important;
+		display: block !important; font-size: 11px !important; color: #888 !important; margin-bottom: 4px !important;
+	}
+
+	/* --- 挂载选项 (右下方：与文件系统对称) --- */
+	tr[id^="cbi-fstab-"] > .td[data-name="options"] {
+		order: 5 !important; flex: 1 1 50% !important;
+		font-size: 13px !important; color: var(--text-high) !important;
+		display: flex !important; flex-direction: column !important; align-items: flex-end !important; text-align: right !important;
+	}
+	tr[id^="cbi-fstab-"] > .td[data-name="options"]::before {
+		content: attr(data-title) !important;
+		display: block !important; font-size: 11px !important; color: #888 !important; margin-bottom: 4px !important;
+	}
+
+	/* --- 底部操作栏 (拖拽小方块 + 编辑/删除平分) --- */
+	tr[id^="cbi-fstab-"] > .td.cbi-section-actions {
+		order: 6 !important; flex: 1 1 100% !important; width: 100% !important;
+		margin-top: 12px !important; padding-top: 12px !important;
+		border-top: 1px dashed rgba(0, 0, 0, 0.08) !important;
+	}
+	tr[id^="cbi-fstab-"] > .td.cbi-section-actions > div {
+		display: flex !important; flex-wrap: nowrap !important; gap: 8px !important; width: 100% !important;
+	}
+
+	/* 1. 拖动按钮 (☰) 退回为左侧小巧的方形控制块 */
+	tr[id^="cbi-fstab-"] > .td.cbi-section-actions > div > .drag-handle {
+		display: inline-flex !important;
+		flex: 0 0 48px !important; /* 🚨 核心魔法：固定宽度为 48px，做成小方块 */
+		align-items: center !important; justify-content: center !important;
+		margin: 0 !important; padding: 0 !important;
+		border-radius: 6px !important; font-size: 16px !important;
+		background: rgba(0, 0, 0, 0.03) !important; color: #888 !important;
+		border: 1px solid rgba(0, 0, 0, 0.05) !important;
+		box-sizing: border-box !important;
+	}
+
+	/* 2. 编辑、删除按钮接管并平分剩下的宽阔空间 */
+	tr[id^="cbi-fstab-"] > .td.cbi-section-actions > div > .btn:not(.drag-handle) {
+		display: inline-flex !important;
+		flex: 1 1 auto !important; /* 🚨 核心魔法：自适应平分剩余空间 */
+		align-items: center !important; justify-content: center !important;
+		margin: 0 !important; padding: 8px 0 !important;
+		text-align: center !important; font-size: 13px !important; border-radius: 6px !important;
+		box-sizing: border-box !important; line-height: 1.2 !important;
+	}
 }
