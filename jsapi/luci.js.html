@@ -1378,11 +1378,12 @@
 				return null;
 
 			if (Array.isArray(children)) {
-				for (let i = 0; i &lt; children.length; i++)
+				for (let i = 0; i &lt; children.length; i++) {
 					if (this.elem(children[i]))
 						node.appendChild(children[i]);
-					else if (children !== null &amp;&amp; children !== undefined)
+					else if (children[i] !== null &amp;&amp; children[i] !== undefined)
 						node.appendChild(document.createTextNode(`${children[i]}`));
+				}
 
 				return node.lastChild;
 			}
