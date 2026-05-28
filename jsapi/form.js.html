@@ -9,7 +9,7 @@
 
 const scope = this;
 
-uci.loadPackage('luci').catch();
+uci.loadPackage('luci').catch(() => {});
 
 const callSessionAccess = rpc.declare({
 	object: 'session',

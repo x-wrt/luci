@@ -551,7 +551,7 @@ const ValidatorFactory = baseclass.extend(/** @lends LuCI.validation.ValidatorFa
 			const x = parseInt(this.value, 16) | 0;
 			const isll = (((x &amp; 0xffc0) ^ 0xfe80) === 0);
 
-			return this.assert(isll &amp;&amp; this.apply('ip6addr', nomask),
+			return this.assert(isll &amp;&amp; this.apply('ip6addr', null, nomask),
 				_('valid IPv6 Link Local address'));
 		},
 
@@ -566,7 +566,7 @@ const ValidatorFactory = baseclass.extend(/** @lends LuCI.validation.ValidatorFa
 			const x = parseInt(this.value, 16) | 0;
 			const isula = (((x &amp; 0xfe00) ^ 0xfc00) === 0);
 
-			return this.assert(isula &amp;&amp; this.apply('ip6addr', nomask),
+			return this.assert(isula &amp;&amp; this.apply('ip6addr', null, nomask),
 				_('valid IPv6 ULA address'));
 		},
 
