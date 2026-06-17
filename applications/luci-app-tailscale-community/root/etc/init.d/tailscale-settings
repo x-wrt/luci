@@ -201,7 +201,7 @@ apply_settings() {
 handle_service_state() {
 	config_load tailscale
 	local service_enabled
-	config_get service_enabled settings service_enabled '1'
+	config_get service_enabled settings service_enabled '0'
 	
 	if [ "$service_enabled" = "0" ]; then
 		logger -t "$NAME" "Service is disabled, stopping tailscale"
