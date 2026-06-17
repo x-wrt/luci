@@ -312,9 +312,9 @@ apply_settings() {
 # means a rolled back config lands on service_enabled=1 while the daemon is
 # still up, and the next apply simply drops the request.
 sync_service_enabled() {
-	local service_enabled=1 prev=''
+	local service_enabled=0 prev=''
 	local requested=0
-	config_get service_enabled settings service_enabled '1'
+	config_get service_enabled settings service_enabled '0'
 
 	prev=$(cat "$ENABLED_FILE" 2>/dev/null)
 	case "$prev" in
@@ -460,8 +460,8 @@ start_service() {
 	# manual `disable` in the shell survives until the reload handler sees a
 	# real transition.
 	if [ ! -f "$ENABLED_FILE" ]; then
-		local service_enabled=1
-		config_get service_enabled settings service_enabled '1'
+		local service_enabled=0
+		config_get service_enabled settings service_enabled '0'
 		echo "$service_enabled" > "$ENABLED_FILE"
 	fi
 	apply_settings
