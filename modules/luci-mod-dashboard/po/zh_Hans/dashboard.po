@@ -10,6 +10,68 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.17-dev\n"
 
+# 活跃用户列表 (35_natflow-users.js)
+msgid "Active Users"
+msgstr "活跃用户"
+
+msgid "Device Info"
+msgstr "设备信息"
+
+msgid "Connection"
+msgstr "接入方式"
+
+msgid "Traffic (RX / TX)"
+msgstr "传输流量 (接收/发送)"
+
+msgid "Internet"
+msgstr "外网控制"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "Disabled"
+msgstr "已禁用"
+
+msgid "Collecting data..."
+msgstr "正在收集数据..."
+
+msgid "No information available"
+msgstr "暂无可用信息"
+
+msgid "Wireless"
+msgstr "无线 (WLAN)"
+
+msgid "Wired"
+msgstr "有线 (LAN)"
+
+msgid "unlimited"
+msgstr "无限制"
+
+msgid "expired"
+msgstr "已过期"
+
+# 无线射频状态 (30_wifi.js)
+msgid "yes"
+msgstr "是"
+
+msgid "Active"
+msgstr "运行中"
+
+msgid "Channel"
+msgstr "信道"
+
+msgid "Bitrate"
+msgstr "传输速率"
+
+msgid "BSSID"
+msgstr "BSSID"
+
+msgid "Encryption"
+msgstr "加密方式"
+
+msgid "Devices Connected"
+msgstr "已连接设备"
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:160
 msgid "Active"
 msgstr "活跃"
