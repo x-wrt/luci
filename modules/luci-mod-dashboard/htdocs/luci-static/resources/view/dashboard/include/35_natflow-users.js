@@ -25,27 +25,27 @@ var callAllowUser = rpc.declare({
 	expect: { result : "OK" },
 });
 
-// ✨ 新增：获取 DHCP 租约数据的 RPC
 var callLuciDHCPLeases = rpc.declare({
 	object: 'luci-rpc',
 	method: 'getDHCPLeases',
 	expect: { '': {} }
 });
 
-var handleBlockUser = function(num, ev) {
+// ✨ 修改点 1：让按钮支持批量操作（传入 IP 数组），彻底阻断/放行该设备的所有 IP
+var handleBlockUser = function(ips, ev) {
 	dom.parent(ev.currentTarget, '.tr').style.opacity = 0.5;
 	ev.currentTarget.classList.add('spinning');
 	ev.currentTarget.disabled = true;
 	ev.currentTarget.blur();
-	callBlockUser(num);
+	ips.forEach(function(ip) { callBlockUser(ip); });
 };
 
-var handleAllowUser = function(num, ev) {
+var handleAllowUser = function(ips, ev) {
 	dom.parent(ev.currentTarget, '.tr').style.opacity = 0.5;
 	ev.currentTarget.classList.add('spinning');
 	ev.currentTarget.disabled = true;
 	ev.currentTarget.blur();
-	callAllowUser(num);
+	ips.forEach(function(ip) { callAllowUser(ip); });
 };
 
 var pollInterval = 5;
@@ -61,7 +61,6 @@ return baseclass.extend({
 	title: _('Active Users'),
 
 	load: function() {
-		// 并行加载所有需要的数据：主机记录、活跃用户、WiFi网络、DHCP租约
 		return Promise.all([
 			network.getHostHints(),
 			callLuciGetUsers(),
@@ -74,7 +73,7 @@ return baseclass.extend({
 				}
 				return Promise.all(tasks).then(function() { return networks; });
 			}),
-			callLuciDHCPLeases() // ✨ 新增：并行获取 DHCP
+			callLuciDHCPLeases()
 		]);
 	},
 
@@ -99,7 +98,6 @@ return baseclass.extend({
 			.active-users-table .table-titles { font-weight: 600; color: #6c757d; background: transparent !important; }
 			.active-users-table .td, .active-users-table .th { border: none !important; padding: 8px 10px; word-break: break-all; }
 
-			/* 桌面端四列比例 */
 			.active-users-table .th:nth-child(1), .active-users-table .td:nth-child(1) { flex: 1 1 30%; }
 			.active-users-table .th:nth-child(2), .active-users-table .td:nth-child(2) { flex: 1 1 25%; }
 			.active-users-table .th:nth-child(3), .active-users-table .td:nth-child(3) { flex: 1 1 35%; }
@@ -140,14 +138,50 @@ return baseclass.extend({
 		]);
 
 		var hosts = data[0];
-		var users = Array.isArray(data[1]) ? data[1] : [];
+		var rawUsers = Array.isArray(data[1]) ? data[1] : [];
 		var wifiNetworks = data[2] || [];
-
-		// ✨ 解析 DHCP 租约数据
 		var dhcpData = data[3] || {};
 		var dhcpLeases = dhcpData.dhcp_leases || [];
 
-		// 建立 WiFi MAC 快速查询表
+		// ✨ 修改点 2：将散乱的记录按 MAC 地址聚合 (处理多 IP 场景)
+		var mergedUsersMap = {};
+		rawUsers.forEach(function(u) {
+			if (!u.mac) return;
+			var mac = u.mac.toUpperCase();
+
+			if (!mergedUsersMap[mac]) {
+				// 第一次遇到这个 MAC，初始化数据结构
+				mergedUsersMap[mac] = {
+					mac: mac,
+					ips: [ u.ip ], // 使用数组存储多个 IP
+					rx_bytes: u.rx_bytes || 0,
+					tx_bytes: u.tx_bytes || 0,
+					rx_speed_bytes: u.rx_speed_bytes || 0,
+					tx_speed_bytes: u.tx_speed_bytes || 0,
+					status: u.status
+				};
+			} else {
+				// 再次遇到相同的 MAC，累加流量并记录新 IP
+				if (mergedUsersMap[mac].ips.indexOf(u.ip) === -1) {
+					mergedUsersMap[mac].ips.push(u.ip);
+				}
+				mergedUsersMap[mac].rx_bytes += (u.rx_bytes || 0);
+				mergedUsersMap[mac].tx_bytes += (u.tx_bytes || 0);
+				mergedUsersMap[mac].rx_speed_bytes += (u.rx_speed_bytes || 0);
+				mergedUsersMap[mac].tx_speed_bytes += (u.tx_speed_bytes || 0);
+				// 如果该设备有任何一个 IP 处于被拉黑状态(6)，则将整个设备状态视为拉黑
+				if (u.status == 6) {
+					mergedUsersMap[mac].status = 6;
+				}
+			}
+		});
+
+		// 将字典转回数组，并按照累加后的总下载流量排序
+		var users = Object.values(mergedUsersMap);
+		users.sort(function(a, b) {
+			return b.rx_bytes - a.rx_bytes;
+		});
+
 		var wifiClientsMap = {};
 		for (var i = 0; i < wifiNetworks.length; i++) {
 			var net = wifiNetworks[i];
@@ -165,7 +199,6 @@ return baseclass.extend({
 			}
 		}
 
-		// ✨ 建立 DHCP MAC 快速查询表
 		var leaseMap = {};
 		for (var k = 0; k < dhcpLeases.length; k++) {
 			var lease = dhcpLeases[k];
@@ -174,15 +207,10 @@ return baseclass.extend({
 			}
 		}
 
-		users.sort(function(a, b) {
-			return b.rx_bytes - a.rx_bytes;
-		});
-
 		var rows = users.map(function(u) {
 			var mac = u.mac.toUpperCase();
 			var name = hosts.getHostnameByMACAddr(mac);
 
-			// ✨ 处理租期 DOM 逻辑
 			var expNode = '';
 			if (leaseMap[mac] !== undefined) {
 				var expires = leaseMap[mac];
@@ -194,20 +222,29 @@ return baseclass.extend({
 					expNode = '%t'.format(expires);
 			}
 
-			// 列 1：设备名 + MAC + IP + ✨ 租约信息聚合
+			// 列 1：设备名 + MAC
 			var nodeDeviceInfo = E('div', {}, [
 				E('div', { 'style': 'font-weight: 600; font-size: 14px;' }, name || '?'),
-				E('div', { 'class': 'text-muted', 'style': 'font-family: monospace; font-size: 12px; opacity: 0.7;' }, mac),
-				E('div', { 'style': 'font-family: monospace; font-size: 13px; margin-top: 3px; color: var(--bs-info, #0dcaf0);' }, u.ip),
-
-				// 仅在找到了有效租期时，才会渲染沙漏和时间
-				(expNode !== '') ? E('div', { 'style': 'font-size: 11px; color: #6c757d; margin-top: 3px;' }, [
-					E('span', { 'style': 'opacity: 0.8; margin-right: 2px;' }, '⏳ '),
-					expNode
-				]) : ''
+				E('div', { 'class': 'text-muted', 'style': 'font-family: monospace; font-size: 12px; opacity: 0.7;' }, mac)
 			]);
 
-			// 列 2：构建接入信息逻辑 (判断有线/无线)
+			// ✨ 修改点 3：循环渲染该设备所有的 IPv4/IPv6 地址
+			u.ips.forEach(function(ipStr) {
+				nodeDeviceInfo.appendChild(
+					E('div', { 'style': 'font-family: monospace; font-size: 13px; margin-top: 3px; color: var(--bs-info, #0dcaf0); word-break: break-all;' }, ipStr)
+				);
+			});
+
+			if (expNode !== '') {
+				nodeDeviceInfo.appendChild(
+					E('div', { 'style': 'font-size: 11px; color: #6c757d; margin-top: 3px;' }, [
+						E('span', { 'style': 'opacity: 0.8; margin-right: 2px;' }, '⏳ '),
+						expNode
+					])
+				);
+			}
+
+			// 列 2：接入信息逻辑
 			var nodeConnection;
 			var wInfo = wifiClientsMap[mac];
 			if (wInfo) {
@@ -232,7 +269,7 @@ return baseclass.extend({
 				]);
 			}
 
-			// 列 3：RX 和 TX 流量
+			// 列 3：聚合后的 RX 和 TX 流量
 			var nodeTraffic = E('div', { 'style': 'display: flex; gap: 10px; flex-direction: column;' }, [
 				E('div', {}, [
 					E('div', { 'style': 'color: var(--bs-success, #198754); font-weight: 600; font-size: 13px;' }, [ E('span', '↓ '), '%1024.2mB'.format(u.rx_bytes) ]),
@@ -244,7 +281,7 @@ return baseclass.extend({
 				])
 			]);
 
-			// 列 4：按钮逻辑
+			// 列 4：按钮逻辑，绑定所有的 IPs
 			var isBlocked = (u.status == 6);
 			var btnText = isBlocked ? _('Disabled') : _('Enabled');
 			var btnClass = isBlocked ? 'btn cbi-button-negative' : 'btn cbi-button-positive';
@@ -253,7 +290,7 @@ return baseclass.extend({
 			var nodeBtn = E('button', {
 				'class': btnClass,
 				'style': 'padding: 4px 10px; font-size: 12px; border-radius: 4px; min-width: 60px;',
-				'click': L.bind(btnHandler, this, u.ip)
+				'click': L.bind(btnHandler, this, u.ips) // 传入的是 IP 数组
 			}, [ btnText ]);
 
 			return [ nodeDeviceInfo, nodeConnection, nodeTraffic, nodeBtn ];
