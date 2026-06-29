@@ -17,7 +17,7 @@ return view.extend({
 		if (!uci.get('rpcd', 'policy'))
 			uci.add('rpcd', 'policy', 'policy');
 
-		m = new form.Map('rpcd', _('Policy'));
+		m = new form.Map('rpcd', _('Policy', 'password policy'));
 		m.readonly = !L.hasViewPermission();
 
 		s = m.section(form.NamedSection, 'policy')
