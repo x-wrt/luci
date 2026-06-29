@@ -16,7 +16,7 @@ jobs:
       - name: Run HyperStickler
         uses: georgesapkin/hyperstickler@v1
         with:
-          check_branch: false
+          check_branch: true
           check_signoff: true
           exclude_weblate: true
           feedback_url: 'https://github.com/openwrt/actions-shared-workflows/issues'
