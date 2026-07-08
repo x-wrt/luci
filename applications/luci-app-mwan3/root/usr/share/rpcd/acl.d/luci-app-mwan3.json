@@ -55,6 +55,11 @@
 			"cgi-io": [
 				"exec"
 			],
+			"file": {
+				"/usr/libexec/luci-mwan3 ipset dump": [
+					"exec"
+				]
+			},
 			"ubus": {
 				"mwan3": [
 					"status"
