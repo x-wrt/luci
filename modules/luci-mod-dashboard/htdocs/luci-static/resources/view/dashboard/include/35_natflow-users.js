@@ -186,12 +186,20 @@ return baseclass.extend({
 		for (var i = 0; i < wifiNetworks.length; i++) {
 			var net = wifiNetworks[i];
 			var ssid = net.getActiveSSID() || '?';
+			var freq = parseFloat(net.getFrequency());
+			var band = '';
+			if (!isNaN(freq)) {
+				if (freq >= 2.4 && freq < 3.0) band = '2.4G';
+				else if (freq >= 5.0 && freq < 6.0) band = '5.8G';
+				else if (freq >= 6.0 && freq < 7.0) band = '6G';
+			}
 			var list = net.assoclist || [];
 			for (var j = 0; j < list.length; j++) {
 				var bss = list[j];
 				if (bss && bss.mac) {
 					wifiClientsMap[bss.mac.toUpperCase()] = {
 						ssid: ssid,
+						band: band,
 						signal: bss.signal,
 						noise: bss.noise
 					};
@@ -255,7 +263,7 @@ return baseclass.extend({
 				var qColor = (q < 25) ? '#dc3545' : ((q < 50) ? '#ffc107' : '#198754');
 
 				nodeConnection = E('div', {}, [
-					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, _('Wireless')),
+					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wInfo.band ? '%s %s'.format(_('Wireless'), wInfo.band) : _('Wireless')),
 					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, wInfo.ssid),
 					E('div', { 'style': 'font-size: 12px; margin-top: 2px; color: #6c757d;' }, [
 						E('span', { 'style': `display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${qColor}; margin-right: 5px;` }),
