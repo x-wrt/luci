@@ -3,6 +3,7 @@ config core 'main'
 	option mediaurlbase '/luci-static/bootstrap'
 	option resourcebase '/luci-static/resources'
 	option ubuspath '/ubus/'
+	option pollinterval '5'
 
 config internal 'languages'
 
