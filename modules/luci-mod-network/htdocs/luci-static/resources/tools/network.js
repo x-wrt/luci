@@ -796,10 +796,10 @@ return baseclass.extend({
 		o.datatype = 'uinteger';
 		o.depends({'type': 'bonding', 'policy': '802.3ad'});
 
-		o = this.replaceOption(s, 'devadvanced', form.Value, 'packets_per_slave', _('Packets per slave'));
+		o = this.replaceOption(s, 'devadvanced', form.Value, 'packets_per_port', _('Packets per slave'));
 		o.description = _('Number of packets to transmit through a slave before moving to the next one. Slave is chosen at random when 0.');
 		o.placeholder = '1';
-		o.datatype = 'range(1, 65535)';
+		o.datatype = 'range(0, 65535)';
 		o.depends({'type': 'bonding', 'policy': 'balance-rr'});
 
 		o = this.replaceOption(s, 'devadvanced', form.Value, 'lp_interval', _('Learning packets Interval'));
