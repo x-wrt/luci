@@ -152,7 +152,6 @@
 		},
 		"write": {
 			"file": {
-				"/etc/crontabs/root": [ "write" ],
 				"/bin/umount": [ "exec" ],
 				"/sbin/block": [ "exec" ]
 			},
