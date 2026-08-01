@@ -2580,3 +2580,47 @@ body[data-page='admin-status-overview'] .ifacebox-head {
 		border-color: var(--text-low) !important;
 	}
 }
+
+/* =========================================================
+   【设置向导 & CBI 表单界面轻量适配】
+   ========================================================= */
+
+.cbi-map .cbi-value {
+	padding: 0.6rem 0.8rem !important;
+	border-radius: 6px;
+	transition: background-color .15s ease;
+}
+
+.cbi-map .cbi-value:hover {
+	background-color: rgba(0, 0, 0, 0.025);
+}
+
+.cbi-value-description {
+	color: var(--text-medium);
+	font-size: 0.88rem;
+	line-height: 1.45;
+	margin-top: 4px;
+}
+
+.cbi-value-description code,
+.cbi-value-title code {
+	background: var(--bg-medium);
+	color: var(--main-bright-color);
+	font-family: monospace;
+	font-size: 85%;
+	padding: 2px 6px;
+	border-radius: 4px;
+	border: 1px solid var(--border-color);
+}
+
+.cbi-value-field label {
+	margin-right: 14px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+}
+
+.cbi-tabmenu > li > a {
+	border-radius: 6px 6px 0 0 !important;
+}
