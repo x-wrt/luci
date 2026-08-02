@@ -186,11 +186,14 @@ return baseclass.extend({
 			return b.rx_bytes - a.rx_bytes;
 		});
 
+		var isWirelessIfname = function(ifname) {
+			return ifname && !!ifname.match(/^(wlan|wl|phy|ra|rai|rae|apcli|apclii|apclie|ath|ap|mon|wds|mesh|sta|bat)/i);
+		};
+
 		var wifiClientsMap = {};
 		var wifiIfnamesMap = {};
 		for (var i = 0; i < wifiNetworks.length; i++) {
 			var net = wifiNetworks[i];
-			var netIfname = net.getIfname();
 			var ssid = net.getActiveSSID() || '?';
 			var freq = parseFloat(net.getFrequency());
 			var band = '';
@@ -200,12 +203,42 @@ return baseclass.extend({
 				else if (freq >= 6.0 && freq < 7.0) band = '6G';
 			}
 
-			if (netIfname) {
-				wifiIfnamesMap[netIfname] = {
-					ssid: ssid,
-					band: band,
-					ifname: netIfname
-				};
+			var ifnames = [];
+			var addIfname = function(name) {
+				if (name && typeof name === 'string' && ifnames.indexOf(name) === -1) {
+					ifnames.push(name);
+				}
+			};
+
+			addIfname(net.getIfname());
+			addIfname(net.ubus('net', 'ifname'));
+			addIfname(net.ubus('net', 'iwinfo', 'ifname'));
+			addIfname(net.ubus('net', 'device'));
+			addIfname(net.ubus('dev', 'ifname'));
+			addIfname(net.ubus('hostapd', 'ifname'));
+
+			var vlans = net.getVlanIfnames();
+			if (Array.isArray(vlans)) {
+				for (var k = 0; k < vlans.length; k++) {
+					addIfname(vlans[k]);
+				}
+			}
+
+			try {
+				var devObj = net.getDevice();
+				if (devObj && devObj.getName) {
+					addIfname(devObj.getName());
+				}
+			} catch(e) {}
+
+			var info = {
+				ssid: ssid,
+				band: band,
+				ifnames: ifnames
+			};
+
+			for (var k = 0; k < ifnames.length; k++) {
+				wifiIfnamesMap[ifnames[k]] = info;
 			}
 
 			var list = net.assoclist || [];
@@ -217,11 +250,15 @@ return baseclass.extend({
 						band: band,
 						signal: bss.signal,
 						noise: bss.noise,
-						ifname: netIfname
+						ifnames: ifnames
 					};
 				}
 			}
 		}
+
+		var getWifiIfInfo = function(ifname) {
+			return ifname ? (wifiIfnamesMap[ifname] || null) : null;
+		};
 
 		var leaseMap = {};
 		for (var k = 0; k < dhcpLeases.length; k++) {
@@ -271,7 +308,10 @@ return baseclass.extend({
 			// 列 2：接入信息逻辑
 			var nodeConnection;
 			var wInfo = wifiClientsMap[mac];
-			var wIfInfo = u.ifname ? wifiIfnamesMap[u.ifname] : null;
+			var wIfInfo = u.ifname ? getWifiIfInfo(u.ifname) : null;
+			var isWifi = !!wInfo || !!wIfInfo || (u.ifname && isWirelessIfname(u.ifname));
+			var isMesh = u.ifname && !!u.ifname.match(/^mesh/i);
+			var labelStr = isMesh ? _('Wireless Mesh') : _('Wireless');
 
 			if (wInfo) {
 				var defaultNF = -90;
@@ -281,7 +321,7 @@ return baseclass.extend({
 				var qColor = (q < 25) ? '#dc3545' : ((q < 50) ? '#ffc107' : '#198754');
 
 				nodeConnection = E('div', {}, [
-					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wInfo.band ? '%s %s'.format(_('Wireless'), wInfo.band) : _('Wireless')),
+					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wInfo.band ? '%s %s'.format(labelStr, wInfo.band) : labelStr),
 					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, wInfo.ssid),
 					E('div', { 'style': 'font-size: 12px; margin-top: 2px; color: #6c757d;' }, [
 						E('span', { 'style': `display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${qColor}; margin-right: 5px;` }),
@@ -290,9 +330,14 @@ return baseclass.extend({
 				]);
 			} else if (wIfInfo) {
 				nodeConnection = E('div', {}, [
-					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wIfInfo.band ? '%s %s'.format(_('Wireless'), wIfInfo.band) : _('Wireless')),
+					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wIfInfo.band ? '%s %s'.format(labelStr, wIfInfo.band) : labelStr),
 					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, wIfInfo.ssid),
 					E('div', { 'style': 'font-size: 12px; margin-top: 2px; color: #6c757d;' }, u.ifname)
+				]);
+			} else if (isWifi) {
+				nodeConnection = E('div', {}, [
+					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, labelStr),
+					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, u.ifname)
 				]);
 			} else {
 				nodeConnection = E('div', {}, [
