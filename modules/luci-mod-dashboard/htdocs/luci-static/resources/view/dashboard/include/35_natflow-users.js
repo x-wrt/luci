@@ -5,80 +5,83 @@
 'require uci';
 'require network';
 
-var callLuciGetUsers = rpc.declare({
+const callLuciGetUsers = rpc.declare({
 	object: 'luci.natflow',
 	method: 'get_users',
 	expect: { result: [] }
 });
 
-var callBlockUser = rpc.declare({
+const callBlockUser = rpc.declare({
 	object: 'luci.natflow',
 	method: 'block_user',
 	params: [ 'token' ],
 	expect: { result : "OK" },
 });
 
-var callAllowUser = rpc.declare({
+const callAllowUser = rpc.declare({
 	object: 'luci.natflow',
 	method: 'allow_user',
 	params: [ 'token' ],
 	expect: { result : "OK" },
 });
 
-var callLuciDHCPLeases = rpc.declare({
+const callLuciDHCPLeases = rpc.declare({
 	object: 'luci-rpc',
 	method: 'getDHCPLeases',
 	expect: { '': {} }
 });
 
-// ✨ 修改点 1：让按钮支持批量操作（传入 IP 数组），彻底阻断/放行该设备的所有 IP
-var handleBlockUser = function(ips, ev) {
-	dom.parent(ev.currentTarget, '.tr').style.opacity = 0.5;
+const handleBlockUser = function(ips, ev) {
+	const tr = dom.parent(ev.currentTarget, '.tr');
+	if (tr) tr.style.opacity = 0.5;
 	ev.currentTarget.classList.add('spinning');
 	ev.currentTarget.disabled = true;
 	ev.currentTarget.blur();
-	ips.forEach(function(ip) { callBlockUser(ip); });
+	ips.forEach(ip => callBlockUser(ip));
 };
 
-var handleAllowUser = function(ips, ev) {
-	dom.parent(ev.currentTarget, '.tr').style.opacity = 0.5;
+const handleAllowUser = function(ips, ev) {
+	const tr = dom.parent(ev.currentTarget, '.tr');
+	if (tr) tr.style.opacity = 0.5;
 	ev.currentTarget.classList.add('spinning');
 	ev.currentTarget.disabled = true;
 	ev.currentTarget.blur();
-	ips.forEach(function(ip) { callAllowUser(ip); });
+	ips.forEach(ip => callAllowUser(ip));
 };
 
-var pollInterval = 5;
+const RE_WIRELESS_IFNAME = /^(wlan|wl|phy|ra|rai|rae|apcli|apclii|apclie|ath|ap|mon|wds|mesh|sta|bat)/i;
+const RE_MESH_IFNAME = /^mesh/i;
 
-Math.log2 = Math.log2 || function(x) { return Math.log(x) * Math.LOG2E; };
+function isWirelessIfname(ifname) {
+	return ifname ? RE_WIRELESS_IFNAME.test(ifname) : false;
+}
 
-function rate(n, br) {
+function rate(n) {
 	n = (n || 0).toFixed(2);
-	return '%1024.2mbit/s (%1024.2mB/s)'.format(n * 8, n)
+	return '%1024.2mbit/s (%1024.2mB/s)'.format(n * 8, n);
 }
 
 return baseclass.extend({
 	title: _('Active Users'),
 
-	load: function() {
+	load() {
 		return Promise.all([
 			network.getHostHints(),
 			callLuciGetUsers(),
-			network.getWifiNetworks().then(function(networks) {
-				var tasks = [];
-				for (var i = 0; i < networks.length; i++) {
-					tasks.push(L.resolveDefault(networks[i].getAssocList(), []).then(L.bind(function(net, list) {
+			network.getWifiNetworks().then(networks => {
+				const tasks = networks.map(net =>
+					L.resolveDefault(net.getAssocList(), []).then(list => {
 						net.assoclist = list || [];
-					}, this, networks[i])));
-				}
-				return Promise.all(tasks).then(function() { return networks; });
+					})
+				);
+				return Promise.all(tasks).then(() => networks);
 			}),
 			callLuciDHCPLeases()
 		]);
 	},
 
-	render: function(data) {
-		var wrapper = E('div', { 'class': 'active-users-self dashboard-bg box-s1', 'style': 'padding: 1.5em; margin-bottom: 20px;' });
+	render(data) {
+		const wrapper = E('div', { 'class': 'active-users-self dashboard-bg box-s1', 'style': 'padding: 1.5em; margin-bottom: 20px;' });
 
 		wrapper.appendChild(E('div', { 'class': 'title', 'style': 'text-align: center; margin-bottom: 20px;' }, [
 			E('img', {
@@ -91,39 +94,41 @@ return baseclass.extend({
 			E('h3', { 'style': 'display: inline-block; vertical-align: middle; margin: 0;' }, this.title)
 		]));
 
-		wrapper.appendChild(E('style', {}, `
-			.active-users-table { display: flex !important; flex-direction: column; width: 100%; border: none !important; }
-			.active-users-table tbody { display: flex; flex-direction: column; width: 100%; }
-			.active-users-table .tr { display: flex; align-items: center; padding: 12px 8px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: opacity 0.3s ease; }
-			.active-users-table .table-titles { font-weight: 600; color: #6c757d; background: transparent !important; }
-			.active-users-table .td, .active-users-table .th { border: none !important; padding: 8px 10px; word-break: break-all; }
+		if (!document.getElementById('active-users-table-styles')) {
+			wrapper.appendChild(E('style', { 'id': 'active-users-table-styles' }, `
+				.active-users-table { display: flex !important; flex-direction: column; width: 100%; border: none !important; }
+				.active-users-table tbody { display: flex; flex-direction: column; width: 100%; }
+				.active-users-table .tr { display: flex; align-items: center; padding: 12px 8px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: opacity 0.3s ease; }
+				.active-users-table .table-titles { font-weight: 600; color: #6c757d; background: transparent !important; }
+				.active-users-table .td, .active-users-table .th { border: none !important; padding: 8px 10px; word-break: break-all; }
 
-			.active-users-table .th:nth-child(1), .active-users-table .td:nth-child(1) { flex: 1 1 30%; }
-			.active-users-table .th:nth-child(2), .active-users-table .td:nth-child(2) { flex: 1 1 25%; }
-			.active-users-table .th:nth-child(3), .active-users-table .td:nth-child(3) { flex: 1 1 35%; }
-			.active-users-table .th:nth-child(4), .active-users-table .td:nth-child(4) { flex: 0 0 80px; text-align: right; }
+				.active-users-table .th:nth-child(1), .active-users-table .td:nth-child(1) { flex: 1 1 30%; }
+				.active-users-table .th:nth-child(2), .active-users-table .td:nth-child(2) { flex: 1 1 25%; }
+				.active-users-table .th:nth-child(3), .active-users-table .td:nth-child(3) { flex: 1 1 35%; }
+				.active-users-table .th:nth-child(4), .active-users-table .td:nth-child(4) { flex: 0 0 80px; text-align: right; }
 
-			@media screen and (max-width: 800px) {
-				.active-users-table .table-titles { display: none !important; }
-				.active-users-table .tr:not(.table-titles) {
-					flex-direction: row; flex-wrap: wrap; align-items: flex-start;
-					background: rgba(0,0,0,0.02); border-radius: 12px; margin-bottom: 12px;
-					padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05) !important;
+				@media screen and (max-width: 800px) {
+					.active-users-table .table-titles { display: none !important; }
+					.active-users-table .tr:not(.table-titles) {
+						flex-direction: row; flex-wrap: wrap; align-items: flex-start;
+						background: rgba(0,0,0,0.02); border-radius: 12px; margin-bottom: 12px;
+						padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05) !important;
+					}
+					.active-users-table .td { flex: 1 1 100% !important; text-align: left !important; padding: 4px 0 !important; }
+
+					.active-users-table .td:nth-child(1) { order: 1; flex: 1 1 65% !important; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px !important; margin-bottom: 8px !important; }
+					.active-users-table .td:nth-child(4) { order: 2; flex: 1 1 35% !important; text-align: right !important; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px !important; margin-bottom: 8px !important; display: flex; justify-content: flex-end; align-items: flex-start; }
+
+					.active-users-table .td:nth-child(2) { order: 3; flex: 1 1 45% !important; background: rgba(255,255,255,0.5); padding: 8px !important; border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.05); }
+					.active-users-table .td:nth-child(3) { order: 4; flex: 1 1 55% !important; background: rgba(255,255,255,0.5); padding: 8px !important; border-radius: 0 6px 6px 0; }
 				}
-				.active-users-table .td { flex: 1 1 100% !important; text-align: left !important; padding: 4px 0 !important; }
 
-				.active-users-table .td:nth-child(1) { order: 1; flex: 1 1 65% !important; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px !important; margin-bottom: 8px !important; }
-				.active-users-table .td:nth-child(4) { order: 2; flex: 1 1 35% !important; text-align: right !important; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px !important; margin-bottom: 8px !important; display: flex; justify-content: flex-end; align-items: flex-start; }
+				[data-darkmode="true"] .active-users-table .tr:not(.table-titles) { background: rgba(255,255,255,0.03); }
+				[data-darkmode="true"] .active-users-table .td:nth-child(2), [data-darkmode="true"] .active-users-table .td:nth-child(3) { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
+			`));
+		}
 
-				.active-users-table .td:nth-child(2) { order: 3; flex: 1 1 45% !important; background: rgba(255,255,255,0.5); padding: 8px !important; border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.05); }
-				.active-users-table .td:nth-child(3) { order: 4; flex: 1 1 55% !important; background: rgba(255,255,255,0.5); padding: 8px !important; border-radius: 0 6px 6px 0; }
-			}
-
-			[data-darkmode="true"] .active-users-table .tr:not(.table-titles) { background: rgba(255,255,255,0.03); }
-			[data-darkmode="true"] .active-users-table .td:nth-child(2), [data-darkmode="true"] .active-users-table .td:nth-child(3) { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
-		`));
-
-		var table = E('table', { 'class': 'table modern-flex-table active-users-table', 'id': 'users' }, [
+		const table = E('table', { 'class': 'table modern-flex-table active-users-table', 'id': 'users' }, [
 			E('tr', { 'class': 'tr table-titles' }, [
 				E('th', { 'class': 'th' }, [ _('Device Info') ]),
 				E('th', { 'class': 'th' }, [ _('Connection') ]),
@@ -137,113 +142,107 @@ return baseclass.extend({
 			])
 		]);
 
-		var hosts = data[0];
-		var rawUsers = Array.isArray(data[1]) ? data[1] : [];
-		var wifiNetworks = data[2] || [];
-		var dhcpData = data[3] || {};
-		var dhcpLeases = dhcpData.dhcp_leases || [];
+		const hosts = data[0];
+		const rawUsers = Array.isArray(data[1]) ? data[1] : [];
+		const wifiNetworks = data[2] || [];
+		const dhcpData = data[3] || {};
+		const dhcpLeases = dhcpData.dhcp_leases || [];
 
-		// ✨ 修改点 2：将散乱的记录按 MAC 地址聚合 (处理多 IP 场景)
-		var mergedUsersMap = {};
-		rawUsers.forEach(function(u) {
-			if (!u.mac) return;
-			var mac = u.mac.toUpperCase();
+		// MAC 按网卡特征聚合多 IP 记录
+		const mergedUsersMap = {};
+		for (let i = 0; i < rawUsers.length; i++) {
+			const u = rawUsers[i];
+			if (!u || !u.mac) continue;
+			const mac = u.mac.toUpperCase();
 
 			if (!mergedUsersMap[mac]) {
-				// 第一次遇到这个 MAC，初始化数据结构
 				mergedUsersMap[mac] = {
 					mac: mac,
-					ips: [ u.ip ], // 使用数组存储多个 IP
+					ips: [ u.ip ],
 					rx_bytes: u.rx_bytes || 0,
 					tx_bytes: u.tx_bytes || 0,
 					rx_speed_bytes: u.rx_speed_bytes || 0,
 					tx_speed_bytes: u.tx_speed_bytes || 0,
 					status: u.status,
-					ifname: u.ifname || ""
+					ifname: u.ifname || ''
 				};
 			} else {
-				// 再次遇到相同的 MAC，累加流量并记录新 IP
-				if (mergedUsersMap[mac].ips.indexOf(u.ip) === -1) {
-					mergedUsersMap[mac].ips.push(u.ip);
+				const userObj = mergedUsersMap[mac];
+				if (u.ip && userObj.ips.indexOf(u.ip) === -1) {
+					userObj.ips.push(u.ip);
 				}
-				mergedUsersMap[mac].rx_bytes += (u.rx_bytes || 0);
-				mergedUsersMap[mac].tx_bytes += (u.tx_bytes || 0);
-				mergedUsersMap[mac].rx_speed_bytes += (u.rx_speed_bytes || 0);
-				mergedUsersMap[mac].tx_speed_bytes += (u.tx_speed_bytes || 0);
-				// 如果该设备有任何一个 IP 处于被拉黑状态(6)，则将整个设备状态视为拉黑
+				userObj.rx_bytes += (u.rx_bytes || 0);
+				userObj.tx_bytes += (u.tx_bytes || 0);
+				userObj.rx_speed_bytes += (u.rx_speed_bytes || 0);
+				userObj.tx_speed_bytes += (u.tx_speed_bytes || 0);
 				if (u.status == 6) {
-					mergedUsersMap[mac].status = 6;
+					userObj.status = 6;
 				}
-				if (!mergedUsersMap[mac].ifname && u.ifname) {
-					mergedUsersMap[mac].ifname = u.ifname;
+				// 若之前的 ifname 为空或非无线，而新记录有无线 ifname，则优先采用无线 ifname
+				if (u.ifname && (!userObj.ifname || (!isWirelessIfname(userObj.ifname) && isWirelessIfname(u.ifname)))) {
+					userObj.ifname = u.ifname;
 				}
 			}
-		});
+		}
 
-		// 将字典转回数组，并按照累加后的总下载流量排序
-		var users = Object.values(mergedUsersMap);
-		users.sort(function(a, b) {
-			return b.rx_bytes - a.rx_bytes;
-		});
+		const users = Object.values(mergedUsersMap);
+		users.sort((a, b) => b.rx_bytes - a.rx_bytes);
 
-		var isWirelessIfname = function(ifname) {
-			return ifname && !!ifname.match(/^(wlan|wl|phy|ra|rai|rae|apcli|apclii|apclie|ath|ap|mon|wds|mesh|sta|bat)/i);
-		};
+		const wifiClientsMap = {};
+		const wifiIfnamesMap = {};
 
-		var wifiClientsMap = {};
-		var wifiIfnamesMap = {};
-		for (var i = 0; i < wifiNetworks.length; i++) {
-			var net = wifiNetworks[i];
-			var ssid = net.getActiveSSID() || '?';
-			var freq = parseFloat(net.getFrequency());
-			var band = '';
+		for (let i = 0; i < wifiNetworks.length; i++) {
+			const net = wifiNetworks[i];
+			const ssid = net.getActiveSSID() || '?';
+			const freq = parseFloat(net.getFrequency());
+			let band = '';
 			if (!isNaN(freq)) {
 				if (freq >= 2.4 && freq < 3.0) band = '2.4G';
 				else if (freq >= 5.0 && freq < 6.0) band = '5.8G';
 				else if (freq >= 6.0 && freq < 7.0) band = '6G';
 			}
 
-			var ifnames = [];
-			var addIfname = function(name) {
+			const ifnames = [];
+			const collectIfname = function(name) {
 				if (name && typeof name === 'string' && ifnames.indexOf(name) === -1) {
 					ifnames.push(name);
 				}
 			};
 
-			addIfname(net.getIfname());
-			addIfname(net.ubus('net', 'ifname'));
-			addIfname(net.ubus('net', 'iwinfo', 'ifname'));
-			addIfname(net.ubus('net', 'device'));
-			addIfname(net.ubus('dev', 'ifname'));
-			addIfname(net.ubus('hostapd', 'ifname'));
+			collectIfname(net.getIfname());
+			collectIfname(net.ubus('net', 'ifname'));
+			collectIfname(net.ubus('net', 'iwinfo', 'ifname'));
+			collectIfname(net.ubus('net', 'device'));
+			collectIfname(net.ubus('dev', 'ifname'));
+			collectIfname(net.ubus('hostapd', 'ifname'));
 
-			var vlans = net.getVlanIfnames();
+			const vlans = net.getVlanIfnames();
 			if (Array.isArray(vlans)) {
-				for (var k = 0; k < vlans.length; k++) {
-					addIfname(vlans[k]);
+				for (let k = 0; k < vlans.length; k++) {
+					collectIfname(vlans[k]);
 				}
 			}
 
 			try {
-				var devObj = net.getDevice();
+				const devObj = net.getDevice();
 				if (devObj && devObj.getName) {
-					addIfname(devObj.getName());
+					collectIfname(devObj.getName());
 				}
 			} catch(e) {}
 
-			var info = {
+			const info = {
 				ssid: ssid,
 				band: band,
 				ifnames: ifnames
 			};
 
-			for (var k = 0; k < ifnames.length; k++) {
+			for (let k = 0; k < ifnames.length; k++) {
 				wifiIfnamesMap[ifnames[k]] = info;
 			}
 
-			var list = net.assoclist || [];
-			for (var j = 0; j < list.length; j++) {
-				var bss = list[j];
+			const list = net.assoclist || [];
+			for (let j = 0; j < list.length; j++) {
+				const bss = list[j];
 				if (bss && bss.mac) {
 					wifiClientsMap[bss.mac.toUpperCase()] = {
 						ssid: ssid,
@@ -256,25 +255,21 @@ return baseclass.extend({
 			}
 		}
 
-		var getWifiIfInfo = function(ifname) {
-			return ifname ? (wifiIfnamesMap[ifname] || null) : null;
-		};
-
-		var leaseMap = {};
-		for (var k = 0; k < dhcpLeases.length; k++) {
-			var lease = dhcpLeases[k];
+		const leaseMap = {};
+		for (let k = 0; k < dhcpLeases.length; k++) {
+			const lease = dhcpLeases[k];
 			if (lease && lease.macaddr) {
 				leaseMap[lease.macaddr.toUpperCase()] = lease.expires;
 			}
 		}
 
-		var rows = users.map(function(u) {
-			var mac = u.mac.toUpperCase();
-			var name = hosts.getHostnameByMACAddr(mac);
+		const rows = users.map(u => {
+			const mac = u.mac.toUpperCase();
+			const name = hosts.getHostnameByMACAddr(mac);
 
-			var expNode = '';
+			let expNode = '';
 			if (leaseMap[mac] !== undefined) {
-				var expires = leaseMap[mac];
+				const expires = leaseMap[mac];
 				if (expires === false)
 					expNode = E('em', _('unlimited'));
 				else if (expires <= 0)
@@ -284,13 +279,12 @@ return baseclass.extend({
 			}
 
 			// 列 1：设备名 + MAC
-			var nodeDeviceInfo = E('div', {}, [
+			const nodeDeviceInfo = E('div', {}, [
 				E('div', { 'style': 'font-weight: 600; font-size: 14px;' }, name || '?'),
 				E('div', { 'class': 'text-muted', 'style': 'font-family: monospace; font-size: 12px; opacity: 0.7;' }, mac)
 			]);
 
-			// ✨ 修改点 3：循环渲染该设备所有的 IPv4/IPv6 地址
-			u.ips.forEach(function(ipStr) {
+			u.ips.forEach(ipStr => {
 				nodeDeviceInfo.appendChild(
 					E('div', { 'style': 'font-family: monospace; font-size: 13px; margin-top: 3px; color: var(--bs-info, #0dcaf0); word-break: break-all;' }, ipStr)
 				);
@@ -306,19 +300,19 @@ return baseclass.extend({
 			}
 
 			// 列 2：接入信息逻辑
-			var nodeConnection;
-			var wInfo = wifiClientsMap[mac];
-			var wIfInfo = u.ifname ? getWifiIfInfo(u.ifname) : null;
-			var isWifi = !!wInfo || !!wIfInfo || (u.ifname && isWirelessIfname(u.ifname));
-			var isMesh = u.ifname && !!u.ifname.match(/^mesh/i);
-			var labelStr = isMesh ? _('Wireless Mesh') : _('Wireless');
+			let nodeConnection;
+			const wInfo = wifiClientsMap[mac];
+			const wIfInfo = u.ifname ? (wifiIfnamesMap[u.ifname] || null) : null;
+			const isWifi = !!wInfo || !!wIfInfo || isWirelessIfname(u.ifname);
+			const isMesh = u.ifname && RE_MESH_IFNAME.test(u.ifname);
+			const labelStr = isMesh ? _('Wireless Mesh') : _('Wireless');
 
 			if (wInfo) {
-				var defaultNF = -90;
-				var defaultCeil = -30;
-				var noise = wInfo.noise || defaultNF;
-				var q = Math.max(0, Math.min(100, 100 * ((wInfo.signal - noise) / (defaultCeil - noise))));
-				var qColor = (q < 25) ? '#dc3545' : ((q < 50) ? '#ffc107' : '#198754');
+				const defaultNF = -90;
+				const defaultCeil = -30;
+				const noise = wInfo.noise || defaultNF;
+				const q = Math.max(0, Math.min(100, 100 * ((wInfo.signal - noise) / (defaultCeil - noise))));
+				const qColor = (q < 25) ? '#dc3545' : ((q < 50) ? '#ffc107' : '#198754');
 
 				nodeConnection = E('div', {}, [
 					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, wInfo.band ? '%s %s'.format(labelStr, wInfo.band) : labelStr),
@@ -347,7 +341,7 @@ return baseclass.extend({
 			}
 
 			// 列 3：聚合后的 RX 和 TX 流量
-			var nodeTraffic = E('div', { 'style': 'display: flex; gap: 10px; flex-direction: column;' }, [
+			const nodeTraffic = E('div', { 'style': 'display: flex; gap: 10px; flex-direction: column;' }, [
 				E('div', {}, [
 					E('div', { 'style': 'color: var(--bs-success, #198754); font-weight: 600; font-size: 13px;' }, [ E('span', '↓ '), '%1024.2mB'.format(u.rx_bytes) ]),
 					E('div', { 'style': 'font-size: 11px; opacity: 0.7; margin-top: 2px;' }, rate(u.rx_speed_bytes))
@@ -358,16 +352,16 @@ return baseclass.extend({
 				])
 			]);
 
-			// 列 4：按钮逻辑，绑定所有的 IPs
-			var isBlocked = (u.status == 6);
-			var btnText = isBlocked ? _('Disabled') : _('Enabled');
-			var btnClass = isBlocked ? 'btn cbi-button-negative' : 'btn cbi-button-positive';
-			var btnHandler = isBlocked ? handleAllowUser : handleBlockUser;
+			// 列 4：按钮逻辑
+			const isBlocked = (u.status == 6);
+			const btnText = isBlocked ? _('Disabled') : _('Enabled');
+			const btnClass = isBlocked ? 'btn cbi-button-negative' : 'btn cbi-button-positive';
+			const btnHandler = isBlocked ? handleAllowUser : handleBlockUser;
 
-			var nodeBtn = E('button', {
-				'class': btnClass,
+			const nodeBtn = E('button', {
+				'class': 'btn ' + btnClass,
 				'style': 'padding: 4px 10px; font-size: 12px; border-radius: 4px; min-width: 60px;',
-				'click': L.bind(btnHandler, this, u.ips) // 传入的是 IP 数组
+				'click': L.bind(btnHandler, this, u.ips)
 			}, [ btnText ]);
 
 			return [ nodeDeviceInfo, nodeConnection, nodeTraffic, nodeBtn ];
