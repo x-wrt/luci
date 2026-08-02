@@ -263,6 +263,10 @@ msgstr "运行时间"
 msgid "Wireless"
 msgstr "无线"
 
+#: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/35_natflow-users.js:314
+msgid "Wireless Mesh"
+msgstr "无线 Mesh"
+
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/10_router.js:102
 #: modules/luci-mod-dashboard/htdocs/luci-static/resources/view/dashboard/include/30_wifi.js:62
 msgid "no"
