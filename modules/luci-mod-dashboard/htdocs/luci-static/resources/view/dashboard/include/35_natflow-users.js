@@ -158,6 +158,7 @@ return baseclass.extend({
 			if (!mergedUsersMap[mac]) {
 				mergedUsersMap[mac] = {
 					mac: mac,
+					hostname: u.hostname || '',
 					ips: [ u.ip ],
 					rx_bytes: u.rx_bytes || 0,
 					tx_bytes: u.tx_bytes || 0,
@@ -168,6 +169,9 @@ return baseclass.extend({
 				};
 			} else {
 				const userObj = mergedUsersMap[mac];
+				if (u.hostname && !userObj.hostname) {
+					userObj.hostname = u.hostname;
+				}
 				if (u.ip && userObj.ips.indexOf(u.ip) === -1) {
 					userObj.ips.push(u.ip);
 				}
@@ -265,7 +269,7 @@ return baseclass.extend({
 
 		const rows = users.map(u => {
 			const mac = u.mac.toUpperCase();
-			const name = hosts.getHostnameByMACAddr(mac);
+			const name = hosts.getHostnameByMACAddr(mac) || u.hostname;
 
 			let expNode = '';
 			if (leaseMap[mac] !== undefined) {
