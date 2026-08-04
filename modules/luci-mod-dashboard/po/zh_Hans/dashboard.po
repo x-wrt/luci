@@ -50,6 +50,18 @@ msgstr "无限制"
 msgid "expired"
 msgstr "已过期"
 
+msgid "Active now"
+msgstr "刚刚活跃"
+
+msgid "%s ago"
+msgstr "%s前"
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Disable"
+msgstr "禁用"
+
 # 无线射频状态 (30_wifi.js)
 msgid "yes"
 msgstr "是"
