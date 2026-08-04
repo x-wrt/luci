@@ -165,7 +165,8 @@ return baseclass.extend({
 					rx_speed_bytes: u.rx_speed_bytes || 0,
 					tx_speed_bytes: u.tx_speed_bytes || 0,
 					status: u.status,
-					ifname: u.ifname || ''
+					ifname: u.ifname || '',
+					idle_time: (u.idle_time !== undefined) ? u.idle_time : 0
 				};
 			} else {
 				const userObj = mergedUsersMap[mac];
@@ -185,6 +186,11 @@ return baseclass.extend({
 				// 若之前的 ifname 为空或非无线，而新记录有无线 ifname，则优先采用无线 ifname
 				if (u.ifname && (!userObj.ifname || (!isWirelessIfname(userObj.ifname) && isWirelessIfname(u.ifname)))) {
 					userObj.ifname = u.ifname;
+				}
+				if (u.idle_time !== undefined) {
+					if (userObj.idle_time === undefined || u.idle_time < userObj.idle_time) {
+						userObj.idle_time = u.idle_time;
+					}
 				}
 			}
 		}
@@ -303,6 +309,16 @@ return baseclass.extend({
 				);
 			}
 
+			if (u.idle_time !== undefined && u.idle_time !== null) {
+				const activeStr = (u.idle_time < 5) ? _('Active now') : _('%s ago').format('%t'.format(u.idle_time));
+				nodeDeviceInfo.appendChild(
+					E('div', { 'style': 'font-size: 11px; color: #6c757d; margin-top: 3px;' }, [
+						E('span', { 'style': 'opacity: 0.8; margin-right: 2px;' }, '⏱️ '),
+						activeStr
+					])
+				);
+			}
+
 			// 列 2：接入信息逻辑
 			let nodeConnection;
 			const wInfo = wifiClientsMap[mac];
@@ -359,13 +375,29 @@ return baseclass.extend({
 			// 列 4：按钮逻辑
 			const isBlocked = (u.status == 6);
 			const btnText = isBlocked ? _('Disabled') : _('Enabled');
-			const btnClass = isBlocked ? 'btn cbi-button-negative' : 'btn cbi-button-positive';
+			const hoverText = isBlocked ? _('Enable') : _('Disable');
+			const btnClass = isBlocked ? 'cbi-button-negative' : 'cbi-button-positive';
+			const hoverClass = isBlocked ? 'cbi-button-positive' : 'cbi-button-negative';
 			const btnHandler = isBlocked ? handleAllowUser : handleBlockUser;
 
 			const nodeBtn = E('button', {
 				'class': 'btn ' + btnClass,
-				'style': 'padding: 4px 10px; font-size: 12px; border-radius: 4px; min-width: 60px;',
-				'click': L.bind(btnHandler, this, u.ips)
+				'style': 'padding: 4px 10px; font-size: 12px; border-radius: 4px; min-width: 75px;',
+				'click': L.bind(btnHandler, this, u.ips),
+				'mouseover': function(ev) {
+					if (!ev.currentTarget.disabled) {
+						ev.currentTarget.textContent = hoverText;
+						ev.currentTarget.classList.remove(btnClass);
+						ev.currentTarget.classList.add(hoverClass);
+					}
+				},
+				'mouseout': function(ev) {
+					if (!ev.currentTarget.disabled) {
+						ev.currentTarget.textContent = btnText;
+						ev.currentTarget.classList.remove(hoverClass);
+						ev.currentTarget.classList.add(btnClass);
+					}
+				}
 			}, [ btnText ]);
 
 			return [ nodeDeviceInfo, nodeConnection, nodeTraffic, nodeBtn ];
