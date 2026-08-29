@@ -15,7 +15,7 @@ import timezones from 'luci.zoneinfo';
 
 
 function shellquote(s) {
-	return `'${replace(s, "'", "'\\''")}'`;
+	return `'${replace(replace(s, "\0", ""), "'", "'\\''")}'`;
 }
 
 function callPackageVersionCheck(pkg) {
