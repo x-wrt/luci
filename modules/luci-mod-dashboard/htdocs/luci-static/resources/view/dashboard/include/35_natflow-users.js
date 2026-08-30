@@ -71,9 +71,14 @@ const handleAllowUser = function(ips, ev) {
 
 const RE_WIRELESS_IFNAME = /^(wlan|wl|phy|ra|rai|rae|apcli|apclii|apclie|ath|ap|mon|wds|mesh|sta|bat)/i;
 const RE_MESH_IFNAME = /^mesh/i;
+const RE_VPN_IFNAME = /^(tun|tap|wg|pptp|ppp|tailscale|zerotier|zt|natcap)/i;
 
 function isWirelessIfname(ifname) {
 	return ifname ? RE_WIRELESS_IFNAME.test(ifname) : false;
+}
+
+function isVpnIfname(ifname) {
+	return ifname ? RE_VPN_IFNAME.test(ifname) : false;
 }
 
 function rate(n) {
@@ -388,6 +393,11 @@ return baseclass.extend({
 			} else if (isWifi) {
 				nodeConnection = E('div', {}, [
 					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(13, 110, 253, 0.1); color: #0d6efd; margin-bottom: 4px;' }, labelStr),
+					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, u.ifname)
+				]);
+			} else if (isVpnIfname(u.ifname)) {
+				nodeConnection = E('div', {}, [
+					E('div', { 'style': 'display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; background: rgba(111, 66, 193, 0.1); color: #6f42c1; margin-bottom: 4px;' }, _('VPN')),
 					E('div', { 'style': 'font-size: 13px; font-weight: 600;' }, u.ifname)
 				]);
 			} else {
